@@ -3,17 +3,10 @@ package com.pas.beans;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import org.springframework.stereotype.Component;
-
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
-@Named("pc_CmcSurveyQuestion")
-@Component
 @DynamoDbBean
-@SessionScoped
 public class CmcSurveyQuestion implements Serializable
 {
 	private static final long serialVersionUID = 131158039169073163L;

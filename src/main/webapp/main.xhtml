@@ -1,4 +1,4 @@
-<ui:composition template="/cmc/template.xhtml"
+<ui:composition template="template.xhtml"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets" 
@@ -6,15 +6,11 @@
     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
     xmlns:c="http://java.sun.com/jsp/jstl/core">
      
-    <ui:define name="content">
-      
-         <f:loadBundle var="bundle" basename="ApplicationProperties" />  
-
+    <ui:define name="content">     
+     
          <h:form id="mainForm">                      
              
-  			<h1>Welcome to the Autism Spectrum Disorder page!
-  				<p:outputLabel value="#{pc_CamGroupMain.loggedInUserName}"></p:outputLabel>
-  			</h1>
+            <h3><h:outputText value="#{pc_CmcMain.siteTitle}"/></h3>
   		    
 		    <p:messages id="facesMessagesID" showDetail="false">
 		    </p:messages>   			

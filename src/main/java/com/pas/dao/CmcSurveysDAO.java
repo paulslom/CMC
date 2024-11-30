@@ -10,9 +10,11 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pas.beans.CmcMain;
 import com.pas.beans.CmcSurvey;
 import com.pas.dynamodb.DynamoClients;
 
+import jakarta.inject.Inject;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
@@ -27,6 +29,8 @@ public class CmcSurveysDAO implements Serializable
 	private static DynamoDbTable<CmcSurvey> cmcSurveysTable;
 	private static final String AWS_TABLE_NAME = "cmcSurveys";
 	
+	@Inject CmcMain cmcMain;
+	
 	public CmcSurveysDAO(DynamoClients dynamoClients2) 
 	{
 	   try 
@@ -40,7 +44,7 @@ public class CmcSurveysDAO implements Serializable
 	   }	   
 	}
 	
-	public void readAllSurveysFromDB() throws Exception
+	public List<CmcSurvey> readAllSurveysFromDB() throws Exception
 	{				
 		Iterator<CmcSurvey> results = cmcSurveysTable.scan().items().iterator();
             
@@ -55,6 +59,8 @@ public class CmcSurveysDAO implements Serializable
         }
 		
 		logger.info("exiting");
+		
+		return this.getFullSurveysList();
 		
 	}
 

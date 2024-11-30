@@ -1,0 +1,174 @@
+<ui:composition template="template.xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+     
+    <ui:define name="content">
+      
+         <f:loadBundle var="bundle" basename="ApplicationProperties" />  
+
+         <h:form id="physForm">                      
+            
+            <h1>
+            	<h:outputText value="#{pc_CmcMain.physicalDisabilitiesPageTitle}"/>
+            </h1> 
+            
+  		    <p:dataTable id="physicalDisabilitiesSection1TableID" value="#{pc_CmcMain.physicalDisabilitiesSection1QuestionsList}"
+	          var="surveyQuestion" scrollable="true" scrollHeight="350" style="font-size:11px;">							
+				
+		          <f:facet name="header">
+	   				  <h:outputText value="#{surveyQuestion.cmcSurveySectionTitleEnglish}"/>
+				  </f:facet>
+				  
+				  <p:column headerText="Question Num" sortBy="#{surveyQuestion.cmcSurveyQuestionNumber}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionNumber}"/>														
+				  </p:column>
+				  
+				  <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyQuestionID}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionID}"/>														
+				  </p:column>
+				  
+				  <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyID}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyID}"/>														
+				  </p:column>
+				  
+				  <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveySectionTitleEnglish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveySectionTitleEnglish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveySectionTitleSpanish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveySectionTitleSpanish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyCategoryEnglish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyCategorySpanish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyQuestionSpanish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcQuestionType}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionType}"/>														
+				  </p:column>
+		  
+		  </p:dataTable>
+		  
+		  <p:dataTable id="physicalDisabilitiesSection2TableID" value="#{pc_CmcMain.physicalDisabilitiesSection2QuestionsList}"
+	          var="surveyQuestion" scrollable="true" scrollHeight="350" style="font-size:11px;">							
+				
+		          <f:facet name="header">
+	   				  <h:outputText value="#{surveyQuestion.cmcSurveySectionTitleEnglish}"/>
+				  </f:facet>
+				  
+				  <p:column headerText="Question Num" sortBy="#{surveyQuestion.cmcSurveyQuestionNumber}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionNumber}"/>														
+				  </p:column>
+				  
+				  <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyQuestionID}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionID}"/>														
+				  </p:column>
+				  
+				  <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyID}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyID}"/>														
+				  </p:column>
+				  
+				  <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveySectionTitleEnglish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveySectionTitleEnglish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveySectionTitleSpanish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveySectionTitleSpanish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyCategoryEnglish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyCategorySpanish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyQuestionSpanish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcQuestionType}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionType}"/>														
+				  </p:column>
+		  
+		  </p:dataTable>
+		  
+		  <p:dataTable id="physicalDisabilitiesSection3TableID" value="#{pc_CmcMain.physicalDisabilitiesSection3QuestionsList}"
+	          var="surveyQuestion" scrollable="true" scrollHeight="350" style="font-size:11px;">							
+				
+		          <f:facet name="header">
+	   				  <h:outputText value="#{surveyQuestion.cmcSurveySectionTitleEnglish}"/>
+				  </f:facet>
+				  
+				  <p:column headerText="Question Num" sortBy="#{surveyQuestion.cmcSurveyQuestionNumber}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionNumber}"/>														
+				  </p:column>
+				  
+				  <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyQuestionID}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionID}"/>														
+				  </p:column>
+				  
+				  <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyID}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyID}"/>														
+				  </p:column>
+				  
+				  <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveySectionTitleEnglish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveySectionTitleEnglish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveySectionTitleSpanish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveySectionTitleSpanish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyCategoryEnglish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyCategorySpanish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcSurveyQuestionSpanish}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
+				  </p:column>
+				  
+				   <p:column headerText="ID" sortBy="#{surveyQuestion.cmcQuestionType}">												
+					  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionType}"/>														
+				  </p:column>
+		  
+		  </p:dataTable>
+		  
+		  <p:messages id="facesMessagesID" showDetail="false">
+		  </p:messages>   			
+	                
+	   </h:form>
+   
+    </ui:define>
+
+</ui:composition>
+  

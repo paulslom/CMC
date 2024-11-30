@@ -2,17 +2,10 @@ package com.pas.beans;
 
 import java.io.Serializable;
 
-import org.springframework.stereotype.Component;
-
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
-@Named("pc_CmcSurvey")
-@Component
 @DynamoDbBean
-@SessionScoped
 public class CmcSurvey implements Serializable
 {
 	private static final long serialVersionUID = 131158039169073163L;

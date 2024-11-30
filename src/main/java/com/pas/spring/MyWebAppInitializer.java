@@ -46,9 +46,9 @@ public class MyWebAppInitializer implements ServletContextInitializer
             sc.setInitParameter("jakarta.faces.VALIDATE_EMPTY_FIELDS", "false");
             sc.setInitParameter("jakarta.faces.FACELETS_SKIP_COMMENTS", "true");
             sc.setInitParameter("jakarta.faces.FACELETS_VIEW_MAPPINGS", "*.xhtml");
-            sc.setInitParameter("jakarta.faces.CONFIG_FILES", "/WEB-INF/main-faces-config.xml");
-            sc.setInitParameter("jakarta.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE", "true");
             sc.setInitParameter("primefaces.THEME", "cupertino");
+            sc.setInitParameter("jakarta.faces.ENABLE_CDI_RESOLVER_CHAIN","true");
+            sc.setInitParameter("jakarta.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE", "true");
             sc.setInitParameter("primefaces.UPLOADER", "commons");
             
             ServletRegistration.Dynamic elResolverInitializer = sc.addServlet("elResolverInit", new ELResolverInitializerServlet());
@@ -56,7 +56,7 @@ public class MyWebAppInitializer implements ServletContextInitializer
             
             //only one class is necessary here, not sure why they are not ALL needed but they are not.
             Set<Class<?>> jsfAnnotatedClasses = new HashSet<>();
-            jsfAnnotatedClasses.add(com.pas.beans.CmcSurveyQuestion.class);
+            jsfAnnotatedClasses.add(com.pas.beans.CmcMain.class);
             
             logger.info("total jsf annotated classes: " + jsfAnnotatedClasses.size()); 
             

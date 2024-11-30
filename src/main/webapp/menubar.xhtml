@@ -1,0 +1,39 @@
+<ui:composition 
+    
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+     
+      <f:loadBundle var="bundle" basename="ApplicationProperties" />  
+  
+      <h:form id="menuForm"> 
+        
+        <h1>
+           	<h:outputText value="#{pc_CmcMain.siteTitle}"/>
+        </h1> 
+     	
+  		<p:selectOneRadio id="englishSpanishID" value="#{pc_CmcMain.siteLanguage}">
+            <f:selectItem itemLabel="English" itemValue="1" />
+			<f:selectItem itemLabel="Spanish" itemValue="2" />
+			<p:ajax update="menuForm menuId mainForm" listener="#{pc_CmcMain.valueChangeLanguageRadio}" />
+        </p:selectOneRadio>	
+        
+      </h:form> 
+        
+      <br />
+         
+      <style type="text/css">
+		.ui-menubar	{mouseover: #ff0000; background-color: #FFA07A !important; background: LightSalmon;}
+	  </style>
+               
+      <p:menubar id="menuId" styleClass="ui-menubar">
+           
+          <p:menuitem value="#{pc_CmcMain.physicalDisabilitiesPageTitle}" url="#{request.contextPath}/physicalDisabilities.xhtml"/>
+          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesPageTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml"/>
+          <p:menuitem value="#{pc_CmcMain.autismDisorderPageTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml"/>
+         			
+	  </p:menubar> 
+        
+</ui:composition>

@@ -11,9 +11,12 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pas.beans.CmcMain;
+import com.pas.beans.CmcSurvey;
 import com.pas.beans.CmcSurveyQuestion;
 import com.pas.dynamodb.DynamoClients;
 
+import jakarta.inject.Inject;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
@@ -27,21 +30,63 @@ public class CmcSurveyQuestionsDAO implements Serializable
 	
 	private Map<String,CmcSurveyQuestion> fullSurveyQuestionsMap = new HashMap<>();
 	private List<CmcSurveyQuestion> fullSurveyQuestionsList = new ArrayList<>();
+	
+	private static String physicalDisabilitiesSurveyID;
+	private static String intellectualDisabilitiesSurveyID;
+	private static String autismSpectrumDisorderSurveyID;
+	
+	private List<CmcSurveyQuestion> physicalDisabilitiesSection1QuestionsList = new ArrayList<>();
+	private List<CmcSurveyQuestion> physicalDisabilitiesSection2QuestionsList = new ArrayList<>();
+	private List<CmcSurveyQuestion> physicalDisabilitiesSection3QuestionsList = new ArrayList<>();
+	
 	private static DynamoClients dynamoClients;
 	private static DynamoDbTable<CmcSurveyQuestion> cmcSurveyQuestionsTable;
 	private static final String AWS_TABLE_NAME = "cmcSurveyQuestions";
 	
+	@Inject CmcMain cmcMain;
+	
 	public CmcSurveyQuestionsDAO(DynamoClients dynamoClients2) 
 	{
-	   try 
-	   {
+	    try 
+	    {
 	       dynamoClients = dynamoClients2;
 	       cmcSurveyQuestionsTable = dynamoClients.getDynamoDbEnhancedClient().table(AWS_TABLE_NAME, TableSchema.fromBean(CmcSurveyQuestion.class));
-	   } 
-	   catch (final Exception ex) 
-	   {
+	       
+	       List<CmcSurvey> tempList = new ArrayList<>();
+	       
+	       if (cmcMain != null)
+	       {
+	    	   tempList = cmcMain.getFullSurveysList();		       
+	       }
+	       else //cmcMain not available yet, just read from the DAO directly
+	       {
+	    	   CmcSurveysDAO cmcSurveysDAO = new CmcSurveysDAO(dynamoClients);
+	   		   tempList = cmcSurveysDAO.readAllSurveysFromDB(); 
+	       }
+	       
+	       for (int i = 0; i < tempList.size(); i++) 
+		   {
+				CmcSurvey cmcSurvey = tempList.get(i);
+				if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase("Physical Disabilities"))
+				{
+					physicalDisabilitiesSurveyID = cmcSurvey.getCmcSurveyID();
+				}
+				else if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase("Intellectual Disabilities"))
+				{
+					intellectualDisabilitiesSurveyID = cmcSurvey.getCmcSurveyID();
+				}
+				else if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase("Autism Spectrum Disorder"))
+				{
+					autismSpectrumDisorderSurveyID =cmcSurvey.getCmcSurveyID();
+				}
+		   }
+			
+	    } 
+	    catch (final Exception ex) 
+	    {
 	      logger.error("Got exception while initializing CmcSurveyQuestionsDAO. Ex = " + ex.getMessage(), ex);
-	   }	   
+	    }
+	
 	}
 	
 	public void readAllSurveyQuestionsFromDB() throws Exception
@@ -52,12 +97,30 @@ public class CmcSurveyQuestionsDAO implements Serializable
         {
             CmcSurveyQuestion cmcsq = results.next(); 
             this.getFullSurveyQuestionsList().add(cmcsq);
+             
+            if (cmcsq.getCmcSurveyID().equalsIgnoreCase(physicalDisabilitiesSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("1"))
+            {
+            	this.getPhysicalDisabilitiesSection1QuestionsList().add(cmcsq);
+            }
+            else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(physicalDisabilitiesSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("2"))
+            {
+            	this.getPhysicalDisabilitiesSection2QuestionsList().add(cmcsq);
+            }
+            else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(physicalDisabilitiesSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("3"))
+            {
+            	this.getPhysicalDisabilitiesSection3QuestionsList().add(cmcsq);
+            }
+            
           	this.getFullSurveyQuestionsMap().put(cmcsq.getCmcSurveyQuestionID(), cmcsq);			
         }
           	
 		logger.info("LoggedDBOperation: function-inquiry; table:cmcSurveyQuestion; rows:" + this.getFullSurveyQuestionsMap().size());
 		
 		Collections.sort(this.getFullSurveyQuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
+		
+		Collections.sort(this.getPhysicalDisabilitiesSection1QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
+		Collections.sort(this.getPhysicalDisabilitiesSection2QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
+		Collections.sort(this.getPhysicalDisabilitiesSection3QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
 		
 		//this loop only for debugging purposes
 		/*
@@ -143,5 +206,33 @@ public class CmcSurveyQuestionsDAO implements Serializable
 	public void setFullSurveyQuestionsList(List<CmcSurveyQuestion> fullSurveyQuestionsList) {
 		this.fullSurveyQuestionsList = fullSurveyQuestionsList;
 	}
+
+	public List<CmcSurveyQuestion> getPhysicalDisabilitiesSection1QuestionsList() {
+		return physicalDisabilitiesSection1QuestionsList;
+	}
+
+	public void setPhysicalDisabilitiesSection1QuestionsList(
+			List<CmcSurveyQuestion> physicalDisabilitiesSection1QuestionsList) {
+		this.physicalDisabilitiesSection1QuestionsList = physicalDisabilitiesSection1QuestionsList;
+	}
+
+	public List<CmcSurveyQuestion> getPhysicalDisabilitiesSection2QuestionsList() {
+		return physicalDisabilitiesSection2QuestionsList;
+	}
+
+	public void setPhysicalDisabilitiesSection2QuestionsList(
+			List<CmcSurveyQuestion> physicalDisabilitiesSection2QuestionsList) {
+		this.physicalDisabilitiesSection2QuestionsList = physicalDisabilitiesSection2QuestionsList;
+	}
+
+	public List<CmcSurveyQuestion> getPhysicalDisabilitiesSection3QuestionsList() {
+		return physicalDisabilitiesSection3QuestionsList;
+	}
+
+	public void setPhysicalDisabilitiesSection3QuestionsList(
+			List<CmcSurveyQuestion> physicalDisabilitiesSection3QuestionsList) {
+		this.physicalDisabilitiesSection3QuestionsList = physicalDisabilitiesSection3QuestionsList;
+	}
+
 	
 }

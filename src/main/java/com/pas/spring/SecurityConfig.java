@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 //import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -26,39 +27,40 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 public class SecurityConfig
 {
 	private static Logger logger = LogManager.getLogger(SecurityConfig.class);
- 	
-	@Bean
-    public PasswordEncoder passwordEncoder() 
+
+    @Bean
+    PasswordEncoder passwordEncoder() 
     {
         return new BCryptPasswordEncoder();
     }
 
-	@Autowired MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+	//@Autowired MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
     @Autowired UserDetailsServiceImpl userDetailsService;
-    
+
     @Bean
-    @Order(1)        
-    public SecurityFilterChain customFilterChain(HttpSecurity http, UserDetailsService userDetailsService, HandlerMappingIntrospector introspector) throws Exception 
+    @Order(1)
+    SecurityFilterChain customFilterChain(HttpSecurity http, UserDetailsService userDetailsService, HandlerMappingIntrospector introspector) throws Exception 
     {
-    	logger.info("entering customFilterChain of SecurityConfig");    	
+    	logger.info("entering customFilterChain of SecurityConfig");     	
     	
-    	//let's turn everything off here until we have some page we want to secure...
-    	
-    	/*
     	MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
     	http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
         	.requestMatchers(
                 mvcMatcherBuilder.pattern("/resources/**"),
+                mvcMatcherBuilder.pattern("/webapp/**"),
                 mvcMatcherBuilder.pattern("/actuator/**"),
                 mvcMatcherBuilder.pattern("/jakarta.faces.resource/**"),
-                mvcMatcherBuilder.pattern("/register.xhtml"),
                 mvcMatcherBuilder.pattern("/index.html"))
-            .permitAll().anyRequest().authenticated()
-            
-        );
-    	    	
+            .permitAll()            
+        );      
+    	
+    	http.authorizeHttpRequests().anyRequest().permitAll();  //allow everything from a spring perspective. (no automatic spring login page).  We control our own login, without this, spring defaults to showing a login page.
+        
+    	//let's turn everything off here until we have some page we want to secure...
+    	
+    	/*
     	http.formLogin(formLogin -> formLogin            
                 .permitAll()
                 .successHandler(myAuthenticationSuccessHandler)
@@ -68,9 +70,7 @@ public class SecurityConfig
     		.logout(logout -> logout.logoutUrl("/logout.xhtml").permitAll());
     	
     	*/
-    	
-    	http.authorizeHttpRequests().anyRequest().permitAll();
-       
+    	       
 	    logger.info("exiting filterChain of SecurityConfig");
 	    
         return http.build();

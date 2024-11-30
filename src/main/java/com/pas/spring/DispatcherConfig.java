@@ -28,7 +28,7 @@ public class DispatcherConfig implements WebMvcConfigurer
      * @return
      */
     @Bean
-    public ViewResolver getViewResolver() 
+    ViewResolver getViewResolver() 
     {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/");

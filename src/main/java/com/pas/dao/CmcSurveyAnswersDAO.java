@@ -8,9 +8,11 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pas.beans.CmcMain;
 import com.pas.beans.CmcSurveyAnswer;
 import com.pas.dynamodb.DynamoClients;
 
+import jakarta.inject.Inject;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
@@ -24,6 +26,8 @@ public class CmcSurveyAnswersDAO implements Serializable
 	private static DynamoClients dynamoClients;
 	private static DynamoDbTable<CmcSurveyAnswer> cmcSurveyAnswersTable;
 	private static final String AWS_TABLE_NAME = "cmcSurveyAnswer";
+	
+	@Inject CmcMain cmcMain;
 	
 	public CmcSurveyAnswersDAO(DynamoClients dynamoClients2) 
 	{
