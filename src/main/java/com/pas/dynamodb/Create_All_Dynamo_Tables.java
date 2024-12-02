@@ -12,7 +12,9 @@ public class Create_All_Dynamo_Tables
 	private static Logger logger = LogManager.getLogger(Create_All_Dynamo_Tables.class); //log4j for Logging 
 	
 	private static String SURVEYS_JSONFILE = "SurveysData.json";
-	private static String SURVEYQUESTIONS_JSONFILE = "SurveyQuestionsData.json";
+	private static String SURVEYQUESTIONS_PHYSICAL_DISABILITIES_JSONFILE = "SurveyQuestionsPhysicalDisabilitiesData.json";
+	private static String SURVEYQUESTIONS_INTELLECTUAL_DISABILITIES_JSONFILE = "SurveyQuestionsIntellectualDisabilitiesData.json";
+	private static String SURVEYQUESTIONS_AUTISM_DISORDER_JSONFILE = "SurveyQuestionsAutismDisorderData.json";
 		
     public static void main(String[] args) throws Exception
     { 
@@ -23,7 +25,9 @@ public class Create_All_Dynamo_Tables
     		 DynamoClients dynamoClients = DynamoUtil.getDynamoClients();
     
     		 //doTable(dynamoClients, SURVEYS_JSONFILE);
-    		 doTable(dynamoClients, SURVEYQUESTIONS_JSONFILE);
+    		 doTable(dynamoClients, SURVEYQUESTIONS_PHYSICAL_DISABILITIES_JSONFILE);
+    		 //doTable(dynamoClients, SURVEYQUESTIONS_INTELLECTUAL_DISABILITIES_JSONFILE);
+    		 //doTable(dynamoClients, SURVEYQUESTIONS_AUTISM_DISORDER_JSONFILE);
     		 //doTable(dynamoClients, "SurveyAnswers");
     	      	
 	    	 DynamoUtil.stopDynamoServer();
@@ -55,9 +59,21 @@ public class Create_All_Dynamo_Tables
         	ct.loadTable(dynamoClients, inputStream);		
         }
         
-        if (jsonFileName.equalsIgnoreCase(SURVEYQUESTIONS_JSONFILE))
+        if (jsonFileName.equalsIgnoreCase(SURVEYQUESTIONS_PHYSICAL_DISABILITIES_JSONFILE))
         {
-        	CreateTableDynamoDB_CmcSurveyQuestion cl = new CreateTableDynamoDB_CmcSurveyQuestion();
+        	CreateTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities cl = new CreateTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities();
+        	cl.loadTable(dynamoClients, inputStream);		
+        }
+        
+        if (jsonFileName.equalsIgnoreCase(SURVEYQUESTIONS_INTELLECTUAL_DISABILITIES_JSONFILE))
+        {
+        	CreateTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities cl = new CreateTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities();
+        	cl.loadTable(dynamoClients, inputStream);		
+        }
+        
+        if (jsonFileName.equalsIgnoreCase(SURVEYQUESTIONS_AUTISM_DISORDER_JSONFILE))
+        {
+        	CreateTableDynamoDB_CmcSurveyQuestionsAutismDisorder cl = new CreateTableDynamoDB_CmcSurveyQuestionsAutismDisorder();
         	cl.loadTable(dynamoClients, inputStream);		
         }
         

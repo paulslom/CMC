@@ -121,20 +121,8 @@ public class CmcSurveyQuestionsDAO implements Serializable
 		Collections.sort(this.getPhysicalDisabilitiesSection1QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
 		Collections.sort(this.getPhysicalDisabilitiesSection2QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
 		Collections.sort(this.getPhysicalDisabilitiesSection3QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
-		
-		//this loop only for debugging purposes
-		/*
-		for (Map.Entry<String, CamGroupUser> entry : this.getFullSurveyQuestionsMap().entrySet()) 
-		{
-		    String key = entry.getKey();
-		    CamGroupUser User = entry.getValue();
-
-		    logger.info("Key = " + key + ", value = " + User.getUserName());
-		}
-		*/
-		
-		logger.info("exiting");
-		
+				
+		logger.info("exiting");		
 	}
 		
 	public CmcSurveyQuestion getCmcSurveyQuestion(String cmcsq)

@@ -12,7 +12,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.pas.beans.CmcSurvey;
 import com.pas.beans.CmcSurveyQuestion;
+import com.pas.dao.CmcSurveysDAO;
 
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
@@ -23,9 +25,9 @@ import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse;
 import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 
-public class CreateTableDynamoDB_CmcSurveyQuestion
+public class CreateTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities
 {	 
-	private static Logger logger = LogManager.getLogger(CreateTableDynamoDB_CmcSurveyQuestion.class);
+	private static Logger logger = LogManager.getLogger(CreateTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities.class);
 	private static String AWS_TABLE_NAME = "cmcSurveyQuestions";
 	
 	public void loadTable(DynamoClients dynamoClients, InputStream inputStream) throws Exception 
@@ -42,7 +44,7 @@ public class CreateTableDynamoDB_CmcSurveyQuestion
         
         // Create a table in DynamoDB Local
         DynamoDbTable<CmcSurveyQuestion> table = createTable(dynamoClients.getDynamoDbEnhancedClient(), dynamoClients.getDdbClient());           
-        loadTableData(table, inputStream);				
+        loadTableData(table, inputStream, dynamoClients);				
 	}
 	    
     private static void deleteTable(DynamoDbEnhancedClient ddbEnhancedClient) throws Exception
@@ -51,11 +53,25 @@ public class CreateTableDynamoDB_CmcSurveyQuestion
         table.deleteTable();        
 	}
    
-    private static void loadTableData(DynamoDbTable<CmcSurveyQuestion> table, InputStream inputStream) throws Exception
+    private static void loadTableData(DynamoDbTable<CmcSurveyQuestion> table, InputStream inputStream, DynamoClients dynamoClients) throws Exception
     {   
         // Insert data into the table
         logger.info("Inserting data into the table:" + AWS_TABLE_NAME);
        
+        String physicalDisabilitiesSurveyID = "";
+        CmcSurveysDAO cmcSurveysDAO = new CmcSurveysDAO(dynamoClients);
+		List<CmcSurvey> tempList = cmcSurveysDAO.readAllSurveysFromDB(); 
+    
+        for (int i = 0; i < tempList.size(); i++) 
+	    {
+			CmcSurvey cmcSurvey = tempList.get(i);
+			if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase("Physical Disabilities"))
+			{
+				physicalDisabilitiesSurveyID = cmcSurvey.getCmcSurveyID();
+				break;
+			}			
+	    }
+    
         List<CmcSurveyQuestion> cmcSurveyQuestionList = readFromFileAndConvert(inputStream); 
         
         if (cmcSurveyQuestionList == null)
@@ -68,6 +84,7 @@ public class CreateTableDynamoDB_CmcSurveyQuestion
     		{
             	CmcSurveyQuestion gu = cmcSurveyQuestionList.get(i);
             	gu.setCmcSurveyQuestionID(UUID.randomUUID().toString());
+            	gu.setCmcSurveyID(physicalDisabilitiesSurveyID);
                 table.putItem(gu);                
     		}             
         }

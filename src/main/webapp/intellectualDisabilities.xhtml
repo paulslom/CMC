@@ -10,10 +10,12 @@
       
          <f:loadBundle var="bundle" basename="ApplicationProperties" />  
 
-         <h:form id="mainForm">                      
+         <h:form id="intelForm">                      
              
-  			<h1>Welcome to the Intellectual Disabilities page</h1>
-  		    
+  			<h1>
+            	<h:outputText value="#{pc_CmcMain.intellectualDisabilitiesPageTitle}"/>
+            </h1> 
+  		                
 		    <p:messages id="facesMessagesID" showDetail="false">
 		    </p:messages>   			
 	                

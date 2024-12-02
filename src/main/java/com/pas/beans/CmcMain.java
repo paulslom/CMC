@@ -1,6 +1,7 @@
 package com.pas.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ import com.pas.dynamodb.DynamoUtil;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.event.AjaxBehaviorEvent;
+import jakarta.faces.model.SelectItem;
 import jakarta.inject.Named;
 
 @Named("pc_CmcMain")
@@ -30,34 +32,98 @@ public class CmcMain implements Serializable
 	private static int SPANISH = 2;
 	
 	private static String Site_Title_English = "Mobility Match: Connecting you with Best Choices of Community Mobility by Occupational Therapists";
-	private static String Site_Title_Spanish = "Spanish version of Mobility Match Title";
-	private static String Physical_Disablities_Page_Title_Spanish = "Habilidades de Movilidad";
-	private static String Physical_Disablities_Page_Title_English = "Physical Disabilities";
-	private static String Intellectual_Disablities_Page_Title_Spanish = "Habilidades de Intelectual";
-	private static String Intellectual_Disablities_Page_Title_English = "Intellectual Disabilities";
-	private static String Autism_Disorder_Page_Title_Spanish = "Trastorno del Autismo";
-	private static String Autism_Disorder_Page_Title_English = "Autism Spectrum Disorder";
+	private static String Site_Title_Spanish = "Mobility Match: lo conectamos con las mejores opciones de movilidad comunitaria a través de terapeutas ocupacionales";
+	
+	private static String Physical_Disabilities_Survey_Name = "Physical Disabilities";
+	private static String Intellectual_Disabilities_Survey_Name = "Intellectual Disabilities";
+	private static String Autism_Disorder_Survey_Name = "Autism Spectrum Disorder";
 	
 	private int siteLanguage = ENGLISH;
 		
 	private boolean siteInEnglish = true;
+	
+	private static String Physical_Disabilities_Menu_Title_English;
+	private static String Physical_Disabilities_Page_Title_English;
+	private static String Physical_Disabilities_Page_SubTitle_English;
+	private static String Physical_Disabilities_Menu_Title_Spanish;
+	private static String Physical_Disabilities_Page_Title_Spanish;	
+	private static String Physical_Disabilities_Page_SubTitle_Spanish;
+	
+	private static String Intellectual_Disabilities_Menu_Title_English;
+	private static String Intellectual_Disabilities_Page_Title_English;
+	private static String Intellectual_Disabilities_Page_SubTitle_English;
+	private static String Intellectual_Disabilities_Menu_Title_Spanish;
+	private static String Intellectual_Disabilities_Page_Title_Spanish;	
+	private static String Intellectual_Disabilities_Page_SubTitle_Spanish;
+	
+	private static String Autism_Disorder_Menu_Title_English;
+	private static String Autism_Disorder_Page_Title_English;
+	private static String Autism_Disorder_Page_SubTitle_English;
+	private static String Autism_Disorder_Menu_Title_Spanish;
+	private static String Autism_Disorder_Page_Title_Spanish;	
+	private static String Autism_Disorder_Page_SubTitle_Spanish;
+	
+	private List<SelectItem> yesNoEnglishList = new ArrayList<>();
+	private List<SelectItem> yesNoSpanishList = new ArrayList<>();
+	
+	private List<SelectItem> skillLevelEnglishList = new ArrayList<>();
+	private List<SelectItem> skillLevelSpanishList = new ArrayList<>();
+	
 	private String siteTitle;
+	
+	private String physicalDisabilitiesMenuTitle;
 	private String physicalDisabilitiesPageTitle;
+	private String physicalDisabilitiesPageSubTitle;
+	
+	private String intellectualDisabilitiesMenuTitle;
 	private String intellectualDisabilitiesPageTitle;
+	private String intellectualDisabilitiesPageSubTitle;
+	
+	private String autismDisorderMenuTitle;
 	private String autismDisorderPageTitle;
+	private String autismDisorderPageSubTitle;
 	
 	private CmcSurveyQuestionsDAO cmcSurveyQuestionsDAO;
 	private CmcSurveysDAO cmcSurveysDAO;
 	private CmcSurveyAnswersDAO cmcSurveyAnswersDAO;
-	
+		
 	public CmcMain() 
 	{
 		logger.info("Entering CmcMain constructor.  Should only be here ONE time");	
 		logger.info("CmcMain id is: " + this.getId());
 		logger.info("Setting default to English");
 		
-		//changeToEnglish();
-		changeToSpanish();
+		SelectItem si = new SelectItem("Select","Select");
+		yesNoEnglishList.add(si);
+		si = new SelectItem("Yes","Yes");
+		yesNoEnglishList.add(si);
+		si = new SelectItem("No","No");
+		yesNoEnglishList.add(si);
+		
+		si = new SelectItem("Seleccionar","Seleccionar");
+		yesNoSpanishList.add(si);
+		si = new SelectItem("Si","Si");
+		yesNoSpanishList.add(si);
+		si = new SelectItem("No","No");
+		yesNoSpanishList.add(si);
+		
+		si = new SelectItem("Select","Select");
+		skillLevelEnglishList.add(si);
+		si = new SelectItem("1","Performs Independently");
+		skillLevelEnglishList.add(si);
+		si = new SelectItem("2","Potentially Able with Training");
+		skillLevelEnglishList.add(si);
+		si = new SelectItem("3","Unable to Meet Demands");
+		skillLevelEnglishList.add(si);
+		
+		si = new SelectItem("Seleccionar","Seleccionar");
+		skillLevelSpanishList.add(si);
+		si = new SelectItem("1","Lo realiza de manera independiente");
+		skillLevelSpanishList.add(si);
+		si = new SelectItem("2","Lo puede realizar con entrenamiento");
+		skillLevelSpanishList.add(si);
+		si = new SelectItem("3","No puede cumplir con las demandas");
+		skillLevelSpanishList.add(si);
 		
 		try 
 		{
@@ -69,7 +135,9 @@ public class CmcMain implements Serializable
 				loadCmcSurveys(dynamoClients);
 				loadCmcSurveyQuestions(dynamoClients);
 				loadCmcSurveyAnswers(dynamoClients);
-			}	
+			}
+			
+			changeToEnglish();
 		} 
 		catch (Exception e) 
 		{
@@ -100,9 +168,19 @@ public class CmcMain implements Serializable
 		this.setSiteLanguage(SPANISH);
 		this.setSiteInEnglish(false);
 		this.setSiteTitle(Site_Title_Spanish);
-		this.setPhysicalDisabilitiesPageTitle(Physical_Disablities_Page_Title_Spanish);
+		
+		this.setPhysicalDisabilitiesMenuTitle(Physical_Disabilities_Menu_Title_Spanish);
+		this.setPhysicalDisabilitiesPageTitle(Physical_Disabilities_Page_Title_Spanish);
+		this.setPhysicalDisabilitiesPageSubTitle(Physical_Disabilities_Page_SubTitle_Spanish);
+		
+		this.setIntellectualDisabilitiesMenuTitle(Intellectual_Disabilities_Menu_Title_Spanish);
+		this.setIntellectualDisabilitiesPageTitle(Intellectual_Disabilities_Page_Title_Spanish);
+		this.setIntellectualDisabilitiesPageSubTitle(Intellectual_Disabilities_Page_SubTitle_Spanish);
+		
+		this.setAutismDisorderMenuTitle(Autism_Disorder_Menu_Title_Spanish);
 		this.setAutismDisorderPageTitle(Autism_Disorder_Page_Title_Spanish);
-		this.setIntellectualDisabilitiesPageTitle(Intellectual_Disablities_Page_Title_Spanish);
+		this.setAutismDisorderPageSubTitle(Autism_Disorder_Page_SubTitle_Spanish);
+		
 		logger.info("Site language set to Spanish");
 	}
 	
@@ -111,9 +189,19 @@ public class CmcMain implements Serializable
 		this.setSiteLanguage(ENGLISH);
 		this.setSiteInEnglish(true);
 		this.setSiteTitle(Site_Title_English);
-		this.setPhysicalDisabilitiesPageTitle(Physical_Disablities_Page_Title_English);
+		
+		this.setPhysicalDisabilitiesMenuTitle(Physical_Disabilities_Menu_Title_English);
+		this.setPhysicalDisabilitiesPageTitle(Physical_Disabilities_Page_Title_English);
+		this.setPhysicalDisabilitiesPageSubTitle(Physical_Disabilities_Page_SubTitle_English);
+		
+		this.setIntellectualDisabilitiesMenuTitle(Intellectual_Disabilities_Menu_Title_English);
+		this.setIntellectualDisabilitiesPageTitle(Intellectual_Disabilities_Page_Title_English);
+		this.setIntellectualDisabilitiesPageSubTitle(Intellectual_Disabilities_Page_SubTitle_English);
+		
+		this.setAutismDisorderMenuTitle(Autism_Disorder_Menu_Title_English);
 		this.setAutismDisorderPageTitle(Autism_Disorder_Page_Title_English);
-		this.setIntellectualDisabilitiesPageTitle(Intellectual_Disablities_Page_Title_English);
+		this.setAutismDisorderPageSubTitle(Autism_Disorder_Page_SubTitle_English);
+		
 		logger.info("Site language set to English");
 	}
 	
@@ -121,8 +209,41 @@ public class CmcMain implements Serializable
 	{
 		logger.info("entering loadCmcSurveys");
 		cmcSurveysDAO = new CmcSurveysDAO(dynamoClients);
-		cmcSurveysDAO.readAllSurveysFromDB(); 
-		logger.info("Cmc Surveys read in. List size = " + cmcSurveysDAO.getFullSurveysList().size());		
+		List<CmcSurvey> tempList = cmcSurveysDAO.readAllSurveysFromDB(); 
+		logger.info("Cmc Surveys read in. List size = " + cmcSurveysDAO.getFullSurveysList().size());
+		
+		for (int i = 0; i < tempList.size(); i++) 
+	    {
+			CmcSurvey cmcSurvey = tempList.get(i);
+			
+			if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase(Physical_Disabilities_Survey_Name))
+			{
+				Physical_Disabilities_Menu_Title_English = cmcSurvey.getCmcSurveyName();
+				Physical_Disabilities_Page_Title_English = cmcSurvey.getCmcSurveyPageTitleEnglish();
+				Physical_Disabilities_Page_SubTitle_English = cmcSurvey.getCmcSurveyPageSubTitleEnglish();
+				Physical_Disabilities_Menu_Title_Spanish = cmcSurvey.getCmcSurveyNameSpanish();
+				Physical_Disabilities_Page_Title_Spanish = cmcSurvey.getCmcSurveyPageTitleSpanish();
+				Physical_Disabilities_Page_SubTitle_Spanish = cmcSurvey.getCmcSurveyPageSubTitleSpanish();				
+			}
+			else if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase(Intellectual_Disabilities_Survey_Name))
+			{
+				Intellectual_Disabilities_Menu_Title_English = cmcSurvey.getCmcSurveyName();
+				Intellectual_Disabilities_Page_Title_English = cmcSurvey.getCmcSurveyPageTitleEnglish();
+				Intellectual_Disabilities_Page_SubTitle_English = cmcSurvey.getCmcSurveyPageSubTitleEnglish();
+				Intellectual_Disabilities_Menu_Title_Spanish = cmcSurvey.getCmcSurveyNameSpanish();
+				Intellectual_Disabilities_Page_Title_Spanish = cmcSurvey.getCmcSurveyPageTitleSpanish();
+				Intellectual_Disabilities_Page_SubTitle_Spanish = cmcSurvey.getCmcSurveyPageSubTitleSpanish();		
+			}
+			else if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase(Autism_Disorder_Survey_Name))
+			{
+				Autism_Disorder_Menu_Title_English = cmcSurvey.getCmcSurveyName();
+				Autism_Disorder_Page_Title_English = cmcSurvey.getCmcSurveyPageTitleEnglish();
+				Autism_Disorder_Page_SubTitle_English = cmcSurvey.getCmcSurveyPageSubTitleEnglish();
+				Autism_Disorder_Menu_Title_Spanish = cmcSurvey.getCmcSurveyNameSpanish();
+				Autism_Disorder_Page_Title_Spanish = cmcSurvey.getCmcSurveyPageTitleSpanish();
+				Autism_Disorder_Page_SubTitle_Spanish = cmcSurvey.getCmcSurveyPageSubTitleSpanish();		
+			}
+	    }
     }
 	
 	public void loadCmcSurveyQuestions(DynamoClients dynamoClients)  throws Exception
@@ -246,6 +367,86 @@ public class CmcMain implements Serializable
 
 	public void setSiteTitle(String siteTitle) {
 		this.siteTitle = siteTitle;
+	}
+
+	public String getPhysicalDisabilitiesPageSubTitle() {
+		return physicalDisabilitiesPageSubTitle;
+	}
+
+	public void setPhysicalDisabilitiesPageSubTitle(String physicalDisabilitiesPageSubTitle) {
+		this.physicalDisabilitiesPageSubTitle = physicalDisabilitiesPageSubTitle;
+	}
+
+	public String getPhysicalDisabilitiesMenuTitle() {
+		return physicalDisabilitiesMenuTitle;
+	}
+
+	public void setPhysicalDisabilitiesMenuTitle(String physicalDisabilitiesMenuTitle) {
+		this.physicalDisabilitiesMenuTitle = physicalDisabilitiesMenuTitle;
+	}
+
+	public String getIntellectualDisabilitiesMenuTitle() {
+		return intellectualDisabilitiesMenuTitle;
+	}
+
+	public void setIntellectualDisabilitiesMenuTitle(String intellectualDisabilitiesMenuTitle) {
+		this.intellectualDisabilitiesMenuTitle = intellectualDisabilitiesMenuTitle;
+	}
+
+	public String getIntellectualDisabilitiesPageSubTitle() {
+		return intellectualDisabilitiesPageSubTitle;
+	}
+
+	public void setIntellectualDisabilitiesPageSubTitle(String intellectualDisabilitiesPageSubTitle) {
+		this.intellectualDisabilitiesPageSubTitle = intellectualDisabilitiesPageSubTitle;
+	}
+
+	public String getAutismDisorderMenuTitle() {
+		return autismDisorderMenuTitle;
+	}
+
+	public void setAutismDisorderMenuTitle(String autismDisorderMenuTitle) {
+		this.autismDisorderMenuTitle = autismDisorderMenuTitle;
+	}
+
+	public String getAutismDisorderPageSubTitle() {
+		return autismDisorderPageSubTitle;
+	}
+
+	public void setAutismDisorderPageSubTitle(String autismDisorderPageSubTitle) {
+		this.autismDisorderPageSubTitle = autismDisorderPageSubTitle;
+	}
+
+	public List<SelectItem> getYesNoEnglishList() {
+		return yesNoEnglishList;
+	}
+
+	public void setYesNoEnglishList(List<SelectItem> yesNoEnglishList) {
+		this.yesNoEnglishList = yesNoEnglishList;
+	}
+
+	public List<SelectItem> getYesNoSpanishList() {
+		return yesNoSpanishList;
+	}
+
+	public void setYesNoSpanishList(List<SelectItem> yesNoSpanishList) {
+		this.yesNoSpanishList = yesNoSpanishList;
+	}
+
+	public List<SelectItem> getSkillLevelEnglishList() {
+		return skillLevelEnglishList;
+	}
+
+	public void setSkillLevelEnglishList(List<SelectItem> skillLevelEnglishList) {
+		this.skillLevelEnglishList = skillLevelEnglishList;
+	}
+
+	public List<SelectItem> getSkillLevelSpanishList() {
+		return skillLevelSpanishList;
+	}
+
+	public void setSkillLevelSpanishList(List<SelectItem> skillLevelSpanishList) {
+		this.skillLevelSpanishList = skillLevelSpanishList;
 	}
 		
 }

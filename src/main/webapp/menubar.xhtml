@@ -17,7 +17,7 @@
   		<p:selectOneRadio id="englishSpanishID" value="#{pc_CmcMain.siteLanguage}">
             <f:selectItem itemLabel="English" itemValue="1" />
 			<f:selectItem itemLabel="Spanish" itemValue="2" />
-			<p:ajax update="menuForm menuId mainForm" listener="#{pc_CmcMain.valueChangeLanguageRadio}" />
+			<p:ajax update="menuForm menuId mainForm physForm intelForm autismForm" listener="#{pc_CmcMain.valueChangeLanguageRadio}" />
         </p:selectOneRadio>	
         
       </h:form> 
@@ -30,9 +30,9 @@
                
       <p:menubar id="menuId" styleClass="ui-menubar">
            
-          <p:menuitem value="#{pc_CmcMain.physicalDisabilitiesPageTitle}" url="#{request.contextPath}/physicalDisabilities.xhtml"/>
-          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesPageTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml"/>
-          <p:menuitem value="#{pc_CmcMain.autismDisorderPageTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml"/>
+          <p:menuitem value="#{pc_CmcMain.physicalDisabilitiesMenuTitle}" url="#{request.contextPath}/physicalDisabilities.xhtml" styleClass="#{view.viewId.contains('/physicalDisabilities.xhtml') ? 'activeMenuSelection' : ''}"/>
+          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesMenuTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml" styleClass="#{view.viewId.contains('/intellectualDisabilities.xhtml') ? 'activeMenuSelection' : ''}"/>
+          <p:menuitem value="#{pc_CmcMain.autismDisorderMenuTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml" styleClass="#{view.viewId.contains('/autismSpectrumDisorder.xhtml') ? 'activeMenuSelection' : ''}"/>
          			
 	  </p:menubar> 
         

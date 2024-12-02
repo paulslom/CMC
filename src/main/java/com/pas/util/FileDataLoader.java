@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pas.dynamodb.CreateTableDynamoDB_CmcSurvey;
-import com.pas.dynamodb.CreateTableDynamoDB_CmcSurveyQuestion;
+import com.pas.dynamodb.CreateTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities;
 import com.pas.dynamodb.DynamoClients;
 import com.pas.dynamodb.DynamoUtil;
 
@@ -47,7 +47,7 @@ public class FileDataLoader
         
         if (jsonFileName.equalsIgnoreCase(SURVEYQUESTIONS_JSONFILE))
         {
-        	CreateTableDynamoDB_CmcSurveyQuestion cl = new CreateTableDynamoDB_CmcSurveyQuestion();
+        	CreateTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities cl = new CreateTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities();
         	cl.loadTable(dynamoClients, inputStream);		
         }
         

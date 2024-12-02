@@ -12,6 +12,11 @@ public class CmcSurvey implements Serializable
 	
 	private String cmcSurveyID;
 	private String cmcSurveyName;
+	private String cmcSurveyNameSpanish;
+	private String cmcSurveyPageTitleEnglish;
+	private String cmcSurveyPageTitleSpanish;
+	private String cmcSurveyPageSubTitleEnglish;
+	private String cmcSurveyPageSubTitleSpanish;
 	
 	@Override
 	public String toString() 
@@ -32,6 +37,46 @@ public class CmcSurvey implements Serializable
 	}
 	public void setCmcSurveyName(String cmcSurveyName) {
 		this.cmcSurveyName = cmcSurveyName;
+	}
+
+	public String getCmcSurveyNameSpanish() {
+		return cmcSurveyNameSpanish;
+	}
+
+	public void setCmcSurveyNameSpanish(String cmcSurveyNameSpanish) {
+		this.cmcSurveyNameSpanish = cmcSurveyNameSpanish;
+	}
+
+	public String getCmcSurveyPageTitleEnglish() {
+		return cmcSurveyPageTitleEnglish;
+	}
+
+	public void setCmcSurveyPageTitleEnglish(String cmcSurveyPageTitleEnglish) {
+		this.cmcSurveyPageTitleEnglish = cmcSurveyPageTitleEnglish;
+	}
+
+	public String getCmcSurveyPageTitleSpanish() {
+		return cmcSurveyPageTitleSpanish;
+	}
+
+	public void setCmcSurveyPageTitleSpanish(String cmcSurveyPageTitleSpanish) {
+		this.cmcSurveyPageTitleSpanish = cmcSurveyPageTitleSpanish;
+	}
+
+	public String getCmcSurveyPageSubTitleEnglish() {
+		return cmcSurveyPageSubTitleEnglish;
+	}
+
+	public void setCmcSurveyPageSubTitleEnglish(String cmcSurveyPageSubTitleEnglish) {
+		this.cmcSurveyPageSubTitleEnglish = cmcSurveyPageSubTitleEnglish;
+	}
+
+	public String getCmcSurveyPageSubTitleSpanish() {
+		return cmcSurveyPageSubTitleSpanish;
+	}
+
+	public void setCmcSurveyPageSubTitleSpanish(String cmcSurveyPageSubTitleSpanish) {
+		this.cmcSurveyPageSubTitleSpanish = cmcSurveyPageSubTitleSpanish;
 	}
 	
 	

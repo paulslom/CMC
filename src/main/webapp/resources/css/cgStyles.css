@@ -51,6 +51,12 @@ background: #e6eaf2;
 background: #768199;
 }
 
+.activeMenuSelection {
+    color: #D09d23;
+    font-weight: bold;
+    background-color : #c7c3c3;
+}
+
 body.custom-background 
 { 
 	background-color: #536b8f; 
@@ -340,12 +346,12 @@ textarea {
 	background-color: #E2E2E2;
 	margin: 2px;
 }
-.chatUser1 {
-	font: bold 10px "Verdana";
+.sectionTitle {
+	font: bold 14px "Verdana";
 	vertical-align: top;
 	text-align: left;
 	text-decoration: none;
-	color: blue;
+	color:  #000000;
 }
 
 .chatUser2 {

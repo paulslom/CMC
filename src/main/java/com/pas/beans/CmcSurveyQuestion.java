@@ -22,6 +22,7 @@ public class CmcSurveyQuestion implements Serializable
 	private String cmcSurveyQuestionEnglish;
 	private String cmcSurveyQuestionSpanish;
 	private String cmcSurveyQuestionType;
+	private String answer;
 	
 	@Override
 	public String toString() 
@@ -113,6 +114,14 @@ public class CmcSurveyQuestion implements Serializable
 		{
 			return cmcSurveyQuestion1.getCmcSurveyQuestionNumber().compareTo(cmcSurveyQuestion2.getCmcSurveyQuestionNumber());
 		}		
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 		
 	/*
