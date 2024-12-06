@@ -57,6 +57,10 @@ background: #768199;
     background-color : #c7c3c3;
 }
 
+.requiredStyle  {
+    color: red !important;
+}
+    
 body.custom-background 
 { 
 	background-color: #536b8f; 

@@ -1,8 +1,6 @@
 [
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Available",
 	"cmcSurveyCategorySpanish": "Disponsible",
 	"cmcSurveyQuestionNumber": 1,
@@ -12,8 +10,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Available",
 	"cmcSurveyCategorySpanish": "Disponsible",
 	"cmcSurveyQuestionNumber": 2,
@@ -24,8 +20,6 @@
 ,
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Available",
 	"cmcSurveyCategorySpanish": "Disponsible",
 	"cmcSurveyQuestionNumber": 3,
@@ -35,8 +29,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Available",
 	"cmcSurveyCategorySpanish": "Disponsible",
 	"cmcSurveyQuestionNumber": 4,
@@ -46,8 +38,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Available",
 	"cmcSurveyCategorySpanish": "Disponsible",
 	"cmcSurveyQuestionNumber": 5,
@@ -57,8 +47,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Available",
 	"cmcSurveyCategorySpanish": "Disponsible",
 	"cmcSurveyQuestionNumber": 6,
@@ -68,8 +56,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Available",
 	"cmcSurveyCategorySpanish": "Disponsible",
 	"cmcSurveyQuestionNumber": 7,
@@ -79,8 +65,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveyCategoryEnglish": "Available",
 	"cmcSurveyCategorySpanish": "Disponsible",
 	"cmcSurveyQuestionNumber": 8,
 	"cmcSurveyQuestionEnglish": "Bike/Scooter",
@@ -89,8 +73,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Available",
 	"cmcSurveyCategorySpanish": "Disponsible",
 	"cmcSurveyQuestionNumber": 9,
@@ -100,9 +82,7 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
-	"cmcSurveyCategoryEnglish": "Tried",
+		"cmcSurveyCategoryEnglish": "Tried",
 	"cmcSurveyCategorySpanish": "Se han probado",
 	"cmcSurveyQuestionNumber": 10,
 	"cmcSurveyQuestionEnglish": "Public (City) Bus",
@@ -111,8 +91,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Tried",
 	"cmcSurveyCategorySpanish": "Se han probado",
 	"cmcSurveyQuestionNumber": 11,
@@ -122,8 +100,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Tried",
 	"cmcSurveyCategorySpanish": "Se han probado",
 	"cmcSurveyQuestionNumber": 12,
@@ -133,8 +109,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Tried",
 	"cmcSurveyCategorySpanish": "Se han probado",
 	"cmcSurveyQuestionNumber": 13,
@@ -144,8 +118,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Tried",
 	"cmcSurveyCategorySpanish": "Se han probado",
 	"cmcSurveyQuestionNumber": 14,
@@ -155,8 +127,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Tried",
 	"cmcSurveyCategorySpanish": "Se han probado",
 	"cmcSurveyQuestionNumber": 15,
@@ -166,8 +136,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Tried",
 	"cmcSurveyCategorySpanish": "Se han probado",
 	"cmcSurveyQuestionNumber": 16,
@@ -177,8 +145,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Tried",
 	"cmcSurveyCategorySpanish": "Se han probado",
 	"cmcSurveyQuestionNumber": 17,
@@ -188,8 +154,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Tried",
 	"cmcSurveyCategorySpanish": "Se han probado",
 	"cmcSurveyQuestionNumber": 18,
@@ -199,8 +163,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 19,
@@ -210,8 +172,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 20,
@@ -221,8 +181,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 21,
@@ -232,8 +190,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 22,
@@ -243,8 +199,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 23,
@@ -254,8 +208,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 24,
@@ -265,8 +217,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 25,
@@ -276,8 +226,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 26,
@@ -287,8 +235,6 @@
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveySectionTitleEnglish": "Section I: Completed by Individual and/or Parent. Please indicate which of these transportation options are available in the community and if used or tried.",
-	"cmcSurveySectionTitleSpanish": "Sección I: Debe ser completada por la persona y/o los padres.   Por favor, indique cuáles de estas opciones de transporte están disponibles en la comunidad y si se han utilizado o probado.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 27,
@@ -298,8 +244,6 @@
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveySectionTitleEnglish": "Section II: Please indicate the individual's type of personal mobility device(s) used.",
-	"cmcSurveySectionTitleSpanish": "Sección II: Indique el tipo de dispositivo(s) de movilidad personal que utiliza el individuo.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 28,
@@ -309,8 +253,6 @@
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveySectionTitleEnglish": "Section II: Please indicate the individual's type of personal mobility device(s) used.",
-	"cmcSurveySectionTitleSpanish": "Sección II: Indique el tipo de dispositivo(s) de movilidad personal que utiliza el individuo.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 29,
@@ -320,8 +262,6 @@
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveySectionTitleEnglish": "Section II: Please indicate the individual's type of personal mobility device(s) used.",
-	"cmcSurveySectionTitleSpanish": "Sección II: Indique el tipo de dispositivo(s) de movilidad personal que utiliza el individuo.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 30,
@@ -331,8 +271,6 @@
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveySectionTitleEnglish": "Section II: Please indicate the individual's type of personal mobility device(s) used.",
-	"cmcSurveySectionTitleSpanish": "Sección II: Indique el tipo de dispositivo(s) de movilidad personal que utiliza el individuo.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 31,
@@ -342,8 +280,6 @@
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveySectionTitleEnglish": "Section II: Please indicate the individual's type of personal mobility device(s) used.",
-	"cmcSurveySectionTitleSpanish": "Sección II: Indique el tipo de dispositivo(s) de movilidad personal que utiliza el individuo.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 32,
@@ -353,8 +289,6 @@
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveySectionTitleEnglish": "Section II: Please indicate the individual's type of personal mobility device(s) used.",
-	"cmcSurveySectionTitleSpanish": "Sección II: Indique el tipo de dispositivo(s) de movilidad personal que utiliza el individuo.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 33,
@@ -364,8 +298,6 @@
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveySectionTitleEnglish": "Section II: Please indicate the individual's type of personal mobility device(s) used.",
-	"cmcSurveySectionTitleSpanish": "Sección II: Indique el tipo de dispositivo(s) de movilidad personal que utiliza el individuo.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 34,
@@ -375,8 +307,6 @@
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveySectionTitleEnglish": "Section II: Please indicate the individual's type of personal mobility device(s) used.",
-	"cmcSurveySectionTitleSpanish": "Sección II: Indique el tipo de dispositivo(s) de movilidad personal que utiliza el individuo.",
 	"cmcSurveyCategoryEnglish": "Use",
 	"cmcSurveyCategorySpanish": "Son utilizadas",
 	"cmcSurveyQuestionNumber": 35,
@@ -386,8 +316,6 @@
 },
 {
 	"cmcSurveySection": "3",
-	"cmcSurveySectionTitleEnglish": "Section III. Completed by Occupational Therapist or Other Providers",
-	"cmcSurveySectionTitleSpanish": "SECCIÓN III. Debe ser completada por el terapeuta ocupacional u otro proveedor.",
 	"cmcSurveySectionSubcategoryEnglish": "Physical",
 	"cmcSurveySectionSubcategorySpanish": "Física Ej. = Ejemplo",
 	"cmcSurveyCategoryEnglish": "Skill Level",
@@ -399,8 +327,6 @@
 },
 {
 	"cmcSurveySection": "3",
-	"cmcSurveySectionTitleEnglish": "Section III. Completed by Occupational Therapist or Other Providers",
-	"cmcSurveySectionTitleSpanish": "SECCIÓN III. Debe ser completada por el terapeuta ocupacional u otro proveedor.",
 	"cmcSurveySectionSubcategoryEnglish": "Physical",
 	"cmcSurveySectionSubcategorySpanish": "Física Ej. = Ejemplo",
 	"cmcSurveyCategoryEnglish": "Skill Level",
@@ -412,8 +338,6 @@
 },
 {
 	"cmcSurveySection": "3",
-	"cmcSurveySectionTitleEnglish": "Section III. Completed by Occupational Therapist or Other Providers",
-	"cmcSurveySectionTitleSpanish": "SECCIÓN III. Debe ser completada por el terapeuta ocupacional u otro proveedor.",
 	"cmcSurveySectionSubcategoryEnglish": "Physical",
 	"cmcSurveySectionSubcategorySpanish": "Física Ej. = Ejemplo",
 	"cmcSurveyCategoryEnglish": "Skill Level",
@@ -425,8 +349,6 @@
 },
 {
 	"cmcSurveySection": "3",
-	"cmcSurveySectionTitleEnglish": "Section III. Completed by Occupational Therapist or Other Providers",
-	"cmcSurveySectionTitleSpanish": "SECCIÓN III. Debe ser completada por el terapeuta ocupacional u otro proveedor.",
 	"cmcSurveySectionSubcategoryEnglish": "Physical",
 	"cmcSurveySectionSubcategorySpanish": "Física Ej. = Ejemplo",
 	"cmcSurveyCategoryEnglish": "Skill Level",

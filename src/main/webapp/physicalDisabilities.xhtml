@@ -18,6 +18,8 @@
             	<h:outputText value="#{pc_CmcMain.physicalDisabilitiesPageSubTitle}"/>
             </h2> 
             
+            <p:messages id="facesMessagesID" showDetail="false"/>
+            
             <table>
             
                <colgroup>
@@ -28,16 +30,34 @@
                <p:blockUI block="physForm" widgetVar="blockWidgetVar"> 
 			       <p:graphicImage value="/images/wait.gif"/>  
 			   </p:blockUI> 
-			
+				
                <tr>
 	           
 	              <td colspan="2" align="center">	              
 	       
                      <p:commandButton id="physDisSubmitId" 
-								   value="Submit results" 
-								   action="#{pc_CmcMain.submitPhysicalDisabilityAnswers}" 
-								   onclick="PF('blockWidgetVar').show()" 
-	            				   oncomplete="PF('block').hide()"/>
+					   value="Submit results" 
+					   action="#{pc_CmcMain.submitPhysicalDisabilityAnswers}" 
+					   onclick="PF('blockWidgetVar').show()" 
+          			   oncomplete="PF('block').hide()"
+          			   ajax="false"
+          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>
+          				   
+          			 <p:commandButton id="physDisClearAnswersId" 
+					   value="Clear all Answers" 
+					   action="#{pc_CmcMain.clearAllPhysicalDisabilityAnswers}" 
+					   ajax="false"
+					   immediate="true"
+          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>
+          				   
+          			 <p:commandButton id="physDisDefaultAnswersId" 
+					   value="Default all Answers" 
+					   action="#{pc_CmcMain.defaultAllPhysicalDisabilityAnswers}" 
+					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
+					   ajax="false"
+					   immediate="true"
+          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>
+          				   
 	              </td>
 	           
 	           </tr>
@@ -79,14 +99,14 @@
 							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
 						  </p:column>
 						  
-						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
+						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}" >												
+							  <p:selectOneMenu id="sect1EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required">
 								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
+							  <p:selectOneMenu id="sect1SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección">
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
@@ -117,13 +137,13 @@
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
+							  <p:selectOneMenu id="sect2EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required">
 								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
 						  
 						  <p:column headerText="Elección" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
+							  <p:selectOneMenu id="sect2SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección">
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
@@ -156,13 +176,13 @@
 						  </p:column>					
 					  		  
 						  <p:column headerText="Skill Level" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
+							  <p:selectOneMenu id="sect3EnglishAnswerID"  required="true" value="#{surveyQuestion.answer}" requiredMessage="Selection is required">
 								  <f:selectItems value="#{pc_CmcMain.skillLevelEnglishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
+							  <p:selectOneMenu id="sect3SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección">
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
@@ -173,10 +193,7 @@
 		  	      
 		       </tr>
 		  
-		  </table>
-		  
-		  <p:messages id="facesMessagesID" showDetail="false">
-		  </p:messages>   			
+		  </table>	  
 	                
 	   </h:form>
    

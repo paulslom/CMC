@@ -22,6 +22,7 @@ public class CmcSurveyQuestion implements Serializable
 	private String cmcSurveyQuestionEnglish;
 	private String cmcSurveyQuestionSpanish;
 	private String cmcSurveyQuestionType;
+	private String cmcSurveyQuestionStyle = null;
 	private String answer;
 	
 	@Override
@@ -122,6 +123,14 @@ public class CmcSurveyQuestion implements Serializable
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+
+	public String getCmcSurveyQuestionStyle() {
+		return cmcSurveyQuestionStyle;
+	}
+
+	public void setCmcSurveyQuestionStyle(String cmcSurveyQuestionStyle) {
+		this.cmcSurveyQuestionStyle = cmcSurveyQuestionStyle;
 	}
 		
 	/*

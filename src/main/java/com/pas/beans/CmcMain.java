@@ -15,6 +15,8 @@ import com.pas.dynamodb.DynamoClients;
 import com.pas.dynamodb.DynamoUtil;
 
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.model.SelectItem;
 import jakarta.inject.Named;
@@ -34,9 +36,9 @@ public class CmcMain implements Serializable
 	private static String Site_Title_English = "Mobility Match: Connecting you with Best Choices of Community Mobility by Occupational Therapists";
 	private static String Site_Title_Spanish = "Mobility Match: lo conectamos con las mejores opciones de movilidad comunitaria a través de terapeutas ocupacionales";
 	
-	private static String Physical_Disabilities_Survey_Name = "Physical Disabilities";
-	private static String Intellectual_Disabilities_Survey_Name = "Intellectual Disabilities";
-	private static String Autism_Disorder_Survey_Name = "Autism Spectrum Disorder";
+	public static String Physical_Disabilities_Survey_Name = "Physical Disabilities";
+	public static String Intellectual_Disabilities_Survey_Name = "Intellectual Disabilities";
+	public static String Autism_Disorder_Survey_Name = "Autism Spectrum Disorder";
 	
 	private int siteLanguage = ENGLISH;
 		
@@ -71,6 +73,8 @@ public class CmcMain implements Serializable
 	
 	private String siteTitle;
 	
+	private boolean renderDefaultAnswers = true;
+	
 	private String physicalDisabilitiesMenuTitle;
 	private String physicalDisabilitiesPageTitle;
 	private String physicalDisabilitiesPageSubTitle;
@@ -93,21 +97,21 @@ public class CmcMain implements Serializable
 		logger.info("CmcMain id is: " + this.getId());
 		logger.info("Setting default to English");
 		
-		SelectItem si = new SelectItem("Select","Select");
+		SelectItem si = new SelectItem("","Select");
 		yesNoEnglishList.add(si);
 		si = new SelectItem("Yes","Yes");
 		yesNoEnglishList.add(si);
 		si = new SelectItem("No","No");
 		yesNoEnglishList.add(si);
 		
-		si = new SelectItem("Seleccionar","Seleccionar");
+		si = new SelectItem("","Seleccionar");
 		yesNoSpanishList.add(si);
-		si = new SelectItem("Si","Si");
+		si = new SelectItem("Yes","Si");
 		yesNoSpanishList.add(si);
 		si = new SelectItem("No","No");
 		yesNoSpanishList.add(si);
 		
-		si = new SelectItem("Select","Select");
+		si = new SelectItem("","Select");
 		skillLevelEnglishList.add(si);
 		si = new SelectItem("1","Performs Independently");
 		skillLevelEnglishList.add(si);
@@ -116,7 +120,7 @@ public class CmcMain implements Serializable
 		si = new SelectItem("3","Unable to Meet Demands");
 		skillLevelEnglishList.add(si);
 		
-		si = new SelectItem("Seleccionar","Seleccionar");
+		si = new SelectItem("","Seleccionar");
 		skillLevelSpanishList.add(si);
 		si = new SelectItem("1","Lo realiza de manera independiente");
 		skillLevelSpanishList.add(si);
@@ -203,6 +207,119 @@ public class CmcMain implements Serializable
 		this.setAutismDisorderPageSubTitle(Autism_Disorder_Page_SubTitle_English);
 		
 		logger.info("Site language set to English");
+	}
+		
+	public String submitPhysicalDisabilityAnswers() throws Exception
+	{
+		logger.info("entering submitPhysicalDisabilityAnswers");
+		
+		if (validateAnswers(this.getPhysicalDisabilitiesSection1QuestionsList()) 
+		||  validateAnswers(this.getPhysicalDisabilitiesSection2QuestionsList())
+		||  validateAnswers(this.getPhysicalDisabilitiesSection3QuestionsList())) //will be true if errors
+		{
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);    
+			return "";
+		}
+		
+		for (int i = 0; i < this.getPhysicalDisabilitiesSection1QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection1QuestionsList().get(i);
+			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+	    }
+		
+		for (int i = 0; i < this.getPhysicalDisabilitiesSection2QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection2QuestionsList().get(i);
+			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+	    }
+		
+		for (int i = 0; i < this.getPhysicalDisabilitiesSection3QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection3QuestionsList().get(i);
+			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+	    }
+		
+		return "";
+	}
+	
+	private boolean validateAnswers(List<CmcSurveyQuestion> tempList)
+	{
+		boolean errorFound = false;
+		
+		for (int i = 0; i < tempList.size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = tempList.get(i);
+			if (cmcSurveyQuestion.getAnswer() == null || cmcSurveyQuestion.getAnswer().equalsIgnoreCase("Select"))
+			{
+				errorFound = true;
+			}			
+	    }
+		
+		return errorFound;				
+	}
+	              
+	public String clearAllPhysicalDisabilityAnswers()
+	{
+		logger.info("entering clearAllPhysicalDisabilityAnswers");
+		
+		for (int i = 0; i < this.getPhysicalDisabilitiesSection1QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection1QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Select");
+	    }
+		
+		for (int i = 0; i < this.getPhysicalDisabilitiesSection2QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection2QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Select");
+	    }
+		
+		for (int i = 0; i < this.getPhysicalDisabilitiesSection3QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection3QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Select");
+	    }
+		
+		return "";
+	}
+	
+	public String defaultAllPhysicalDisabilityAnswers()
+	{
+		logger.info("entering defaultAllPhysicalDisabilityAnswers");
+		
+		for (int i = 0; i < this.getPhysicalDisabilitiesSection1QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection1QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Yes");
+	    }
+		
+		for (int i = 0; i < this.getPhysicalDisabilitiesSection2QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection2QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("No");
+	    }
+		
+		for (int i = 0; i < this.getPhysicalDisabilitiesSection3QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection3QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("2");
+	    }
+		
+		return "";
+		
 	}
 	
 	public void loadCmcSurveys(DynamoClients dynamoClients)  throws Exception
@@ -447,6 +564,14 @@ public class CmcMain implements Serializable
 
 	public void setSkillLevelSpanishList(List<SelectItem> skillLevelSpanishList) {
 		this.skillLevelSpanishList = skillLevelSpanishList;
+	}
+
+	public boolean isRenderDefaultAnswers() {
+		return renderDefaultAnswers;
+	}
+
+	public void setRenderDefaultAnswers(boolean renderDefaultAnswers) {
+		this.renderDefaultAnswers = renderDefaultAnswers;
 	}
 		
 }
