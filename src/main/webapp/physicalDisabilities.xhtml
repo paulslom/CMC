@@ -100,13 +100,13 @@
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}" >												
-							  <p:selectOneMenu id="sect1EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required">
+							  <p:selectOneMenu id="sect1EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required in section 3">
 								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect1SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección">
+							  <p:selectOneMenu id="sect1SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 3">
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
@@ -137,13 +137,13 @@
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect2EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required">
+							  <p:selectOneMenu id="sect2EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required in section 3">
 								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
 						  
 						  <p:column headerText="Elección" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect2SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección">
+							  <p:selectOneMenu id="sect2SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 3">
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
@@ -176,13 +176,13 @@
 						  </p:column>					
 					  		  
 						  <p:column headerText="Skill Level" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect3EnglishAnswerID"  required="true" value="#{surveyQuestion.answer}" requiredMessage="Selection is required">
+							  <p:selectOneMenu id="sect3EnglishAnswerID"  required="true" value="#{surveyQuestion.answer}" requiredMessage="Selection is required in section 3">
 								  <f:selectItems value="#{pc_CmcMain.skillLevelEnglishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect3SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección">
+							  <p:selectOneMenu id="sect3SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 3">
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>

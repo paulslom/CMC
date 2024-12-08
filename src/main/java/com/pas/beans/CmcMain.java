@@ -44,6 +44,10 @@ public class CmcMain implements Serializable
 		
 	private boolean siteInEnglish = true;
 	
+	private static String Performs_Independently_Dropdown_Value = "1";
+	private static String Potentially_Able_with_Training_Dropdown_Value = "2";
+	private static String Unable_to_Meet_Demands_Dropdown_Value = "3";
+	
 	private static String Physical_Disabilities_Menu_Title_English;
 	private static String Physical_Disabilities_Page_Title_English;
 	private static String Physical_Disabilities_Page_SubTitle_English;
@@ -113,20 +117,20 @@ public class CmcMain implements Serializable
 		
 		si = new SelectItem("","Select");
 		skillLevelEnglishList.add(si);
-		si = new SelectItem("1","Performs Independently");
+		si = new SelectItem(Performs_Independently_Dropdown_Value,"Performs Independently");
 		skillLevelEnglishList.add(si);
-		si = new SelectItem("2","Potentially Able with Training");
+		si = new SelectItem(Potentially_Able_with_Training_Dropdown_Value,"Potentially Able with Training");
 		skillLevelEnglishList.add(si);
-		si = new SelectItem("3","Unable to Meet Demands");
+		si = new SelectItem(Unable_to_Meet_Demands_Dropdown_Value,"Unable to Meet Demands");
 		skillLevelEnglishList.add(si);
 		
 		si = new SelectItem("","Seleccionar");
 		skillLevelSpanishList.add(si);
-		si = new SelectItem("1","Lo realiza de manera independiente");
+		si = new SelectItem(Performs_Independently_Dropdown_Value,"Lo realiza de manera independiente");
 		skillLevelSpanishList.add(si);
-		si = new SelectItem("2","Lo puede realizar con entrenamiento");
+		si = new SelectItem(Potentially_Able_with_Training_Dropdown_Value,"Lo puede realizar con entrenamiento");
 		skillLevelSpanishList.add(si);
-		si = new SelectItem("3","No puede cumplir con las demandas");
+		si = new SelectItem(Unable_to_Meet_Demands_Dropdown_Value,"No puede cumplir con las demandas");
 		skillLevelSpanishList.add(si);
 		
 		try 
@@ -252,8 +256,88 @@ public class CmcMain implements Serializable
 			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
 	    }
 		
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Physical Disabilities answers successfully submitted",null);
+        FacesContext.getCurrentInstance().addMessage(null, msg);   
+        
+		return "";
+	}	
+	
+	public String submitIntellectualDisabilityAnswers() throws Exception
+	{
+		logger.info("entering submitPhysicalDisabilityAnswers");
+		
+		if (validateAnswers(this.getIntellectualDisabilitiesSection1QuestionsList()) 
+		||  validateAnswers(this.getIntellectualDisabilitiesSection2QuestionsList())) //will be true if errors
+		{
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);    
+			return "";
+		}
+		
+		for (int i = 0; i < this.getIntellectualDisabilitiesSection1QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection1QuestionsList().get(i);
+			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+	    }
+		
+		for (int i = 0; i < this.getIntellectualDisabilitiesSection2QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection2QuestionsList().get(i);
+			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+	    }
+				
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Intellectual disabilities answers successfully submitted",null);
+        FacesContext.getCurrentInstance().addMessage(null, msg);   
+        
 		return "";
 	}
+	
+	public String submitAutismSpectrumDisorderAnswers() throws Exception
+	{
+		logger.info("entering submitAutismSpectrumDisorderAnswers");
+		
+		if (validateAnswers(this.getAutismDisorderSection1QuestionsList()) 
+		||  validateAnswers(this.getAutismDisorderSection2QuestionsList())) //will be true if errors
+		{
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);    
+			return "";
+		}
+		
+		for (int i = 0; i < this.getAutismDisorderSection1QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection1QuestionsList().get(i);
+			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+	    }
+		
+		for (int i = 0; i < this.getAutismDisorderSection2QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection2QuestionsList().get(i);
+			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+	    }
+				
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Autism Spectrum Disorder answers successfully submitted",null);
+        FacesContext.getCurrentInstance().addMessage(null, msg);   
+        
+		return "";
+	}
+	
 	
 	private boolean validateAnswers(List<CmcSurveyQuestion> tempList)
 	{
@@ -296,6 +380,44 @@ public class CmcMain implements Serializable
 		return "";
 	}
 	
+	public String clearAllIntellectualDisabilityAnswers()
+	{
+		logger.info("entering clearAllIntellectualDisabilityAnswers");
+		
+		for (int i = 0; i < this.getIntellectualDisabilitiesSection1QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection1QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Select");
+	    }
+		
+		for (int i = 0; i < this.getIntellectualDisabilitiesSection2QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection2QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Select");
+	    }
+		
+		return "";
+	}
+	
+	public String clearAllAutismSpectrumDisorderAnswers()
+	{
+		logger.info("entering clearAllAutismSpectrumDisorderAnswers");
+		
+		for (int i = 0; i < this.getAutismDisorderSection1QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection1QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Select");
+	    }
+		
+		for (int i = 0; i < this.getAutismDisorderSection2QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection2QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Select");
+	    }		
+		
+		return "";
+	}
+	
 	public String defaultAllPhysicalDisabilityAnswers()
 	{
 		logger.info("entering defaultAllPhysicalDisabilityAnswers");
@@ -315,11 +437,49 @@ public class CmcMain implements Serializable
 		for (int i = 0; i < this.getPhysicalDisabilitiesSection3QuestionsList().size(); i++) 
 	    {
 			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection3QuestionsList().get(i);
-			cmcSurveyQuestion.setAnswer("2");
+			cmcSurveyQuestion.setAnswer(Performs_Independently_Dropdown_Value);
 	    }
 		
 		return "";
 		
+	}
+	
+	public String defaultAllIntellectualDisabilityAnswers()
+	{
+		logger.info("entering defaultAllIntellectualDisabilityAnswers");
+		
+		for (int i = 0; i < this.getIntellectualDisabilitiesSection1QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection1QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Yes");
+	    }
+		
+		for (int i = 0; i < this.getIntellectualDisabilitiesSection2QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection2QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer(Performs_Independently_Dropdown_Value);
+	    }
+		
+		return "";		
+	}
+	
+	public String defaultAllAutismSpectrumDisorderAnswers()
+	{
+		logger.info("entering defaultAllAllAutismSpectrumDisorderAnswers");
+		
+		for (int i = 0; i < this.getAutismDisorderSection1QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection1QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer("Yes");
+	    }
+		
+		for (int i = 0; i < this.getAutismDisorderSection2QuestionsList().size(); i++) 
+	    {
+			CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection2QuestionsList().get(i);
+			cmcSurveyQuestion.setAnswer(Performs_Independently_Dropdown_Value);
+	    }
+		
+		return "";		
 	}
 	
 	public void loadCmcSurveys(DynamoClients dynamoClients)  throws Exception
@@ -431,6 +591,26 @@ public class CmcMain implements Serializable
 	public List<CmcSurveyQuestion> getPhysicalDisabilitiesSection2QuestionsList() 
 	{
 		return cmcSurveyQuestionsDAO.getPhysicalDisabilitiesSection2QuestionsList();
+	}
+	
+	public List<CmcSurveyQuestion> getIntellectualDisabilitiesSection1QuestionsList() 
+	{
+		return cmcSurveyQuestionsDAO.getIntellectualDisabilitiesSection1QuestionsList();
+	}
+	
+	public List<CmcSurveyQuestion> getIntellectualDisabilitiesSection2QuestionsList() 
+	{
+		return cmcSurveyQuestionsDAO.getIntellectualDisabilitiesSection2QuestionsList();
+	}
+	
+	public List<CmcSurveyQuestion> getAutismDisorderSection1QuestionsList() 
+	{
+		return cmcSurveyQuestionsDAO.getAutismSpectrumSection1QuestionsList();
+	}
+	
+	public List<CmcSurveyQuestion> getAutismDisorderSection2QuestionsList() 
+	{
+		return cmcSurveyQuestionsDAO.getAutismSpectrumSection2QuestionsList();
 	}
 	
 	public List<CmcSurveyQuestion> getPhysicalDisabilitiesSection3QuestionsList() 

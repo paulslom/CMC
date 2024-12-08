@@ -7,12 +7,10 @@
     xmlns:c="http://java.sun.com/jsp/jstl/core">
      
     <ui:define name="content">
-      
-         <f:loadBundle var="bundle" basename="ApplicationProperties" />  
-
+    
          <h:form id="intelForm">                      
-             
-  			<h1>
+            
+            <h1>
             	<h:outputText value="#{pc_CmcMain.intellectualDisabilitiesPageTitle}"/>
             </h1> 
             
@@ -37,26 +35,28 @@
 	           
 	              <td colspan="2" align="center">	              
 	       
-                     <p:commandButton id="physDisSubmitId" 
+                     <p:commandButton id="intelDisSubmitId" 
 					   value="Submit results" 
 					   action="#{pc_CmcMain.submitIntellectualDisabilityAnswers}" 
 					   onclick="PF('blockWidgetVar').show()" 
           			   oncomplete="PF('block').hide()"
           			   ajax="false"
-          			   update="intellectualDisabilitiesSection1TableID intellectualDisabilitiesSection2TableID intellectualDisabilitiesSection3TableID"/>
+          			   update="intellectualDisabilitiesSection1TableID intellectualDisabilitiesSection2TableID"/>
           				   
-          			 <p:commandButton id="physDisClearAnswersId" 
+          			 <p:commandButton id="intelDisClearAnswersId" 
 					   value="Clear all Answers" 
 					   action="#{pc_CmcMain.clearAllIntellectualDisabilityAnswers}" 
 					   ajax="false"
-          			   update="intellectualDisabilitiesSection1TableID intellectualDisabilitiesSection2TableID intellectualDisabilitiesSection3TableID"/>
+					   immediate="true"
+          			   update="intellectualDisabilitiesSection1TableID intellectualDisabilitiesSection2TableID"/>
           				   
-          			 <p:commandButton id="physDisDefaultAnswersId" 
+          			 <p:commandButton id="intelDisDefaultAnswersId" 
 					   value="Default all Answers" 
 					   action="#{pc_CmcMain.defaultAllIntellectualDisabilityAnswers}" 
 					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
 					   ajax="false"
-          			   update="intellectualDisabilitiesSection1TableID intellectualDisabilitiesSection2TableID intellectualDisabilitiesSection3TableID"/>
+					   immediate="true"
+          			   update="intellectualDisabilitiesSection1TableID intellectualDisabilitiesSection2TableID"/>
           				   
 	              </td>
 	           
@@ -81,7 +81,7 @@
 	              <td>
 	                    
 			  		 <p:dataTable id="intellectualDisabilitiesSection1TableID" value="#{pc_CmcMain.intellectualDisabilitiesSection1QuestionsList}"
-				          var="surveyQuestion" scrollable="true" scrollHeight="550" style="font-size:11px;" rowStyleClass="#{surveyQuestion.answer eq Select ? 'requiredStyle' : null}">							
+				          var="surveyQuestion" scrollable="true" scrollHeight="550" style="font-size:11px;">							
 											       				  
 						  <p:column headerText="Option" sortBy="#{surveyQuestion.cmcSurveyCategoryEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
 							  <h:outputText value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>														
@@ -100,13 +100,13 @@
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}" >												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
+							  <p:selectOneMenu id="sect1EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required in section 1">
 								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}" >
+							  <p:selectOneMenu id="sect1SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 1">
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
@@ -118,55 +118,8 @@
 		       	  <td>
                	  	           
 				     <p:dataTable id="intellectualDisabilitiesSection2TableID" value="#{pc_CmcMain.intellectualDisabilitiesSection2QuestionsList}"
-			          var="surveyQuestion" scrollable="true" scrollHeight="350" style="font-size:11px;" rowStyleClass="#{surveyQuestion.answer eq Select ? 'requiredStyle' : null}">							
-						
-				       	  <p:column headerText="Option" sortBy="#{surveyQuestion.cmcSurveyCategoryEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Opcione" sortBy="#{surveyQuestion.cmcSurveyCategorySpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Question" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Pregunta" sortBy="#{surveyQuestion.cmcSurveyQuestionSpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
-								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
-							  </p:selectOneMenu>										
-						  </p:column>
-						  
-						  <p:column headerText="Elección" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}" >
-								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
-							  </p:selectOneMenu>										
-						  </p:column>
-				  
-				     </p:dataTable>
-		  
-		  	      </td>
-		       </tr>
-		       
-		       <tr class="sectionTitle">
-	              <td colspan="2">
-	            	<h:outputText value="#{bundleCMC.intellectualDisabilities_Section3_Title_English}" rendered="#{pc_CmcMain.siteInEnglish}"></h:outputText>
-	            	<h:outputText value="#{bundleCMC.intellectualDisabilities_Section3_Title_Spanish}" rendered="#{!pc_CmcMain.siteInEnglish}"></h:outputText>
-	              </td>
-	           </tr>
-	           
-	           <tr>
-	           
-               	  <td colspan="2">
-      
-					  <p:dataTable id="intellectualDisabilitiesSection3TableID" value="#{pc_CmcMain.intellectualDisabilitiesSection3QuestionsList}"
-				          var="surveyQuestion" scrollable="true" scrollHeight="350" style="font-size:11px;" rowStyleClass="#{surveyQuestion.answer eq Select ? 'requiredStyle' : null}">							
-							
+			          var="surveyQuestion" scrollable="true" scrollHeight="550" style="font-size:11px;">						
+				       	 
 						  <p:column headerText="Functional Skills and Abilities:Is the individual able to: Ex. = Example" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
 							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
 						  </p:column>
@@ -176,13 +129,13 @@
 						  </p:column>					
 					  		  
 						  <p:column headerText="Skill Level" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
+							  <p:selectOneMenu id="sect3EnglishAnswerID"  required="true" value="#{surveyQuestion.answer}" requiredMessage="Selection is required in section 2">
 								  <f:selectItems value="#{pc_CmcMain.skillLevelEnglishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
 						  
 						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu value="#{surveyQuestion.answer}">
+							  <p:selectOneMenu id="sect3SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 2">
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
@@ -193,9 +146,9 @@
 		  	      
 		       </tr>
 		  
-		  </table>	    			
+		  </table>	  
 	                
-	     </h:form>
+	   </h:form>
    
     </ui:define>
 

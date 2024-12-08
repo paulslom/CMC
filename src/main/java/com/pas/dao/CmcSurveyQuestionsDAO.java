@@ -39,6 +39,12 @@ public class CmcSurveyQuestionsDAO implements Serializable
 	private List<CmcSurveyQuestion> physicalDisabilitiesSection2QuestionsList = new ArrayList<>();
 	private List<CmcSurveyQuestion> physicalDisabilitiesSection3QuestionsList = new ArrayList<>();
 	
+	private List<CmcSurveyQuestion> intellectualDisabilitiesSection1QuestionsList = new ArrayList<>();
+	private List<CmcSurveyQuestion> intellectualDisabilitiesSection2QuestionsList = new ArrayList<>();
+	
+	private List<CmcSurveyQuestion> autismSpectrumSection1QuestionsList = new ArrayList<>();
+	private List<CmcSurveyQuestion> autismSpectrumSection2QuestionsList = new ArrayList<>();
+	
 	private static DynamoClients dynamoClients;
 	private static DynamoDbTable<CmcSurveyQuestion> cmcSurveyQuestionsTable;
 	private static final String AWS_TABLE_NAME = "cmcSurveyQuestions";
@@ -110,7 +116,23 @@ public class CmcSurveyQuestionsDAO implements Serializable
             {
             	this.getPhysicalDisabilitiesSection3QuestionsList().add(cmcsq);
             }
-            
+            else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(intellectualDisabilitiesSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("1"))
+            {
+            	this.getIntellectualDisabilitiesSection1QuestionsList().add(cmcsq);
+            }
+            else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(intellectualDisabilitiesSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("2"))
+            {
+            	this.getIntellectualDisabilitiesSection2QuestionsList().add(cmcsq);
+            }
+            else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(autismSpectrumDisorderSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("1"))
+            {
+            	this.getAutismSpectrumSection1QuestionsList().add(cmcsq);
+            }
+            else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(autismSpectrumDisorderSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("2"))
+            {
+            	this.getAutismSpectrumSection2QuestionsList().add(cmcsq);
+            }
+                       
           	this.getFullSurveyQuestionsMap().put(cmcsq.getCmcSurveyQuestionID(), cmcsq);			
         }
           	
@@ -121,6 +143,12 @@ public class CmcSurveyQuestionsDAO implements Serializable
 		Collections.sort(this.getPhysicalDisabilitiesSection1QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
 		Collections.sort(this.getPhysicalDisabilitiesSection2QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
 		Collections.sort(this.getPhysicalDisabilitiesSection3QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
+		
+		Collections.sort(this.getIntellectualDisabilitiesSection1QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
+		Collections.sort(this.getIntellectualDisabilitiesSection2QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
+		
+		Collections.sort(this.getAutismSpectrumSection1QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
+		Collections.sort(this.getAutismSpectrumSection2QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
 				
 		logger.info("exiting");		
 	}
@@ -222,5 +250,38 @@ public class CmcSurveyQuestionsDAO implements Serializable
 		this.physicalDisabilitiesSection3QuestionsList = physicalDisabilitiesSection3QuestionsList;
 	}
 
-	
+	public List<CmcSurveyQuestion> getIntellectualDisabilitiesSection1QuestionsList() {
+		return intellectualDisabilitiesSection1QuestionsList;
+	}
+
+	public void setIntellectualDisabilitiesSection1QuestionsList(
+			List<CmcSurveyQuestion> intellectualDisabilitiesSection1QuestionsList) {
+		this.intellectualDisabilitiesSection1QuestionsList = intellectualDisabilitiesSection1QuestionsList;
+	}
+
+	public List<CmcSurveyQuestion> getIntellectualDisabilitiesSection2QuestionsList() {
+		return intellectualDisabilitiesSection2QuestionsList;
+	}
+
+	public void setIntellectualDisabilitiesSection2QuestionsList(
+			List<CmcSurveyQuestion> intellectualDisabilitiesSection2QuestionsList) {
+		this.intellectualDisabilitiesSection2QuestionsList = intellectualDisabilitiesSection2QuestionsList;
+	}
+
+	public List<CmcSurveyQuestion> getAutismSpectrumSection1QuestionsList() {
+		return autismSpectrumSection1QuestionsList;
+	}
+
+	public void setAutismSpectrumSection1QuestionsList(List<CmcSurveyQuestion> autismSpectrumSection1QuestionsList) {
+		this.autismSpectrumSection1QuestionsList = autismSpectrumSection1QuestionsList;
+	}
+
+	public List<CmcSurveyQuestion> getAutismSpectrumSection2QuestionsList() {
+		return autismSpectrumSection2QuestionsList;
+	}
+
+	public void setAutismSpectrumSection2QuestionsList(List<CmcSurveyQuestion> autismSpectrumSection2QuestionsList) {
+		this.autismSpectrumSection2QuestionsList = autismSpectrumSection2QuestionsList;
+	}
+
 }
