@@ -7,19 +7,148 @@
     xmlns:c="http://java.sun.com/jsp/jstl/core">
      
     <ui:define name="content">
-      
-         <f:loadBundle var="bundle" basename="ApplicationProperties" />  
-
+    
          <h:form id="autismForm">                      
-             
-  			<h1>
-  				<h:outputText value="#{pc_CmcMain.autismDisorderPageTitle}"/>
-  			</h1>
-  		    
-		    <p:messages id="facesMessagesID" showDetail="false">
-		    </p:messages>   			
+            
+            <h1>
+            	<h:outputText value="#{pc_CmcMain.autismDisorderPageTitle}"/>
+            </h1> 
+            
+            <h2>
+            	<h:outputText value="#{pc_CmcMain.autismDisorderPageSubTitle}"/>
+            </h2> 
+            
+            <p:messages id="facesMessagesID" showDetail="false"/>
+            
+            <table>
+            
+               <colgroup>
+		            <col width="50%"/>
+		            <col width="50%"/>
+               </colgroup>
+      
+               <p:blockUI block="autismForm" widgetVar="blockWidgetVar"> 
+			       <p:graphicImage value="/images/wait.gif"/>  
+			   </p:blockUI> 
+				
+               <tr>
+	           
+	              <td colspan="2" align="center">	              
+	       
+                     <p:commandButton id="autismDisSubmitId" 
+					   value="Submit results" 
+					   action="#{pc_CmcMain.submitAutismSpectrumDisorderAnswers}" 
+					   onclick="PF('blockWidgetVar').show()" 
+          			   oncomplete="PF('block').hide()"
+          			   ajax="false"
+          			   update="autismDisorderSection1TableID autismDisorderSection2TableID"/>
+          				   
+          			 <p:commandButton id="autismDisClearAnswersId" 
+					   value="Clear all Answers" 
+					   action="#{pc_CmcMain.clearAllAutismSpectrumDisorderAnswers}" 
+					   ajax="false"
+					   immediate="true"
+          			   update="autismDisorderSection1TableID autismDisorderSection2TableID"/>
+          				   
+          			 <p:commandButton id="autismDisDefaultAnswersId" 
+					   value="Default all Answers" 
+					   action="#{pc_CmcMain.defaultAllAutismSpectrumDisorderAnswers}" 
+					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
+					   ajax="false"
+					   immediate="true"
+          			   update="autismDisorderSection1TableID autismDisorderSection2TableID"/>
+          				   
+	              </td>
+	           
+	           </tr>
+	              			   	
+	           <tr>
+	           
+	              <td>	              
+	            	<h:outputText value="#{bundleCMC.autismDisorder_Section1_Title_English}" rendered="#{pc_CmcMain.siteInEnglish}" styleClass="sectionTitle"></h:outputText>
+	            	<h:outputText value="#{bundleCMC.autismDisorder_Section1_Title_Spanish}" rendered="#{!pc_CmcMain.siteInEnglish}" styleClass="sectionTitle"></h:outputText>	              
+	              </td>
+	              
+	              <td>
+	            	<h:outputText value="#{bundleCMC.autismDisorder_Section2_Title_English}" rendered="#{pc_CmcMain.siteInEnglish}" styleClass="sectionTitle"></h:outputText>
+	            	<h:outputText value="#{bundleCMC.autismDisorder_Section2_Title_Spanish}" rendered="#{!pc_CmcMain.siteInEnglish}" styleClass="sectionTitle"></h:outputText>
+	              </td>
+	          
+	          </tr>
+	          
+	          <tr>
+	          
+	              <td>
+	                    
+			  		 <p:dataTable id="autismDisorderSection1TableID" value="#{pc_CmcMain.autismDisorderSection1QuestionsList}"
+				          var="surveyQuestion" scrollable="true" scrollHeight="550" style="font-size:11px;">							
+											       				  
+						  <p:column headerText="Option" sortBy="#{surveyQuestion.cmcSurveyCategoryEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
+							  <h:outputText value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>														
+						  </p:column>
+						  
+						  <p:column headerText="Option" sortBy="#{surveyQuestion.cmcSurveyCategorySpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
+							  <h:outputText value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>														
+						  </p:column>
+						  
+						  <p:column headerText="Question" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
+							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
+						  </p:column>
+						  
+						  <p:column headerText="Question" sortBy="#{surveyQuestion.cmcSurveyQuestionSpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
+							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
+						  </p:column>
+						  
+						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}" >												
+							  <p:selectOneMenu id="sect1EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required in section 1">
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>										
+						  </p:column>
+						  
+						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
+							  <p:selectOneMenu id="sect1SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 1">
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>										
+						  </p:column>
+				  
+				     </p:dataTable>
+				     
+				  </td>
+		     
+		       	  <td>
+               	  	           
+				     <p:dataTable id="autismDisorderSection2TableID" value="#{pc_CmcMain.autismDisorderSection2QuestionsList}"
+			          var="surveyQuestion" scrollable="true" scrollHeight="550" style="font-size:11px;">						
+				       	 
+						  <p:column headerText="Functional Skills and Abilities:Is the individual able to: Ex. = Example" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
+							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
+						  </p:column>
+						  
+						  <p:column headerText="HABILIDADES Y CAPACIDADES FUNCIONALES La persona es capaz de: Física Ej. = Ejemplo" sortBy="#{surveyQuestion.cmcSurveyQuestionSpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
+							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
+						  </p:column>					
+					  		  
+						  <p:column headerText="Skill Level" rendered="#{pc_CmcMain.siteInEnglish}">												
+							  <p:selectOneMenu id="sect3EnglishAnswerID"  required="true" value="#{surveyQuestion.answer}" requiredMessage="Selection is required in section 2">
+								  <f:selectItems value="#{pc_CmcMain.skillLevelEnglishList}" />
+							  </p:selectOneMenu>										
+						  </p:column>
+						  
+						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
+							  <p:selectOneMenu id="sect3SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 2">
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>										
+						  </p:column>
+					  
+					  </p:dataTable>
+					  				  
+		  	      </td>
+		  	      
+		       </tr>
+		  
+		  </table>	  
 	                
-	     </h:form>
+	   </h:form>
    
     </ui:define>
 
