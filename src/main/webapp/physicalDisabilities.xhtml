@@ -9,31 +9,30 @@
     <ui:define name="content">
     
          <h:form id="physForm">                      
-            
-            <h1>
-            	<h:outputText value="#{pc_CmcMain.physicalDisabilitiesPageTitle}"/>
-            </h1> 
-            
-            <h2>
-            	<h:outputText value="#{pc_CmcMain.physicalDisabilitiesPageSubTitle}"/>
-            </h2> 
-            
-            <p:messages id="facesMessagesID" showDetail="false"/>
+     
+             <p:messages id="facesMessagesID" showDetail="false"/>
             
             <table>
             
-               <colgroup>
-		            <col width="50%"/>
-		            <col width="50%"/>
-               </colgroup>
-      
                <p:blockUI block="physForm" widgetVar="blockWidgetVar"> 
 			       <p:graphicImage value="/images/wait.gif"/>  
 			   </p:blockUI> 
 				
+			   <tr>
+			      <td>
+			   		  <h:outputText value="#{pc_CmcMain.physicalDisabilitiesPageTitle}" styleClass="pageSectionTitle"/>
+			   	  </td>
+			   </tr>
+			   
+			   <tr>
+			      <td>
+           			<h:outputText value="#{pc_CmcMain.physicalDisabilitiesPageSubTitle}" styleClass="pageSectionSubTitle"/>
+           		  </td>
+			   </tr>			  
+				
                <tr>
 	           
-	              <td colspan="2" align="center">	              
+	              <td align="center">	              
 	       
                      <p:commandButton id="physDisSubmitId" 
 					   value="Submit results" 
@@ -65,96 +64,319 @@
 	           <tr>
 	           
 	              <td>	              
-	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section1_Title_English}" rendered="#{pc_CmcMain.siteInEnglish}" styleClass="sectionTitle"></h:outputText>
-	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section1_Title_Spanish}" rendered="#{!pc_CmcMain.siteInEnglish}" styleClass="sectionTitle"></h:outputText>	              
+	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section1_Title_English}" rendered="#{pc_CmcMain.siteInEnglish}" styleClass="pageSectionTitle"></h:outputText>
+	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section1_Title_Spanish}" rendered="#{!pc_CmcMain.siteInEnglish}" styleClass="pageSectionTitle"></h:outputText>	              
 	              </td>
 	              
-	              <td>
-	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section2_Title_English}" rendered="#{pc_CmcMain.siteInEnglish}" styleClass="sectionTitle"></h:outputText>
-	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section2_Title_Spanish}" rendered="#{!pc_CmcMain.siteInEnglish}" styleClass="sectionTitle"></h:outputText>
-	              </td>
-	          
 	          </tr>
 	          
 	          <tr>
 	          
 	              <td>
 	                    
-			  		 <p:dataTable id="physicalDisabilitiesSection1TableID" value="#{pc_CmcMain.physicalDisabilitiesSection1QuestionsList}"
-				          var="surveyQuestion" scrollable="true" scrollHeight="550" style="font-size:11px;">							
+			  		 <p:dataTable id="physicalDisabilitiesSection1TableID" value="#{pc_CmcMain.physicalDisabilitiesSection1QuestionsHorizontalList}"
+				          var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
 											       				  
-						  <p:column headerText="Option" sortBy="#{surveyQuestion.cmcSurveyCategoryEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>														
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Options">												
+							  <h:outputText rendered="#{pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>															
 						  </p:column>
 						  
-						  <p:column headerText="Option" sortBy="#{surveyQuestion.cmcSurveyCategorySpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>														
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Opciones">												
+							  <h:outputText rendered="#{!pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>															
 						  </p:column>
-						  
-						  <p:column headerText="Question" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Question" sortBy="#{surveyQuestion.cmcSurveyQuestionSpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}" >												
-							  <p:selectOneMenu id="sect1EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required in section 3">
+							  				  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Public (City) Bus">												
+							  <p:selectOneMenu id="sect1PublicBusAnswerIDEng" value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}"
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
 								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
-							  </p:selectOneMenu>										
+							  </p:selectOneMenu>
 						  </p:column>
 						  
-						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect1SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 3">
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Autobús público (urbano)">											
+							  <p:selectOneMenu id="sect1PublicBusAnswerIDSpan" value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}"
+							                        required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
-							  </p:selectOneMenu>										
+							  </p:selectOneMenu>															
 						  </p:column>
-				  
+
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Coach (Intercity Bus)">												
+							  <p:selectOneMenu id="sect1CityBusAnswerIDEng" value="#{surveyQuestion.coachBusAnswer}" styleClass="#{surveyQuestion.coachBusAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Autobús de larga distancia (interurbano)">											
+							  <p:selectOneMenu id="sect1CityBusAnswerIDSpan" value="#{surveyQuestion.coachBusAnswer}"  styleClass="#{surveyQuestion.coachBusAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Train/Subway Trolley/Tram">												
+							  <p:selectOneMenu id="sect1TrolleyAnswerIDEng" value="#{surveyQuestion.trainSubwayAnswer}" styleClass="#{surveyQuestion.trainSubwayAnswerStyle}"  
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Tren/Metro/Tranvía/Trolley">											
+							  <p:selectOneMenu id="sect1TrolleyAnswerIDSpan" value="#{surveyQuestion.trainSubwayAnswer}" styleClass="#{surveyQuestion.trainSubwayAnswerStyle}"  
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Taxi">												
+							  <p:selectOneMenu id="sect1TaxiAnswerIDEng" value="#{surveyQuestion.taxiAnswer}"  styleClass="#{surveyQuestion.taxiAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Taxi">											
+							  <p:selectOneMenu id="sect1TaxiAnswerIDSpan" value="#{surveyQuestion.taxiAnswer}"  styleClass="#{surveyQuestion.taxiAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="E-hailing (Uber, Lyft)">												
+							  <p:selectOneMenu id="sect1UberAnswerIDEng" value="#{surveyQuestion.ehailingAnswer}"  styleClass="#{surveyQuestion.ehailingAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Transporte por aplicación (Uber/Lyft)">											
+							  <p:selectOneMenu id="sect1UberAnswerIDSpan" value="#{surveyQuestion.ehailingAnswer}" styleClass="#{surveyQuestion.ehailingAnswerStyle}"  
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Ferry">												
+							  <p:selectOneMenu id="sect1FerryAnswerIDEng" value="#{surveyQuestion.ferryAnswer}"  styleClass="#{surveyQuestion.ferryAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Feri">											
+							  <p:selectOneMenu id="sect1FerryAnswerIDSpan" value="#{surveyQuestion.ferryAnswer}"  styleClass="#{surveyQuestion.ferryAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+				
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Walk">												
+							  <p:selectOneMenu id="sect1WalkAnswerIDEng" value="#{surveyQuestion.walkAnswer}"  styleClass="#{surveyQuestion.walkAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="A pie">											
+							  <p:selectOneMenu id="sect1WalkAnswerIDSpan" value="#{surveyQuestion.walkAnswer}"  styleClass="#{surveyQuestion.walkAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Bicycle/Scooter">												
+							  <p:selectOneMenu id="sect1BikeAnswerIDEng" value="#{surveyQuestion.bikeAnswer}"  styleClass="#{surveyQuestion.bikeAnswerStyle}" 
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Bicicleta/Scooter">											
+							  <p:selectOneMenu id="sect1BikeAnswerIDSpan" value="#{surveyQuestion.bikeAnswer}" styleClass="#{surveyQuestion.bikeAnswerStyle}"  
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Other">												
+							  <p:selectOneMenu id="sect1OtherAnswerIDEng" value="#{surveyQuestion.otherAnswer}" styleClass="#{surveyQuestion.otherAnswerStyle}"  
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Otro">											
+							  <p:selectOneMenu id="sect1OtherAnswerIDSpan" value="#{surveyQuestion.otherAnswer}" styleClass="#{surveyQuestion.otherAnswerStyle}"  
+							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>						  
+										  
 				     </p:dataTable>
 				     
 				  </td>
+		     </tr>
 		     
-		       	  <td>
-               	  	           
-				     <p:dataTable id="physicalDisabilitiesSection2TableID" value="#{pc_CmcMain.physicalDisabilitiesSection2QuestionsList}"
-			          var="surveyQuestion" scrollable="true" scrollHeight="350" style="font-size:11px;">							
+		     <tr>
+	                 
+	             <td>
+	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section2_Title_English}" rendered="#{pc_CmcMain.siteInEnglish}" styleClass="pageSectionTitle"></h:outputText>
+	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section2_Title_Spanish}" rendered="#{!pc_CmcMain.siteInEnglish}" styleClass="pageSectionTitle"></h:outputText>
+	             </td>
+	          
+	          </tr>
+	          
+		     <tr>
+	          
+	              <td>
+	                    
+			  		 <p:dataTable id="physicalDisabilitiesSection2TableID" value="#{pc_CmcMain.physicalDisabilitiesSection2QuestionsHorizontalList}"
+				          var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
+											       				  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Options">												
+							  <h:outputText rendered="#{pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>															
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Opciones">												
+							  <h:outputText rendered="#{!pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>															
+						  </p:column>
 						
-				       	  <p:column headerText="Option" sortBy="#{surveyQuestion.cmcSurveyCategoryEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Opcione" sortBy="#{surveyQuestion.cmcSurveyCategorySpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Question" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Pregunta" sortBy="#{surveyQuestion.cmcSurveyQuestionSpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
-						  </p:column>
-						  
-						  <p:column headerText="Choice" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect2EnglishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Selection is required in section 3">
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Power Wheelchair">												
+							  <p:selectOneMenu id="sect2PowerWheelchairAnswerIDEng" value="#{surveyQuestion.powerwheelchairAnswer}" styleClass="#{surveyQuestion.powerwheelchairAnswerStyle}"> 
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
 								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
-							  </p:selectOneMenu>										
+							  </p:selectOneMenu>
 						  </p:column>
 						  
-						  <p:column headerText="Elección" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect2SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 3">
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Silla de ruedas eléctrica">											
+							  <p:selectOneMenu id="sect2PowerWheelchairAnswerIDSpan" value="#{surveyQuestion.powerwheelchairAnswer}" styleClass="#{surveyQuestion.powerwheelchairAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
-							  </p:selectOneMenu>										
+							  </p:selectOneMenu>															
 						  </p:column>
-				  
+						
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Manual Wheelchair">												
+							  <p:selectOneMenu id="sect2ManualWheelchairIDEng" value="#{surveyQuestion.manualwheelchairAnswer}" styleClass="#{surveyQuestion.manualwheelchairAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Silla de ruedas manual">											
+							  <p:selectOneMenu id="sect2ManualWheelchairAnswerIDSpan" value="#{surveyQuestion.manualwheelchairAnswer}"  styleClass="#{surveyQuestion.manualwheelchairAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Rollator">												
+							  <p:selectOneMenu id="sect2RollatorAnswerIDEng" value="#{surveyQuestion.rollatorAnswer}" styleClass="#{surveyQuestion.rollatorAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Caminador con ruedas (Rollator)">											
+							  <p:selectOneMenu id="sect2RollatorAnswerIDSpan" value="#{surveyQuestion.rollatorAnswer}"  styleClass="#{surveyQuestion.rollatorAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Prosthetics">												
+							  <p:selectOneMenu id="sect2ProstheticsAnswerIDEng" value="#{surveyQuestion.prostheticsAnswer}" styleClass="#{surveyQuestion.prostheticsAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Prótesis">											
+							  <p:selectOneMenu id="sect2ProstheticsAnswerIDSpan" value="#{surveyQuestion.prostheticsAnswer}"  styleClass="#{surveyQuestion.prostheticsAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Walker">												
+							  <p:selectOneMenu id="sect2WalkerAnswerIDEng" value="#{surveyQuestion.walkerAnswer}"  styleClass="#{surveyQuestion.walkerAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Caminador">											
+							  <p:selectOneMenu id="sect2WalkerAnswerIDSpan" value="#{surveyQuestion.walkerAnswer}"  styleClass="#{surveyQuestion.walkerAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Crutches/Cane">												
+							  <p:selectOneMenu id="sect2CrutchescaneAnswerIDEng" value="#{surveyQuestion.crutchescaneAnswer}" styleClass="#{surveyQuestion.crutchescaneAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Muletas/Bastón">											
+							  <p:selectOneMenu id="sect2CrutchescaneAnswerIDSpan" value="#{surveyQuestion.crutchescaneAnswer}"  styleClass="#{surveyQuestion.crutchescaneAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+				
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Scooter">												
+							  <p:selectOneMenu id="sect2ScooterAnswerIDEng" value="#{surveyQuestion.scooterAnswer}"  styleClass="#{surveyQuestion.scooterAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Scooter">											
+							  <p:selectOneMenu id="sect2ScooterAnswerIDSpan" value="#{surveyQuestion.scooterAnswer}"  styleClass="#{surveyQuestion.scooterAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>
+						  
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Other">												
+							  <p:selectOneMenu id="sect2OtherAnswerIDEng" value="#{surveyQuestion.otherAnswer}" styleClass="#{surveyQuestion.otherAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
+							  </p:selectOneMenu>
+						  </p:column>
+						  
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Otro">											
+							  <p:selectOneMenu id="sect2OtherAnswerIDSpan" value="#{surveyQuestion.otherAnswer}" styleClass="#{surveyQuestion.otherAnswerStyle}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  </p:selectOneMenu>															
+						  </p:column>						  
+										  
 				     </p:dataTable>
-		  
-		  	      </td>
-		       </tr>
+				     
+				  </td>
+		     </tr>
 		       
-		       <tr class="sectionTitle">
-	              <td colspan="2">
+		       <tr class="pageSectionTitle">
+	              <td>
 	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section3_Title_English}" rendered="#{pc_CmcMain.siteInEnglish}"></h:outputText>
 	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section3_Title_Spanish}" rendered="#{!pc_CmcMain.siteInEnglish}"></h:outputText>
 	              </td>
@@ -162,31 +384,43 @@
 	           
 	           <tr>
 	           
-               	  <td colspan="2">
+               	  <td>
       
 					  <p:dataTable id="physicalDisabilitiesSection3TableID" value="#{pc_CmcMain.physicalDisabilitiesSection3QuestionsList}"
-				          var="surveyQuestion" scrollable="true" scrollHeight="350" style="font-size:11px;">							
+				          var="surveyQuestion" scrollable="true" scrollHeight="350" styleClass="dataTableStyle;">						
 							
-						  <p:column headerText="Functional Skills and Abilities:Is the individual able to: Ex. = Example" sortBy="#{surveyQuestion.cmcSurveyQuestionEnglish}" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
+						  <p:column headerText="Functional Skills and Abilities:Is the individual able to: Ex. = Example" rendered="#{pc_CmcMain.siteInEnglish}">												
+							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}" styleClass="#{surveyQuestion.cmcSurveyQuestionStyleClass}"/>														
 						  </p:column>
 						  
-						  <p:column headerText="HABILIDADES Y CAPACIDADES FUNCIONALES La persona es capaz de: Física Ej. = Ejemplo" sortBy="#{surveyQuestion.cmcSurveyQuestionSpanish}" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}"/>														
+						  <p:column headerText="HABILIDADES Y CAPACIDADES FUNCIONALES La persona es capaz de: Física Ej. = Ejemplo" rendered="#{!pc_CmcMain.siteInEnglish}">												
+							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionSpanish}" styleClass="#{surveyQuestion.cmcSurveyQuestionStyleClass}"/>														
 						  </p:column>					
 					  		  
 						  <p:column headerText="Skill Level" rendered="#{pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect3EnglishAnswerID"  required="true" value="#{surveyQuestion.answer}" requiredMessage="Selection is required in section 3">
+							  <p:selectOneMenu id="sect3EnglishAnswerID"  required="true" value="#{surveyQuestion.answer}" styleClass="#{surveyQuestion.answerStyle}"  
+							  						requiredMessage="Selection is required in section 3" rendered="#{surveyQuestion.cmcSurveyQuestionRenderInputs}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
 								  <f:selectItems value="#{pc_CmcMain.skillLevelEnglishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
-						  
-						  <p:column headerText="Choice" rendered="#{!pc_CmcMain.siteInEnglish}">												
-							  <p:selectOneMenu id="sect3SpanishAnswerID" value="#{surveyQuestion.answer}" required="true" requiredMessage="Se requiere selección en la sección 3">
-								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
+							  
+						  <p:column headerText="Nivel de habilidad" rendered="#{!pc_CmcMain.siteInEnglish}">												
+							  <p:selectOneMenu id="sect3SpanishAnswerID"  required="true" value="#{surveyQuestion.answer}" styleClass="#{surveyQuestion.answerStyle}"  
+							  						requiredMessage="Selection is required in section 3" rendered="#{surveyQuestion.cmcSurveyQuestionRenderInputs}">
+								  <p:ajax event="change" update="physForm" listener="#{pc_CmcMain.highlightDropdown}" />
+								  <f:selectItems value="#{pc_CmcMain.skillLevelSpanishList}" />
 							  </p:selectOneMenu>										
 						  </p:column>
-					  
+						  
+						  <p:column headerText="Comments" rendered="#{pc_CmcMain.siteInEnglish}">	
+						      <p:inputText id="sect3EnglishAnswerCommentID" value="#{surveyQuestion.answerComment}" rendered="#{surveyQuestion.cmcSurveyQuestionRenderInputs}"/>
+						  </p:column>
+							
+						  <p:column headerText="Comentarios" rendered="#{!pc_CmcMain.siteInEnglish}">				
+						      <p:inputText id="sect3SpanishAnswerCommentID" value="#{surveyQuestion.answerComment}" rendered="#{surveyQuestion.cmcSurveyQuestionRenderInputs}"/>
+						  </p:column>  
+						 					  
 					  </p:dataTable>
 					  				  
 		  	      </td>

@@ -6,34 +6,58 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:fn="http://java.sun.com/jsp/jstl/functions">
      
-      <f:loadBundle var="bundle" basename="ApplicationProperties" />  
-  
-      <h:form id="menuForm"> 
+    <f:loadBundle var="bundle" basename="ApplicationProperties" />  
+    
+    <h:form id="menuForm"> 
         
-        <h1>
-           	<h:outputText value="#{pc_CmcMain.siteTitle}"/>
-        </h1> 
-     	
-  		<p:selectOneRadio id="englishSpanishID" value="#{pc_CmcMain.siteLanguage}">
-            <f:selectItem itemLabel="English" itemValue="1" />
-			<f:selectItem itemLabel="Spanish" itemValue="2" />
-			<p:ajax update="menuForm menuId mainForm physForm intelForm autismForm" listener="#{pc_CmcMain.valueChangeLanguageRadio}" />
-        </p:selectOneRadio>	
+        <table style="table-layout: fixed; width:100%;">
+        
+        	<tr>
+        	
+        		<td width="80%">
+        		     <h:outputText value="#{pc_CmcMain.siteTitle}" styleClass="sectionTitle"/>           	
+		        </td>
+        		
+        		<td width="20%">
+        		
+        		    <p:selectOneRadio id="englishSpanishID" value="#{pc_CmcMain.siteLanguage}"  styleClass="sectionSubTitle">
+			            <f:selectItem itemLabel="English" itemValue="1" />
+						<f:selectItem itemLabel="Spanish" itemValue="2" />
+						<p:ajax update="menuForm menuId mainForm physForm intelForm autismForm" listener="#{pc_CmcMain.valueChangeLanguageRadio}" />
+			        </p:selectOneRadio>		
+		           
+        		</td>
+        		
+        	</tr>
+        		
+        	<tr>
+        	
+        		<td colspan="2">
+        		   <h:outputText value="#{pc_CmcMain.siteSubTitle}" styleClass="sectionSubTitle"/>     
+	     		</td>
+        		
+        	</tr>
+        	            
+            <tr>
+            
+               <td colspan="2">
+               
+                  <p:menubar id="menuId" styleClass="ui-menubar">
+           
+			          <p:menuitem value="#{pc_CmcMain.physicalDisabilitiesMenuTitle}" url="#{request.contextPath}/physicalDisabilities.xhtml" styleClass="#{view.viewId.contains('/physicalDisabilities.xhtml') ? 'activeMenuSelection' : ''}"/>
+			          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesMenuTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml" styleClass="#{view.viewId.contains('/intellectualDisabilities.xhtml') ? 'activeMenuSelection' : ''}"/>
+			          <p:menuitem value="#{pc_CmcMain.autismDisorderMenuTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml" styleClass="#{view.viewId.contains('/autismSpectrumDisorder.xhtml') ? 'activeMenuSelection' : ''}"/>
+			         			
+				  </p:menubar> 
+        		    
+               </td>
+        		
+        	</tr>
+  		
+        </table>
         
       </h:form> 
         
-      <br />
-         
-      <style type="text/css">
-		.ui-menubar	{mouseover: #ff0000; background-color: #FFA07A !important; background: LightSalmon;}
-	  </style>
-               
-      <p:menubar id="menuId" styleClass="ui-menubar">
-           
-          <p:menuitem value="#{pc_CmcMain.physicalDisabilitiesMenuTitle}" url="#{request.contextPath}/physicalDisabilities.xhtml" styleClass="#{view.viewId.contains('/physicalDisabilities.xhtml') ? 'activeMenuSelection' : ''}"/>
-          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesMenuTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml" styleClass="#{view.viewId.contains('/intellectualDisabilities.xhtml') ? 'activeMenuSelection' : ''}"/>
-          <p:menuitem value="#{pc_CmcMain.autismDisorderMenuTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml" styleClass="#{view.viewId.contains('/autismSpectrumDisorder.xhtml') ? 'activeMenuSelection' : ''}"/>
-         			
-	  </p:menubar> 
+      
         
 </ui:composition>

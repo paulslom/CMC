@@ -15,6 +15,7 @@ public class CmcSurveyAnswer implements Serializable
 	private String surveyID; //the ID of the question
 	private String surveyAnswerDate;
 	private String surveyAnswer;
+	private String surveyAnswerComment;
 	
 	@DynamoDbPartitionKey
 	public String getSurveyAnswerID() {
@@ -46,6 +47,12 @@ public class CmcSurveyAnswer implements Serializable
 	}
 	public void setSurveyAnswer(String surveyAnswer) {
 		this.surveyAnswer = surveyAnswer;
+	}
+	public String getSurveyAnswerComment() {
+		return surveyAnswerComment;
+	}
+	public void setSurveyAnswerComment(String surveyAnswerComment) {
+		this.surveyAnswerComment = surveyAnswerComment;
 	}
 		
 	/*

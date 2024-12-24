@@ -15,6 +15,7 @@ import com.pas.beans.CmcMain;
 import com.pas.beans.CmcSurvey;
 import com.pas.beans.CmcSurveyQuestion;
 import com.pas.dynamodb.DynamoClients;
+import com.pas.pojo.DisabilityRow;
 
 import jakarta.inject.Inject;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
@@ -36,14 +37,22 @@ public class CmcSurveyQuestionsDAO implements Serializable
 	private static String autismSpectrumDisorderSurveyID;
 	
 	private List<CmcSurveyQuestion> physicalDisabilitiesSection1QuestionsList = new ArrayList<>();
+	private List<DisabilityRow> physicalDisabilitiesSection1QuestionsHorizontalList = new ArrayList<>();
+	
 	private List<CmcSurveyQuestion> physicalDisabilitiesSection2QuestionsList = new ArrayList<>();
+	private List<DisabilityRow> physicalDisabilitiesSection2QuestionsHorizontalList = new ArrayList<>();
+	
 	private List<CmcSurveyQuestion> physicalDisabilitiesSection3QuestionsList = new ArrayList<>();
 	
 	private List<CmcSurveyQuestion> intellectualDisabilitiesSection1QuestionsList = new ArrayList<>();
+	private List<DisabilityRow> intellectualDisabilitiesSection1QuestionsHorizontalList = new ArrayList<>();
+	
 	private List<CmcSurveyQuestion> intellectualDisabilitiesSection2QuestionsList = new ArrayList<>();
 	
 	private List<CmcSurveyQuestion> autismSpectrumSection1QuestionsList = new ArrayList<>();
 	private List<CmcSurveyQuestion> autismSpectrumSection2QuestionsList = new ArrayList<>();
+	
+	private List<DisabilityRow> autismDisorderSection1QuestionsHorizontalList = new ArrayList<>();
 	
 	private static DynamoClients dynamoClients;
 	private static DynamoDbTable<CmcSurveyQuestion> cmcSurveyQuestionsTable;
@@ -114,6 +123,10 @@ public class CmcSurveyQuestionsDAO implements Serializable
             }
             else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(physicalDisabilitiesSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("3"))
             {
+            	if (!cmcsq.isCmcSurveyQuestionRenderInputs())
+            	{
+            		cmcsq.setCmcSurveyQuestionStyleClass("sectionSubTitle");
+            	}
             	this.getPhysicalDisabilitiesSection3QuestionsList().add(cmcsq);
             }
             else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(intellectualDisabilitiesSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("1"))
@@ -122,6 +135,10 @@ public class CmcSurveyQuestionsDAO implements Serializable
             }
             else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(intellectualDisabilitiesSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("2"))
             {
+            	if (!cmcsq.isCmcSurveyQuestionRenderInputs())
+            	{
+            		cmcsq.setCmcSurveyQuestionStyleClass("sectionSubTitle");
+            	}
             	this.getIntellectualDisabilitiesSection2QuestionsList().add(cmcsq);
             }
             else if (cmcsq.getCmcSurveyID().equalsIgnoreCase(autismSpectrumDisorderSurveyID) && cmcsq.getCmcSurveySection().equalsIgnoreCase("1"))
@@ -149,10 +166,69 @@ public class CmcSurveyQuestionsDAO implements Serializable
 		
 		Collections.sort(this.getAutismSpectrumSection1QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
 		Collections.sort(this.getAutismSpectrumSection2QuestionsList(), new CmcSurveyQuestion.SurveyQuestionComparator());
-				
+		
+		setHorizontalOrientedLists();
+		
 		logger.info("exiting");		
 	}
 		
+	private void setHorizontalOrientedLists()
+	{
+		List<DisabilityRow> tempListPhysSection1 = new ArrayList<>();
+		List<DisabilityRow> tempListPhysSection2 = new ArrayList<>();		
+		DisabilityRow physAvailableRow = new DisabilityRow();
+		DisabilityRow physTriedRow = new DisabilityRow();
+		DisabilityRow physSection1UseRow = new DisabilityRow();
+		DisabilityRow physSection2UseRow = new DisabilityRow();		
+		physAvailableRow.setCmcSurveyCategoryEnglish("Available");
+		physAvailableRow.setAnswerRequired(true);
+		physAvailableRow.setCmcSurveyCategorySpanish("Disponible");		
+		physTriedRow.setCmcSurveyCategoryEnglish("Tried");
+		physTriedRow.setCmcSurveyCategorySpanish("Intentó");		
+		physSection1UseRow.setCmcSurveyCategoryEnglish("Use");
+		physSection1UseRow.setCmcSurveyCategorySpanish("Usar");		
+		physSection2UseRow.setCmcSurveyCategoryEnglish("Use");
+		physSection2UseRow.setCmcSurveyCategorySpanish("Usar");
+		tempListPhysSection1.add(physAvailableRow);
+		tempListPhysSection1.add(physTriedRow);
+		tempListPhysSection1.add(physSection1UseRow);		
+		tempListPhysSection2.add(physSection2UseRow);
+		this.setPhysicalDisabilitiesSection1QuestionsHorizontalList(tempListPhysSection1);
+		this.setPhysicalDisabilitiesSection2QuestionsHorizontalList(tempListPhysSection2);
+		
+		List<DisabilityRow> tempListIntelSection1 = new ArrayList<>();
+		DisabilityRow intelAvailableRow = new DisabilityRow();
+		DisabilityRow intelTriedRow = new DisabilityRow();
+		DisabilityRow intelUseRow = new DisabilityRow();		
+		intelAvailableRow.setCmcSurveyCategoryEnglish("Available");
+		intelAvailableRow.setAnswerRequired(true);
+		intelAvailableRow.setCmcSurveyCategorySpanish("Disponible");		
+		intelTriedRow.setCmcSurveyCategoryEnglish("Tried");
+		intelTriedRow.setCmcSurveyCategorySpanish("Intentó");		
+		intelUseRow.setCmcSurveyCategoryEnglish("Use");
+		intelUseRow.setCmcSurveyCategorySpanish("Usar");		
+		tempListIntelSection1.add(intelAvailableRow);
+		tempListIntelSection1.add(intelTriedRow);
+		tempListIntelSection1.add(intelUseRow);		
+		this.setIntellectualDisabilitiesSection1QuestionsHorizontalList(tempListIntelSection1);
+		
+		List<DisabilityRow> tempListAutismSection1 = new ArrayList<>();			
+		DisabilityRow autismAvailableRow = new DisabilityRow();
+		DisabilityRow autismTriedRow = new DisabilityRow();
+		DisabilityRow autismUseRow = new DisabilityRow();		
+		autismAvailableRow.setCmcSurveyCategoryEnglish("Available");
+		autismAvailableRow.setAnswerRequired(true);
+		autismAvailableRow.setCmcSurveyCategorySpanish("Disponible");		
+		autismTriedRow.setCmcSurveyCategoryEnglish("Tried");
+		autismTriedRow.setCmcSurveyCategorySpanish("Intentó");		
+		autismUseRow.setCmcSurveyCategoryEnglish("Use");
+		autismUseRow.setCmcSurveyCategorySpanish("Usar");		
+		tempListAutismSection1.add(autismAvailableRow);
+		tempListAutismSection1.add(autismTriedRow);
+		tempListAutismSection1.add(autismUseRow);		
+		this.setAutismDisorderSection1QuestionsHorizontalList(tempListAutismSection1);
+	}
+
 	public CmcSurveyQuestion getCmcSurveyQuestion(String cmcsq)
     {	    	
 		CmcSurveyQuestion gu = this.getFullSurveyQuestionsMap().get(cmcsq);			
@@ -282,6 +358,42 @@ public class CmcSurveyQuestionsDAO implements Serializable
 
 	public void setAutismSpectrumSection2QuestionsList(List<CmcSurveyQuestion> autismSpectrumSection2QuestionsList) {
 		this.autismSpectrumSection2QuestionsList = autismSpectrumSection2QuestionsList;
+	}
+
+	public List<DisabilityRow> getPhysicalDisabilitiesSection1QuestionsHorizontalList() {
+		return physicalDisabilitiesSection1QuestionsHorizontalList;
+	}
+
+	public void setPhysicalDisabilitiesSection1QuestionsHorizontalList(
+			List<DisabilityRow> physicalDisabilitiesSection1QuestionsHorizontalList) {
+		this.physicalDisabilitiesSection1QuestionsHorizontalList = physicalDisabilitiesSection1QuestionsHorizontalList;
+	}
+
+	public List<DisabilityRow> getPhysicalDisabilitiesSection2QuestionsHorizontalList() {
+		return physicalDisabilitiesSection2QuestionsHorizontalList;
+	}
+
+	public void setPhysicalDisabilitiesSection2QuestionsHorizontalList(
+			List<DisabilityRow> physicalDisabilitiesSection2QuestionsHorizontalList) {
+		this.physicalDisabilitiesSection2QuestionsHorizontalList = physicalDisabilitiesSection2QuestionsHorizontalList;
+	}
+
+	public List<DisabilityRow> getIntellectualDisabilitiesSection1QuestionsHorizontalList() {
+		return intellectualDisabilitiesSection1QuestionsHorizontalList;
+	}
+
+	public void setIntellectualDisabilitiesSection1QuestionsHorizontalList(
+			List<DisabilityRow> intellectualDisabilitiesSection1QuestionsHorizontalList) {
+		this.intellectualDisabilitiesSection1QuestionsHorizontalList = intellectualDisabilitiesSection1QuestionsHorizontalList;
+	}
+
+	public List<DisabilityRow> getAutismDisorderSection1QuestionsHorizontalList() {
+		return autismDisorderSection1QuestionsHorizontalList;
+	}
+
+	public void setAutismDisorderSection1QuestionsHorizontalList(
+			List<DisabilityRow> autismDisorderSection1QuestionsHorizontalList) {
+		this.autismDisorderSection1QuestionsHorizontalList = autismDisorderSection1QuestionsHorizontalList;
 	}
 
 }

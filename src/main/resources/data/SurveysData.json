@@ -2,18 +2,18 @@
 {
 	"cmcSurveyName": "Physical Disabilities",
 	"cmcSurveyNameSpanish": "Habilidades de Movilidad",
-	"cmcSurveyPageTitleEnglish": "OT Community Mobility Skills Checklist for PDD (OT-CMSC– PDD)",
-	"cmcSurveyPageTitleSpanish": "Lista de Verificación de Habilidades de Movilidad en la Comunidad para Personas Dependientes de Dispositivos de Movilidad Asistida (CCMS-PDD, por sus siglas en inglés)",
+	"cmcSurveyPageTitleEnglish": "OT Community Mobility Skills Checklist for PD (OT-CMSC– PD)",
+	"cmcSurveyPageTitleSpanish": "Lista de Verificación de Habilidades de Movilidad en la Comunidad para Personas Dependientes de Dispositivos de Movilidad Asistida (CCMS-PD, por sus siglas en inglés)",
 	"cmcSurveyPageSubTitleEnglish": "Objective: This tool examines an individual’s functional skills and abilities in relation to the environmental and task demands required by different transportation types (excluding driving) to assist in identifying transportation options that support and/or increase safe and effective community mobility for individuals with physical disabilities and whether training is needed, or a companion is necessary.",
 	"cmcSurveyPageSubTitleSpanish": "Objetivo:  Esta herramienta examina las habilidades y capacidades funcionales de una persona en relación con las exigencias del entorno y las tareas requeridas por diferentes tipos de transporte, sin incluir la conducción de un vehículo, para ayudar a identificar opciones de transporte que apoyen o aumenten la movilidad segura y efectiva para personas con discapacidades físicas en la comunidad, además si se necesita capacitación o es necesario un acompañante."
 },
 {
 	"cmcSurveyName": "Intellectual Disabilities",
 	"cmcSurveyNameSpanish": "Habilidades de Intelectual",
-	"cmcSurveyPageTitleEnglish": "OT Community Mobility Skills Checklist for IDD (OT-CMSC– IDD)  ",
-	"cmcSurveyPageTitleSpanish": "Lista de Verificación de Habilidades de Movilidad en la Comunidad para Personas con Discapacidad Intelectual y del Desarrollo (CCMS-IDD, por sus siglas en inglés)",
+	"cmcSurveyPageTitleEnglish": "OT Community Mobility Skills Checklist for ID (OT-CMSC– ID)  ",
+	"cmcSurveyPageTitleSpanish": "Lista de Verificación de Habilidades de Movilidad en la Comunidad para Personas con Discapacidad Intelectual y del Desarrollo (CCMS-ID, por sus siglas en inglés)",
 	"cmcSurveyPageSubTitleEnglish": "Objective: This tool examines an individual’s functional skills and abilities in relation to the environmental and task demands required by different transportation types (excluding driving) to assist in identifying transportation options that support and/or increase safe and effective community mobility for individuials with physical disabilities and whether training is needed, or a companion is necessary.",
-	"cmcSurveyPageSubTitleSpanish": "Objetivo:  Esta herramienta examina las habilidades y capacidades funcionales de una persona en relación con las exigencias del entorno y las tareas requeridas por diferentes tipos de transporte, sin incluir la conducción de un vehículo, para ayudar a identificar opciones de transporte que apoyen o aumenten la movilidad segura y efectiva para personas con Discapacidades Intelectuales y del Desarrollo (IDD, por sus siglas en inglés) en la comunidad, además si se necesita capacitación o es necesario un acompañante."		
+	"cmcSurveyPageSubTitleSpanish": "Objetivo:  Esta herramienta examina las habilidades y capacidades funcionales de una persona en relación con las exigencias del entorno y las tareas requeridas por diferentes tipos de transporte, sin incluir la conducción de un vehículo, para ayudar a identificar opciones de transporte que apoyen o aumenten la movilidad segura y efectiva para personas con Discapacidades Intelectuales y del Desarrollo (ID, por sus siglas en inglés) en la comunidad, además si se necesita capacitación o es necesario un acompañante."		
 },
 {
 	"cmcSurveyName": "Autism Spectrum Disorder",

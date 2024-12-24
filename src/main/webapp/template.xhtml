@@ -24,18 +24,26 @@
 		
 			<f:loadBundle var="bundleCMC" basename="ApplicationProperties" />  	 
 	 		
-			 <div style="border-width: 1px; border-style: solid; height: 10%">
-				 <ui:insert name="header">
-				 	<ui:include src="/menubar.xhtml"></ui:include>
-				 </ui:insert>
-			 </div>
-			 
-			 <div style="border-width: 1px; border-style: solid; height: 90%">
-				 <ui:insert name="content">
-				 	<ui:include src="/main.xhtml"></ui:include>
-				 </ui:insert>
-			 </div>
-			 
+	 		 <table style="table-layout: fixed; width:100%;">
+	 		 
+        		<tr>
+        			<td>
+    		 			<ui:insert name="header">
+				 			<ui:include src="/menubar.xhtml"></ui:include>
+				 		</ui:insert>
+				 	</td>
+			 	</tr>
+			 	
+			 	<tr>
+        			<td>
+    		 			<ui:insert name="content">
+						 	<ui:include src="/main.xhtml"></ui:include>
+						 </ui:insert>
+				 	</td>
+			 	</tr>
+			 	
+			 </table>
+						 
 		</f:view>	 
 		        
     </h:body>

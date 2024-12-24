@@ -22,8 +22,11 @@ public class CmcSurveyQuestion implements Serializable
 	private String cmcSurveyQuestionEnglish;
 	private String cmcSurveyQuestionSpanish;
 	private String cmcSurveyQuestionType;
-	private String cmcSurveyQuestionStyle = null;
+	private String cmcSurveyQuestionStyleClass = null;
+	private boolean cmcSurveyQuestionRenderInputs = true;
 	private String answer;
+	private String answerComment;
+	private String answerStyle;
 	
 	@Override
 	public String toString() 
@@ -125,12 +128,36 @@ public class CmcSurveyQuestion implements Serializable
 		this.answer = answer;
 	}
 
-	public String getCmcSurveyQuestionStyle() {
-		return cmcSurveyQuestionStyle;
+	public String getAnswerComment() {
+		return answerComment;
 	}
 
-	public void setCmcSurveyQuestionStyle(String cmcSurveyQuestionStyle) {
-		this.cmcSurveyQuestionStyle = cmcSurveyQuestionStyle;
+	public void setAnswerComment(String answerComment) {
+		this.answerComment = answerComment;
+	}
+
+	public String getAnswerStyle() {
+		return answerStyle;
+	}
+
+	public void setAnswerStyle(String answerStyle) {
+		this.answerStyle = answerStyle;
+	}
+
+	public boolean isCmcSurveyQuestionRenderInputs() {
+		return cmcSurveyQuestionRenderInputs;
+	}
+
+	public void setCmcSurveyQuestionRenderInputs(boolean cmcSurveyQuestionRenderInputs) {
+		this.cmcSurveyQuestionRenderInputs = cmcSurveyQuestionRenderInputs;
+	}
+
+	public String getCmcSurveyQuestionStyleClass() {
+		return cmcSurveyQuestionStyleClass;
+	}
+
+	public void setCmcSurveyQuestionStyleClass(String cmcSurveyQuestionStyleClass) {
+		this.cmcSurveyQuestionStyleClass = cmcSurveyQuestionStyleClass;
 	}
 		
 	/*
