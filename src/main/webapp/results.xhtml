@@ -15,7 +15,7 @@
 		    
 		    <p:outputPanel id="physicalResultsPanel" style="display:block" rendered="#{pc_CmcMain.renderPhysicalResults}">
 		    
-		     	<p:dataTable id="physicalDisabilitiesSection1TableID" value="#{pc_CmcMain.physicalDisabilitiesSection1QuestionsHorizontalList}"
+		     	<p:dataTable id="physicalTableID" value="#{pc_CmcMain.physicalDisabilitiesSection1QuestionsHorizontalList}"
 				    var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
 											       				  
 					<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Options">												
@@ -35,12 +35,17 @@
 				    </p:column>
 				    
 				</p:dataTable> 
+				
+				<p:commandLink ajax="false">
+                     <p:graphicImage url="/images/pdf.png" width="24"/>
+                     <p:dataExporter type="pdf" target="physicalTableID" fileName="physPdf"/>
+                </p:commandLink>	
 				   
 		    </p:outputPanel> 	
 		    
 		    <p:outputPanel id="intellectualResultsPanel" style="display:block" rendered="#{pc_CmcMain.renderIntellectualResults}">
 		    
-		    	<p:dataTable id="intellectualDisabilitiesSection1TableID" value="#{pc_CmcMain.intellectualDisabilitiesSection1QuestionsHorizontalList}"
+		    	<p:dataTable id="intelTableID" value="#{pc_CmcMain.intellectualDisabilitiesSection1QuestionsHorizontalList}"
 				    var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
 											       				  
 					<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Options">												
@@ -60,12 +65,17 @@
 				    </p:column>
 				    
 				</p:dataTable>
-				 
+				
+				<p:commandLink ajax="false">
+                     <p:graphicImage url="/images/pdf.png" width="24"/>
+                     <p:dataExporter type="pdf" target="intelTableID" fileName="intelPdf"/>
+                </p:commandLink>
+                 
 		    </p:outputPanel> 
 		    
 		    <p:outputPanel id="autismResultsPanel" style="display:block" rendered="#{pc_CmcMain.renderAutismResults}">
 		    
-		    	<p:dataTable id="autismSection1TableID" value="#{pc_CmcMain.autismDisorderSection1QuestionsHorizontalList}"
+		    	<p:dataTable id="autismTableID" value="#{pc_CmcMain.autismDisorderSection1QuestionsHorizontalList}"
 				    var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
 											       				  
 					<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Options">												
@@ -85,6 +95,11 @@
 				    </p:column>
 				    
 				</p:dataTable>
+				
+				<p:commandLink ajax="false">
+                     <p:graphicImage url="/images/pdf.png" width="24"/>
+                     <p:dataExporter type="pdf" target="autismTableID" fileName="autismPdf"/>
+                </p:commandLink>
 				
 		    </p:outputPanel> 		
 	                
