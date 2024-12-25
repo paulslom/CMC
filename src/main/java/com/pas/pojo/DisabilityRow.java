@@ -6,40 +6,72 @@ public class DisabilityRow implements Serializable
 {
 	private static final long serialVersionUID = 131158039169073163L;
 	
-	private String cmcSurveyQuestionID;
 	private String cmcSurveyCategoryEnglish;
 	private String cmcSurveyCategorySpanish;
+	private String cmcSurveyID;
+	
 	private String publicBusAnswer;
-	private String publicBusAnswerStyle;
+	private String publicBusAnswerStyle;	
+	private String publicBusAnswerQuestionID;
+	
 	private String coachBusAnswer;
 	private String coachBusAnswerStyle;
+	private String coachBusAnswerQuestionID;
+	
 	private String trainSubwayAnswer;
 	private String trainSubwayAnswerStyle;
+	private String trainSubwayAnswerQuestionID;
+	
 	private String taxiAnswer;
 	private String taxiAnswerStyle;
+	private String taxiAnswerQuestionID;
+	
 	private String ehailingAnswer;
 	private String ehailingAnswerStyle;
+	private String ehailingAnswerQuestionID;
+	
 	private String ferryAnswer;
 	private String ferryAnswerStyle;
+	private String ferryAnswerQuestionID;
+	
 	private String walkAnswer;
 	private String walkAnswerStyle;
+	private String walkAnswerQuestionID;
+	
 	private String bikeAnswer;
 	private String bikeAnswerStyle;
+	private String bikeAnswerQuestionID;
+	
 	private String otherAnswer;
 	private String otherAnswerStyle;
+	private String otherAnswerQuestionID;
+	
 	private String powerwheelchairAnswer;
-	private String manualwheelchairAnswer;
-	private String rollatorAnswer;
-	private String prostheticsAnswer;
-	private String walkerAnswer;
-	private String crutchescaneAnswer;
-	private String scooterAnswer;
+	private String powerwheelchairQuestionID;
 	private String powerwheelchairAnswerStyle;
+	
+	private String manualwheelchairAnswer;
+	private String manualwheelchairQuestionID;
 	private String manualwheelchairAnswerStyle;
+	
+	private String rollatorAnswer;
+	private String rollatorAnswerQuestionID;
 	private String rollatorAnswerStyle;
+	
+	private String prostheticsAnswer;
+	private String prostheticsAnswerQuestionID;
 	private String prostheticsAnswerStyle;
+	
+	private String walkerAnswer;
+	private String walkerAnswerQuestionID;
 	private String walkerAnswerStyle;
+	
+	private String crutchescaneAnswer;
+	private String crutchescaneAnswerQuestionID;
 	private String crutchescaneAnswerStyle;
+	
+	private String scooterAnswer;
+	private String scooterAnswerQuestionID;
 	private String scooterAnswerStyle;
 	
 	private boolean answerRequired = false;	
@@ -47,16 +79,8 @@ public class DisabilityRow implements Serializable
 	@Override
 	public String toString() 
 	{
-		String myString = "Survey Question ID: " + cmcSurveyQuestionID;
+		String myString = "Survey ID: " + cmcSurveyID + "publicBusAnswer Question ID: " + publicBusAnswerQuestionID;
 		return myString;
-	}
-
-	public String getCmcSurveyQuestionID() {
-		return cmcSurveyQuestionID;
-	}
-
-	public void setCmcSurveyQuestionID(String cmcSurveyQuestionID) {
-		this.cmcSurveyQuestionID = cmcSurveyQuestionID;
 	}
 
 	public String getCmcSurveyCategoryEnglish() {
@@ -338,7 +362,141 @@ public class DisabilityRow implements Serializable
 	public void setScooterAnswerStyle(String scooterAnswerStyle) {
 		this.scooterAnswerStyle = scooterAnswerStyle;
 	}
+
+	public String getPublicBusAnswerQuestionID() {
+		return publicBusAnswerQuestionID;
+	}
+
+	public void setPublicBusAnswerQuestionID(String publicBusAnswerQuestionID) {
+		this.publicBusAnswerQuestionID = publicBusAnswerQuestionID;
+	}
+
+	public String getCoachBusAnswerQuestionID() {
+		return coachBusAnswerQuestionID;
+	}
+
+	public void setCoachBusAnswerQuestionID(String coachBusAnswerQuestionID) {
+		this.coachBusAnswerQuestionID = coachBusAnswerQuestionID;
+	}
+
+	public String getTrainSubwayAnswerQuestionID() {
+		return trainSubwayAnswerQuestionID;
+	}
+
+	public void setTrainSubwayAnswerQuestionID(String trainSubwayAnswerQuestionID) {
+		this.trainSubwayAnswerQuestionID = trainSubwayAnswerQuestionID;
+	}
+
+	public String getTaxiAnswerQuestionID() {
+		return taxiAnswerQuestionID;
+	}
+
+	public void setTaxiAnswerQuestionID(String taxiAnswerQuestionID) {
+		this.taxiAnswerQuestionID = taxiAnswerQuestionID;
+	}
+
+	public String getEhailingAnswerQuestionID() {
+		return ehailingAnswerQuestionID;
+	}
+
+	public void setEhailingAnswerQuestionID(String ehailingAnswerQuestionID) {
+		this.ehailingAnswerQuestionID = ehailingAnswerQuestionID;
+	}
+
+	public String getFerryAnswerQuestionID() {
+		return ferryAnswerQuestionID;
+	}
+
+	public void setFerryAnswerQuestionID(String ferryAnswerQuestionID) {
+		this.ferryAnswerQuestionID = ferryAnswerQuestionID;
+	}
+
+	public String getWalkAnswerQuestionID() {
+		return walkAnswerQuestionID;
+	}
+
+	public void setWalkAnswerQuestionID(String walkAnswerQuestionID) {
+		this.walkAnswerQuestionID = walkAnswerQuestionID;
+	}
 	
-	
+	public String getBikeAnswerQuestionID() {
+		return bikeAnswerQuestionID;
+	}
+
+	public void setBikeAnswerQuestionID(String bikeAnswerQuestionID) {
+		this.bikeAnswerQuestionID = bikeAnswerQuestionID;
+	}
+
+	public String getOtherAnswerQuestionID() {
+		return otherAnswerQuestionID;
+	}
+
+	public void setOtherAnswerQuestionID(String otherAnswerQuestionID) {
+		this.otherAnswerQuestionID = otherAnswerQuestionID;
+	}
+
+	public String getPowerwheelchairQuestionID() {
+		return powerwheelchairQuestionID;
+	}
+
+	public void setPowerwheelchairQuestionID(String powerwheelchairQuestionID) {
+		this.powerwheelchairQuestionID = powerwheelchairQuestionID;
+	}
+
+	public String getManualwheelchairQuestionID() {
+		return manualwheelchairQuestionID;
+	}
+
+	public void setManualwheelchairQuestionID(String manualwheelchairQuestionID) {
+		this.manualwheelchairQuestionID = manualwheelchairQuestionID;
+	}
+
+	public String getRollatorAnswerQuestionID() {
+		return rollatorAnswerQuestionID;
+	}
+
+	public void setRollatorAnswerQuestionID(String rollatorAnswerQuestionID) {
+		this.rollatorAnswerQuestionID = rollatorAnswerQuestionID;
+	}
+
+	public String getProstheticsAnswerQuestionID() {
+		return prostheticsAnswerQuestionID;
+	}
+
+	public void setProstheticsAnswerQuestionID(String prostheticsAnswerQuestionID) {
+		this.prostheticsAnswerQuestionID = prostheticsAnswerQuestionID;
+	}
+
+	public String getWalkerAnswerQuestionID() {
+		return walkerAnswerQuestionID;
+	}
+
+	public void setWalkerAnswerQuestionID(String walkerAnswerQuestionID) {
+		this.walkerAnswerQuestionID = walkerAnswerQuestionID;
+	}
+
+	public String getCrutchescaneAnswerQuestionID() {
+		return crutchescaneAnswerQuestionID;
+	}
+
+	public void setCrutchescaneAnswerQuestionID(String crutchescaneAnswerQuestionID) {
+		this.crutchescaneAnswerQuestionID = crutchescaneAnswerQuestionID;
+	}
+
+	public String getScooterAnswerQuestionID() {
+		return scooterAnswerQuestionID;
+	}
+
+	public void setScooterAnswerQuestionID(String scooterAnswerQuestionID) {
+		this.scooterAnswerQuestionID = scooterAnswerQuestionID;
+	}
+
+	public String getCmcSurveyID() {
+		return cmcSurveyID;
+	}
+
+	public void setCmcSurveyID(String cmcSurveyID) {
+		this.cmcSurveyID = cmcSurveyID;
+	}
 	
 }

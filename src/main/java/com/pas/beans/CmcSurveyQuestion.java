@@ -14,14 +14,10 @@ public class CmcSurveyQuestion implements Serializable
 	private String cmcSurveyQuestionID;
 	private String cmcSurveyID;
 	private String cmcSurveySection;
-	private String cmcSurveySectionTitleEnglish;
-	private String cmcSurveySectionTitleSpanish;
-	private String cmcSurveyCategoryEnglish;
-	private String cmcSurveyCategorySpanish;
+	private String cmcSurveyCategory;
 	private Integer cmcSurveyQuestionNumber;
 	private String cmcSurveyQuestionEnglish;
 	private String cmcSurveyQuestionSpanish;
-	private String cmcSurveyQuestionType;
 	private String cmcSurveyQuestionStyleClass = null;
 	private boolean cmcSurveyQuestionRenderInputs = true;
 	private String answer;
@@ -55,31 +51,7 @@ public class CmcSurveyQuestion implements Serializable
 	public void setCmcSurveySection(String cmcSurveySection) {
 		this.cmcSurveySection = cmcSurveySection;
 	}
-	public String getCmcSurveySectionTitleEnglish() {
-		return cmcSurveySectionTitleEnglish;
-	}
-	public void setCmcSurveySectionTitleEnglish(String cmcSurveySectionTitleEnglish) {
-		this.cmcSurveySectionTitleEnglish = cmcSurveySectionTitleEnglish;
-	}
-	public String getCmcSurveySectionTitleSpanish() {
-		return cmcSurveySectionTitleSpanish;
-	}
-	public void setCmcSurveySectionTitleSpanish(String cmcSurveySectionTitleSpanish) {
-		this.cmcSurveySectionTitleSpanish = cmcSurveySectionTitleSpanish;
-	}
-	public String getCmcSurveyCategoryEnglish() {
-		return cmcSurveyCategoryEnglish;
-	}
-	public void setCmcSurveyCategoryEnglish(String cmcSurveyCategoryEnglish) {
-		this.cmcSurveyCategoryEnglish = cmcSurveyCategoryEnglish;
-	}
-	public String getCmcSurveyCategorySpanish() {
-		return cmcSurveyCategorySpanish;
-	}
-	public void setCmcSurveyCategorySpanish(String cmcSurveyCategorySpanish) {
-		this.cmcSurveyCategorySpanish = cmcSurveyCategorySpanish;
-	}
-
+	
 	public Integer getCmcSurveyQuestionNumber() {
 		return cmcSurveyQuestionNumber;
 	}
@@ -103,14 +75,6 @@ public class CmcSurveyQuestion implements Serializable
 	public void setCmcSurveyQuestionSpanish(String cmcSurveyQuestionSpanish) {
 		this.cmcSurveyQuestionSpanish = cmcSurveyQuestionSpanish;
 	}
-
-	public String getCmcSurveyQuestionType() {
-		return cmcSurveyQuestionType;
-	}
-
-	public void setCmcSurveyQuestionType(String cmcSurveyQuestionType) {
-		this.cmcSurveyQuestionType = cmcSurveyQuestionType;
-	}	
 
 	public static class SurveyQuestionComparator implements Comparator<CmcSurveyQuestion> 
 	{
@@ -158,6 +122,14 @@ public class CmcSurveyQuestion implements Serializable
 
 	public void setCmcSurveyQuestionStyleClass(String cmcSurveyQuestionStyleClass) {
 		this.cmcSurveyQuestionStyleClass = cmcSurveyQuestionStyleClass;
+	}
+
+	public String getCmcSurveyCategory() {
+		return cmcSurveyCategory;
+	}
+
+	public void setCmcSurveyCategory(String cmcSurveyCategory) {
+		this.cmcSurveyCategory = cmcSurveyCategory;
 	}
 		
 	/*

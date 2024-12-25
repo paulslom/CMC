@@ -53,6 +53,10 @@ public class CmcMain implements Serializable
 		
 	private boolean siteInEnglish = true;
 	
+	private boolean renderPhysicalResults = false;
+	private boolean renderIntellectualResults = false;
+	private boolean renderAutismResults = false;
+	
 	private static String Performs_Independently_Dropdown_Value = "1";
 	private static String Potentially_Able_with_Training_Dropdown_Value = "2";
 	private static String Unable_to_Meet_Demands_Dropdown_Value = "3";
@@ -583,140 +587,388 @@ public class CmcMain implements Serializable
 		logger.info("Site language set to English");
 	}
 		
-	public String submitPhysicalDisabilityAnswers() throws Exception
+	public String submitPhysicalDisabilityAnswers()
 	{
 		logger.info("entering submitPhysicalDisabilityAnswers");
 		
-		if (validateAnswers(this.getPhysicalDisabilitiesSection1QuestionsList()) 
-		||  validateAnswers(this.getPhysicalDisabilitiesSection2QuestionsList())
-		||  validateAnswers(this.getPhysicalDisabilitiesSection3QuestionsList())) //will be true if errors
+		try
 		{
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
-	        FacesContext.getCurrentInstance().addMessage(null, msg);    
-			return "";
+			if (validateAnswersUpperSection(this.getPhysicalDisabilitiesSection1QuestionsHorizontalList())
+			||  validateAnswersLowerSection(this.getPhysicalDisabilitiesSection3QuestionsList())) //will be true if errors
+			{
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
+		        FacesContext.getCurrentInstance().addMessage(null, msg);    
+				return "";
+			}
+			
+			for (int i = 0; i < this.getPhysicalDisabilitiesSection1QuestionsHorizontalList().size(); i++) 
+		    {
+				DisabilityRow dr = this.getPhysicalDisabilitiesSection1QuestionsHorizontalList().get(i);
+				writeAnswersFromDisabilityRow(dr, "phys1");			
+		    }
+			
+			for (int i = 0; i < this.getPhysicalDisabilitiesSection2QuestionsHorizontalList().size(); i++) 
+		    {
+				DisabilityRow dr = this.getPhysicalDisabilitiesSection2QuestionsHorizontalList().get(i);
+				writeAnswersFromDisabilityRow(dr, "phys2");			
+		    }
+			
+			for (int i = 0; i < this.getPhysicalDisabilitiesSection3QuestionsList().size(); i++) 
+		    {
+				CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection3QuestionsList().get(i);
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+				cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+				cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+		    }
+			
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Physical Disabilities answers successfully submitted",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg); 
+	        
+	        this.setRenderPhysicalResults(true);
+	        this.setRenderIntellectualResults(false);
+	        this.setRenderAutismResults(false);
+		}
+		catch (Exception e)
+		{
+			logger.error("Exception in submitPhysicalDisabilityAnswers: " + e.getMessage(), e);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Exception in submitPhysicalDisabilityAnswers: " + e.getMessage(),null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg); 
+	        return "";
 		}
 		
-		for (int i = 0; i < this.getPhysicalDisabilitiesSection1QuestionsList().size(); i++) 
-	    {
-			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection1QuestionsList().get(i);
-			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
-			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
-			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
-			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
-			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
-	    }
+        //FacesContext.getCurrentInstance().getExternalContext().redirect("/results.xhtml");
 		
-		for (int i = 0; i < this.getPhysicalDisabilitiesSection2QuestionsList().size(); i++) 
-	    {
-			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection2QuestionsList().get(i);
-			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
-			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
-			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
-			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
-			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
-	    }
-		
-		for (int i = 0; i < this.getPhysicalDisabilitiesSection3QuestionsList().size(); i++) 
-	    {
-			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection3QuestionsList().get(i);
-			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
-			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
-			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
-			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
-			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
-	    }
-		
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Physical Disabilities answers successfully submitted",null);
-        FacesContext.getCurrentInstance().addMessage(null, msg);   
-        
-		return "";
+		return "/results.xhtml";
 	}	
 	
 	public String submitIntellectualDisabilityAnswers() throws Exception
 	{
 		logger.info("entering submitPhysicalDisabilityAnswers");
 		
-		if (validateAnswers(this.getIntellectualDisabilitiesSection1QuestionsList()) 
-		||  validateAnswers(this.getIntellectualDisabilitiesSection2QuestionsList())) //will be true if errors
+		try
 		{
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
-	        FacesContext.getCurrentInstance().addMessage(null, msg);    
-			return "";
+			if (validateAnswersUpperSection(this.getIntellectualDisabilitiesSection1QuestionsHorizontalList())
+			||  validateAnswersLowerSection(this.getIntellectualDisabilitiesSection2QuestionsList())) //will be true if errors
+			{
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
+		        FacesContext.getCurrentInstance().addMessage(null, msg);    
+				return "";
+			}
+			
+			for (int i = 0; i < this.getIntellectualDisabilitiesSection1QuestionsHorizontalList().size(); i++) 
+		    {
+				DisabilityRow dr = this.getIntellectualDisabilitiesSection1QuestionsHorizontalList().get(i);
+				writeAnswersFromDisabilityRow(dr, "intel");		
+		    }
+			
+			for (int i = 0; i < this.getIntellectualDisabilitiesSection2QuestionsList().size(); i++) 
+		    {
+				CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection2QuestionsList().get(i);
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+				cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+				cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+		    }
+					
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Intellectual disabilities answers successfully submitted",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);  
+	        
+	        this.setRenderPhysicalResults(false);
+	        this.setRenderIntellectualResults(true);
+	        this.setRenderAutismResults(false);
+		}
+		catch (Exception e)
+		{
+			logger.error("Exception in submitIntellectualDisabilityAnswers: " + e.getMessage(), e);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Exception in submitIntellectualDisabilityAnswers: " + e.getMessage(),null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg); 
+	        return "";
 		}
 		
-		for (int i = 0; i < this.getIntellectualDisabilitiesSection1QuestionsList().size(); i++) 
-	    {
-			CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection1QuestionsList().get(i);
-			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
-			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
-			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
-			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
-			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
-	    }
+        //FacesContext.getCurrentInstance().getExternalContext().redirect("/results.xhtml");
 		
-		for (int i = 0; i < this.getIntellectualDisabilitiesSection2QuestionsList().size(); i++) 
-	    {
-			CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection2QuestionsList().get(i);
-			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
-			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
-			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
-			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
-			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
-	    }
-				
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Intellectual disabilities answers successfully submitted",null);
-        FacesContext.getCurrentInstance().addMessage(null, msg);   
-        
-		return "";
+		return "/results.xhtml";
 	}
 	
 	public String submitAutismSpectrumDisorderAnswers() throws Exception
 	{
 		logger.info("entering submitAutismSpectrumDisorderAnswers");
 		
-		if (validateAnswers(this.getAutismDisorderSection1QuestionsList()) 
-		||  validateAnswers(this.getAutismDisorderSection2QuestionsList())) //will be true if errors
+		try
 		{
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
-	        FacesContext.getCurrentInstance().addMessage(null, msg);    
-			return "";
+			if (validateAnswersUpperSection(this.getAutismDisorderSection1QuestionsHorizontalList())
+			||  validateAnswersLowerSection(this.getAutismDisorderSection2QuestionsList())) //will be true if errors
+			{
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
+		        FacesContext.getCurrentInstance().addMessage(null, msg);    
+				return "";
+			}
+			
+			for (int i = 0; i < this.getAutismDisorderSection1QuestionsHorizontalList().size(); i++) 
+		    {
+				DisabilityRow dr = this.getAutismDisorderSection1QuestionsHorizontalList().get(i);
+				writeAnswersFromDisabilityRow(dr, "autism");	
+			}
+			
+			for (int i = 0; i < this.getAutismDisorderSection2QuestionsList().size(); i++) 
+		    {
+				CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection2QuestionsList().get(i);
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
+				cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
+				cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
+		    }
+					
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Autism Spectrum Disorder answers successfully submitted",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);   
+	        
+	        this.setRenderPhysicalResults(false);
+	        this.setRenderIntellectualResults(false);
+	        this.setRenderAutismResults(true);
+		}
+		catch (Exception e)
+		{
+			logger.error("Exception in submitAutismDisorderAnswers: " + e.getMessage(), e);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Exception in submitAutismDisorderAnswers: " + e.getMessage(),null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg); 
+	        return "";
 		}
 		
-		for (int i = 0; i < this.getAutismDisorderSection1QuestionsList().size(); i++) 
-	    {
-			CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection1QuestionsList().get(i);
-			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
-			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
-			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
-			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
-			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
-	    }
+        //FacesContext.getCurrentInstance().getExternalContext().redirect("/results.xhtml");
 		
-		for (int i = 0; i < this.getAutismDisorderSection2QuestionsList().size(); i++) 
-	    {
-			CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection2QuestionsList().get(i);
-			CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
-			cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
-			cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
-			cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
-			cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
-	    }
-				
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Autism Spectrum Disorder answers successfully submitted",null);
-        FacesContext.getCurrentInstance().addMessage(null, msg);   
-        
-		return "";
+		return "/results.xhtml";
 	}
 	
+	private void writeAnswersFromDisabilityRow(DisabilityRow dr, String whichSurvey) throws Exception 
+	{		
+		if (whichSurvey.equalsIgnoreCase("phys2"))
+		{
+			if (dr.getPowerwheelchairAnswer() != null && dr.getPowerwheelchairAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getPowerwheelchairAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getPowerwheelchairQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getManualwheelchairAnswer() != null && dr.getManualwheelchairAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getManualwheelchairAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getManualwheelchairQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getRollatorAnswer() != null && dr.getRollatorAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getRollatorAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getRollatorAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getProstheticsAnswer() != null && dr.getProstheticsAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getProstheticsAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getProstheticsAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getWalkerAnswer() != null && dr.getWalkerAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getWalkerAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getWalkerAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getCrutchescaneAnswer() != null && dr.getCrutchescaneAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getCrutchescaneAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getCrutchescaneAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getScooterAnswer() != null && dr.getScooterAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getScooterAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getScooterAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getOtherAnswer() != null && dr.getOtherAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getOtherAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getOtherAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+		}
+		else //phys1, intel, autism
+		{
+			if (dr.getPublicBusAnswer() != null && dr.getPublicBusAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getPublicBusAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getPublicBusAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getCoachBusAnswer() != null && dr.getCoachBusAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getCoachBusAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getCoachBusAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getTrainSubwayAnswer() != null && dr.getTrainSubwayAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getTrainSubwayAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getTrainSubwayAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getTaxiAnswer() != null && dr.getTaxiAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getTaxiAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getTaxiAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getEhailingAnswer() != null && dr.getEhailingAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getEhailingAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getEhailingAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getFerryAnswer() != null && dr.getFerryAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getFerryAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getFerryAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getWalkAnswer() != null && dr.getWalkAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getWalkAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getWalkAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getBikeAnswer() != null && dr.getBikeAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getBikeAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getBikeAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+			if (dr.getOtherAnswer() != null && dr.getOtherAnswer().trim().length() > 0)
+			{
+				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();		
+				cmcSurveyAnswer.setSurveyID(dr.getCmcSurveyID());
+				cmcSurveyAnswer.setSurveyAnswer(dr.getOtherAnswer());
+				cmcSurveyAnswer.setSurveyQuestionID(dr.getOtherAnswerQuestionID());
+				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);		
+			}
+			
+		}
+		
+		
+	}
+
+	private boolean validateAnswersUpperSection(List<DisabilityRow> tempList)
+	{
+		boolean errorFound = false;
+		
+		for (int i = 0; i < tempList.size(); i++) 
+	    {
+			DisabilityRow dr = tempList.get(i);
+			
+			if (dr.getCmcSurveyCategoryEnglish().equalsIgnoreCase("Available"))
+			{
+				if (dr.getPublicBusAnswer() == null || dr.getPublicBusAnswer().trim().length() == 0)
+				{
+					errorFound = true;
+				}	
+				if (dr.getCoachBusAnswer() == null || dr.getCoachBusAnswer().trim().length() == 0)
+				{
+					errorFound = true;
+				}	
+				if (dr.getTrainSubwayAnswer() == null || dr.getTrainSubwayAnswer().trim().length() == 0)
+				{
+					errorFound = true;
+				}	
+				if (dr.getTaxiAnswer() == null || dr.getTaxiAnswer().trim().length() == 0)
+				{
+					errorFound = true;
+				}	
+				if (dr.getEhailingAnswer() == null || dr.getEhailingAnswer().trim().length() == 0)
+				{
+					errorFound = true;
+				}	
+				if (dr.getFerryAnswer() == null || dr.getFerryAnswer().trim().length() == 0)
+				{
+					errorFound = true;
+				}	
+				if (dr.getWalkAnswer() == null || dr.getWalkAnswer().trim().length() == 0)
+				{
+					errorFound = true;
+				}	
+				if (dr.getBikeAnswer() == null || dr.getBikeAnswer().trim().length() == 0)
+				{
+					errorFound = true;
+				}	
+				if (dr.getOtherAnswer() == null || dr.getOtherAnswer().trim().length() == 0)
+				{
+					errorFound = true;
+				}	
+			}
+					
+	    }
+		
+		return errorFound;				
+	}
 	
-	private boolean validateAnswers(List<CmcSurveyQuestion> tempList)
+	private boolean validateAnswersLowerSection(List<CmcSurveyQuestion> tempList)
 	{
 		boolean errorFound = false;
 		
 		for (int i = 0; i < tempList.size(); i++) 
 	    {
 			CmcSurveyQuestion cmcSurveyQuestion = tempList.get(i);
-			if (cmcSurveyQuestion.getAnswer() == null || cmcSurveyQuestion.getAnswer().equalsIgnoreCase("Select"))
+			
+			if (cmcSurveyQuestion.getAnswer() == null || cmcSurveyQuestion.getAnswer().trim().length() == 0)
 			{
 				errorFound = true;
 			}			
@@ -1228,6 +1480,30 @@ public class CmcMain implements Serializable
 
 	public void setSiteSubTitle(String siteSubTitle) {
 		this.siteSubTitle = siteSubTitle;
+	}
+
+	public boolean isRenderPhysicalResults() {
+		return renderPhysicalResults;
+	}
+
+	public void setRenderPhysicalResults(boolean renderPhysicalResults) {
+		this.renderPhysicalResults = renderPhysicalResults;
+	}
+
+	public boolean isRenderAutismResults() {
+		return renderAutismResults;
+	}
+
+	public void setRenderAutismResults(boolean renderAutismResults) {
+		this.renderAutismResults = renderAutismResults;
+	}
+
+	public boolean isRenderIntellectualResults() {
+		return renderIntellectualResults;
+	}
+
+	public void setRenderIntellectualResults(boolean renderIntellectualResults) {
+		this.renderIntellectualResults = renderIntellectualResults;
 	}
 		
 }
