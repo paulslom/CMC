@@ -19,7 +19,7 @@
 			   </p:blockUI> 
 				
 			   <tr>
-			      <td>
+			      <td align="center">
 			   		  <h:outputText value="#{pc_CmcMain.intellectualDisabilitiesPageTitle}" styleClass="pageSectionTitle"/>
 			   	  </td>
 			   </tr>
@@ -49,9 +49,17 @@
 					   immediate="true"
           			   update="intellectualDisabilitiesSection1TableID intellectualDisabilitiesSection2TableID"/>
           				   
-          			 <p:commandButton id="intelDisDefaultAnswersId" 
-					   value="Default all Answers" 
-					   action="#{pc_CmcMain.defaultAllIntellectualDisabilityAnswers}" 
+          			 <p:commandButton id="intelDisDefaultAnswersYesId" 
+					   value="Default all Answers to Yes/Able" 
+					   action="#{pc_CmcMain.defaultAllIntellectualDisabilityAnswersToYes}" 
+					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
+					   ajax="false"
+					   immediate="true"
+          			   update="intellectualDisabilitiesSection1TableID intellectualDisabilitiesSection2TableID"/>
+          			   
+          			  <p:commandButton id="intelDisDefaultAnswersNoId" 
+					   value="Default all Answers to No/Unable" 
+					   action="#{pc_CmcMain.defaultAllIntellectualDisabilityAnswersToNo}" 
 					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
 					   ajax="false"
 					   immediate="true"
@@ -249,7 +257,7 @@
 				     <p:dataTable id="intellectualDisabilitiesSection2TableID" value="#{pc_CmcMain.intellectualDisabilitiesSection2QuestionsList}"
 			          var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">				
 				       	 
-						  <p:column headerText="Functional Skills and Abilities:Is the individual able to: Ex. = Example" rendered="#{pc_CmcMain.siteInEnglish}">												
+						  <p:column headerText="Functional Skills and Abilities: Is the individual able to: Ex. = Example" rendered="#{pc_CmcMain.siteInEnglish}">												
 							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}" styleClass="#{surveyQuestion.cmcSurveyQuestionStyleClass}"/>														
 						  </p:column>
 						  

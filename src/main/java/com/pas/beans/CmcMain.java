@@ -15,6 +15,8 @@ import com.pas.dao.CmcSurveysDAO;
 import com.pas.dynamodb.DynamoClients;
 import com.pas.dynamodb.DynamoUtil;
 import com.pas.pojo.DisabilityRow;
+import com.pas.pojo.QuestionSkip;
+import com.pas.pojo.ResultsRow;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
@@ -42,7 +44,7 @@ public class CmcMain implements Serializable
 	private static String Site_Title_English = "Mobility Match";
 	private static String Site_Title_Spanish = "Mobility Match";
 	
-	private static String Site_SubTitle_English = "Connecting You with Best Choices of Community Mobility";
+	private static String Site_SubTitle_English = "Connecting You with Choices of Community Mobility";
 	private static String Site_SubTitle_Spanish = "Lo conectamos con las mejores opciones de movilidad comunitaria a través";
 
 	public static String Physical_Disabilities_Survey_Name = "Physical Disabilities";
@@ -93,6 +95,8 @@ public class CmcMain implements Serializable
 	
 	private boolean renderDefaultAnswers = true;
 	
+	private List<ResultsRow> resultsList = new ArrayList<>();
+	
 	private String physicalDisabilitiesMenuTitle;
 	private String physicalDisabilitiesPageTitle;
 	private String physicalDisabilitiesPageSubTitle;
@@ -104,6 +108,8 @@ public class CmcMain implements Serializable
 	private String autismDisorderMenuTitle;
 	private String autismDisorderPageTitle;
 	private String autismDisorderPageSubTitle;
+	
+	private String resultsPageTitle = "Pauls Results";
 	
 	private CmcSurveyQuestionsDAO cmcSurveyQuestionsDAO;
 	private CmcSurveysDAO cmcSurveysDAO;
@@ -586,6 +592,40 @@ public class CmcMain implements Serializable
 		
 		logger.info("Site language set to English");
 	}
+	
+	//This method only for Paul's unit testing of the results page
+	public String submitTestAnswers()
+	{
+		logger.info("entering submitTestAnswers");
+		
+		this.setRenderPhysicalResults(true);
+		
+		ResultsRow resultsRow = new ResultsRow();
+		resultsRow.setTransportationOption("Public (City) Bus");
+		resultsRow.setTransportationViable(true);
+		resultsRow.getSkillsAcquiredList().add("1. Ambulate independently, including steps/stairs or locate/operate elevators");
+		resultsRow.getSkillsAcquiredList().add("2. Propels self up and down ramps without assistance");
+		resultsRow.getSkillsAcquiredList().add("4. Transfers in and out of a vehicle efficiently");
+		resultsRow.getSkillsNeedingDevelopmentList().add("6. Crosses a street without pedestrian controls (with/without traffic signals)");
+		resultsRow.getSkillsNeedingDevelopmentList().add("18. Manage money/money card/fare card to pay for and register travel");
+		resultsRow.getSkillsUnableToPerformList().add("9. Secures mobility device to vehicle or provide directions to others");
+		
+		resultsList.add(resultsRow);
+		
+		resultsRow = new ResultsRow();
+		resultsRow.setTransportationOption("Coach (Intercity Bus)");
+		resultsRow.setTransportationViable(false);
+		resultsRow.getSkillsAcquiredList().add("5. Coach bus, including steps/stairs or locate/operate elevators");
+		resultsRow.getSkillsAcquiredList().add("2. Propels self up into the coach bus");
+		resultsRow.getSkillsAcquiredList().add("4. Transfers in and out of the coach bus");
+		resultsRow.getSkillsNeedingDevelopmentList().add("6. Crosses a street into the coach bus");
+		resultsRow.getSkillsNeedingDevelopmentList().add("18. Manage moneyto use for the coach bus");
+		resultsRow.getSkillsUnableToPerformList().add("9. Secures mobility device for the coach bus");
+		
+		resultsList.add(resultsRow);
+		
+		return "";
+	}	
 		
 	public String submitPhysicalDisabilityAnswers()
 	{
@@ -629,6 +669,8 @@ public class CmcMain implements Serializable
 	        this.setRenderPhysicalResults(true);
 	        this.setRenderIntellectualResults(false);
 	        this.setRenderAutismResults(false);
+	        
+	        populateResultsPage("physical", this.getPhysicalDisabilitiesSection1QuestionsHorizontalList(), this.getPhysicalDisabilitiesSection3QuestionsList());
 		}
 		catch (Exception e)
 		{
@@ -641,8 +683,8 @@ public class CmcMain implements Serializable
         //FacesContext.getCurrentInstance().getExternalContext().redirect("/results.xhtml");
 		
 		return "/results.xhtml";
-	}	
-	
+	}		
+
 	public String submitIntellectualDisabilityAnswers() throws Exception
 	{
 		logger.info("entering submitPhysicalDisabilityAnswers");
@@ -679,6 +721,8 @@ public class CmcMain implements Serializable
 	        this.setRenderPhysicalResults(false);
 	        this.setRenderIntellectualResults(true);
 	        this.setRenderAutismResults(false);
+	        
+	        populateResultsPage("intellectual", this.getIntellectualDisabilitiesSection1QuestionsHorizontalList(), this.getIntellectualDisabilitiesSection2QuestionsList());
 		}
 		catch (Exception e)
 		{
@@ -729,6 +773,8 @@ public class CmcMain implements Serializable
 	        this.setRenderPhysicalResults(false);
 	        this.setRenderIntellectualResults(false);
 	        this.setRenderAutismResults(true);
+	        
+	        populateResultsPage("autism", this.getAutismDisorderSection1QuestionsHorizontalList(), this.getAutismDisorderSection2QuestionsList());
 		}
 		catch (Exception e)
 		{
@@ -741,6 +787,190 @@ public class CmcMain implements Serializable
         //FacesContext.getCurrentInstance().getExternalContext().redirect("/results.xhtml");
 		
 		return "/results.xhtml";
+	}
+	
+
+	private void populateResultsPage(String survey, List<DisabilityRow> topSectionList, List<CmcSurveyQuestion> bottomSectionList) 
+	{
+		logger.info("entering populateResultsPage for survey: " + survey);
+		
+		this.getResultsList().clear();
+		
+		//default all viability settings to true; if even one unable to perform is selected it'll get set to false.
+		
+		ResultsRow resultsRowPublicBus = new ResultsRow();
+		resultsRowPublicBus.setTransportationOption("Public (City) Bus");
+		resultsRowPublicBus.setTransportationViable(true);
+		
+		ResultsRow resultsRowCoachBus = new ResultsRow();
+		resultsRowCoachBus.setTransportationOption("Coach (Intercity Bus)");
+		resultsRowCoachBus.setTransportationViable(true);
+		
+		ResultsRow resultsRowTrainSubway = new ResultsRow();
+		resultsRowTrainSubway.setTransportationOption("Train/Subway/Trolley/Tram");
+		resultsRowTrainSubway.setTransportationViable(true);
+		
+		ResultsRow resultsRowTaxi = new ResultsRow();
+		resultsRowTaxi.setTransportationOption("Taxi");
+		resultsRowTaxi.setTransportationViable(true);
+		
+		ResultsRow resultsRowEhailing = new ResultsRow();
+		resultsRowEhailing.setTransportationOption("Ehailing (Uber/Lyft)");
+		resultsRowEhailing.setTransportationViable(true);
+		
+		ResultsRow resultsRowFerry = new ResultsRow();
+		resultsRowFerry.setTransportationOption("Ferry");
+		resultsRowFerry.setTransportationViable(true);
+		
+		ResultsRow resultsRowWalking = new ResultsRow();
+		resultsRowWalking.setTransportationOption("Walking");
+		resultsRowWalking.setTransportationViable(true);
+		
+		ResultsRow resultsRowBikeScooter = new ResultsRow();
+		resultsRowBikeScooter.setTransportationOption("Bike/Scooter");
+		resultsRowBikeScooter.setTransportationViable(true);
+		
+		for (int i = 0; i < bottomSectionList.size(); i++) 
+		{
+			CmcSurveyQuestion cmcsq = bottomSectionList.get(i);
+			
+			//skip "questions" that are only in there as subcategory separators on the questions pages
+			if (cmcsq.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Physical")
+			||  cmcsq.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Cognitive")
+			||  cmcsq.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Communication")
+			||  cmcsq.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Self-Monitoring")
+			||  cmcsq.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Behavioral"))
+			{
+				continue;
+			}
+						
+			QuestionSkip questionSkip = new QuestionSkip();
+			questionSkip.setSkipQuestion(cmcsq, survey);
+			
+			if (cmcsq.getAnswer().equalsIgnoreCase(Performs_Independently_Dropdown_Value))
+			{
+				if (questionSkip.isDoPublicBus())
+				{
+					resultsRowPublicBus.getSkillsAcquiredList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoCoachBus())
+				{
+					resultsRowCoachBus.getSkillsAcquiredList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoTrainSubway())
+				{
+					resultsRowTrainSubway.getSkillsAcquiredList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoTaxi())
+				{
+					resultsRowTaxi.getSkillsAcquiredList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoEhailing())
+				{
+					resultsRowEhailing.getSkillsAcquiredList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoFerry())
+				{
+					resultsRowFerry.getSkillsAcquiredList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoWalking())
+				{
+					resultsRowWalking.getSkillsAcquiredList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoBikeScooter())
+				{
+					resultsRowBikeScooter.getSkillsAcquiredList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+			}
+			else if (cmcsq.getAnswer().equalsIgnoreCase(Potentially_Able_with_Training_Dropdown_Value))
+			{
+				if (questionSkip.isDoPublicBus())
+				{
+					resultsRowPublicBus.getSkillsNeedingDevelopmentList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoCoachBus())
+				{
+					resultsRowCoachBus.getSkillsNeedingDevelopmentList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoTrainSubway())
+				{				
+					resultsRowTrainSubway.getSkillsNeedingDevelopmentList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoTaxi())
+				{
+					resultsRowTaxi.getSkillsNeedingDevelopmentList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoEhailing())
+				{
+					resultsRowEhailing.getSkillsNeedingDevelopmentList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoFerry())
+				{
+					resultsRowFerry.getSkillsNeedingDevelopmentList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoWalking())
+				{
+					resultsRowWalking.getSkillsNeedingDevelopmentList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+				if (questionSkip.isDoBikeScooter())
+				{
+					resultsRowBikeScooter.getSkillsNeedingDevelopmentList().add(cmcsq.getCmcSurveyQuestionEnglish());
+				}
+			}
+			else if (cmcsq.getAnswer().equalsIgnoreCase(Unable_to_Meet_Demands_Dropdown_Value))
+			{
+				if (questionSkip.isDoPublicBus())
+				{
+					resultsRowPublicBus.getSkillsUnableToPerformList().add(cmcsq.getCmcSurveyQuestionEnglish());
+					resultsRowPublicBus.setTransportationViable(false);
+				}
+				if (questionSkip.isDoCoachBus())
+				{
+					resultsRowCoachBus.getSkillsUnableToPerformList().add(cmcsq.getCmcSurveyQuestionEnglish());
+					resultsRowCoachBus.setTransportationViable(false);
+				}
+				if (questionSkip.isDoTrainSubway())
+				{
+					resultsRowTrainSubway.getSkillsUnableToPerformList().add(cmcsq.getCmcSurveyQuestionEnglish());
+					resultsRowTrainSubway.setTransportationViable(false);
+				}
+				if (questionSkip.isDoTaxi())
+				{
+					resultsRowTaxi.getSkillsUnableToPerformList().add(cmcsq.getCmcSurveyQuestionEnglish());
+					resultsRowTaxi.setTransportationViable(false);
+				}
+				if (questionSkip.isDoEhailing())
+				{
+					resultsRowEhailing.getSkillsUnableToPerformList().add(cmcsq.getCmcSurveyQuestionEnglish());
+					resultsRowEhailing.setTransportationViable(false);
+				}
+				if (questionSkip.isDoFerry())
+				{
+					resultsRowFerry.getSkillsUnableToPerformList().add(cmcsq.getCmcSurveyQuestionEnglish());
+					resultsRowFerry.setTransportationViable(false);
+				}
+				if (questionSkip.isDoWalking())
+				{
+					resultsRowWalking.getSkillsUnableToPerformList().add(cmcsq.getCmcSurveyQuestionEnglish());
+					resultsRowWalking.setTransportationViable(false);
+				}
+				if (questionSkip.isDoBikeScooter())
+				{
+					resultsRowBikeScooter.getSkillsUnableToPerformList().add(cmcsq.getCmcSurveyQuestionEnglish());
+					resultsRowBikeScooter.setTransportationViable(false);
+				}
+			}
+			
+		}	
+			
+		resultsList.add(resultsRowPublicBus);
+		resultsList.add(resultsRowCoachBus);
+		resultsList.add(resultsRowTrainSubway);
+		resultsList.add(resultsRowTaxi);
+		resultsList.add(resultsRowEhailing);
+		resultsList.add(resultsRowFerry);
+		resultsList.add(resultsRowWalking);
+		resultsList.add(resultsRowBikeScooter);				
 	}
 	
 	private void writeAnswersFromDisabilityRow(DisabilityRow dr, String whichSurvey) throws Exception 
@@ -1043,68 +1273,128 @@ public class CmcMain implements Serializable
 		return "";
 	}
 	
-	public String defaultAllPhysicalDisabilityAnswers()
+	public String defaultAllPhysicalDisabilityAnswersToYes()
+	{
+		defaultAllPhysicalDisabilityAnswers("Yes", GREEN_STYLECLASS);
+		return "";
+	}
+	
+	public String defaultAllPhysicalDisabilityAnswersToNo()
+	{
+		defaultAllPhysicalDisabilityAnswers("No", RED_STYLECLASS);
+		return "";
+	}
+	
+	public String defaultAllPhysicalDisabilityAnswers(String defaultAnswer, String defaultStyleClass)
 	{
 		logger.info("entering defaultAllPhysicalDisabilityAnswers");
 		
 		for (int i = 0; i < this.getPhysicalDisabilitiesSection1QuestionsHorizontalList().size(); i++) 
 	    {
 			DisabilityRow dr = this.getPhysicalDisabilitiesSection1QuestionsHorizontalList().get(i);
-			defaultDisabilityRow(dr);			
+			defaultDisabilityRow(dr, defaultAnswer, defaultStyleClass);			
 	    }
 		
 		for (int i = 0; i < this.getPhysicalDisabilitiesSection2QuestionsHorizontalList().size(); i++) 
 	    {
 			DisabilityRow dr = this.getPhysicalDisabilitiesSection2QuestionsHorizontalList().get(i);
-			defaultDisabilityRow(dr);		
+			defaultDisabilityRow(dr, defaultAnswer, defaultStyleClass);	
 	    }
 		
 		for (int i = 0; i < this.getPhysicalDisabilitiesSection3QuestionsList().size(); i++) 
 	    {
 			CmcSurveyQuestion cmcSurveyQuestion = this.getPhysicalDisabilitiesSection3QuestionsList().get(i);
-			cmcSurveyQuestion.setAnswer(Performs_Independently_Dropdown_Value);
-			cmcSurveyQuestion.setAnswerStyle(GREEN_STYLECLASS);
+			if (defaultAnswer.equalsIgnoreCase("Yes"))
+			{
+				cmcSurveyQuestion.setAnswer(Performs_Independently_Dropdown_Value);
+				cmcSurveyQuestion.setAnswerStyle(GREEN_STYLECLASS);
+			}
+			else
+			{
+				cmcSurveyQuestion.setAnswer(Unable_to_Meet_Demands_Dropdown_Value);
+				cmcSurveyQuestion.setAnswerStyle(RED_STYLECLASS);
+			}
 	    }
 		
 		return "";
 		
 	}
 	
-	public String defaultAllIntellectualDisabilityAnswers()
+	public String defaultAllIntellectualDisabilityAnswersToYes()
+	{
+		defaultAllIntellectualDisabilityAnswers("Yes", GREEN_STYLECLASS);
+		return "";
+	}
+	
+	public String defaultAllIntellectualDisabilityAnswersToNo()
+	{
+		defaultAllIntellectualDisabilityAnswers("No", RED_STYLECLASS);
+		return "";
+	}
+	
+	public String defaultAllIntellectualDisabilityAnswers(String defaultAnswer, String defaultStyleClass)
 	{
 		logger.info("entering defaultAllIntellectualDisabilityAnswers");
 		
 		for (int i = 0; i < this.getIntellectualDisabilitiesSection1QuestionsHorizontalList().size(); i++) 
 	    {
 			DisabilityRow dr = this.getIntellectualDisabilitiesSection1QuestionsHorizontalList().get(i);
-			defaultDisabilityRow(dr);			
+			defaultDisabilityRow(dr, defaultAnswer, defaultStyleClass);			
 	    }
 		
 		for (int i = 0; i < this.getIntellectualDisabilitiesSection2QuestionsList().size(); i++) 
 	    {
 			CmcSurveyQuestion cmcSurveyQuestion = this.getIntellectualDisabilitiesSection2QuestionsList().get(i);
-			cmcSurveyQuestion.setAnswer(Performs_Independently_Dropdown_Value);
-			cmcSurveyQuestion.setAnswerStyle(GREEN_STYLECLASS);
+			if (defaultAnswer.equalsIgnoreCase("Yes"))
+			{
+				cmcSurveyQuestion.setAnswer(Performs_Independently_Dropdown_Value);
+				cmcSurveyQuestion.setAnswerStyle(GREEN_STYLECLASS);
+			}
+			else
+			{
+				cmcSurveyQuestion.setAnswer(Unable_to_Meet_Demands_Dropdown_Value);
+				cmcSurveyQuestion.setAnswerStyle(RED_STYLECLASS);
+			}
 	    }
 		
 		return "";		
 	}
 	
-	public String defaultAllAutismSpectrumDisorderAnswers()
+	public String defaultAllAutismSpectrumDisorderAnswersToYes()
+	{
+		defaultAllAutismSpectrumDisorderAnswers("Yes", GREEN_STYLECLASS);
+		return "";
+	}
+	
+	public String defaultAllAutismSpectrumDisorderAnswersToNo()
+	{
+		defaultAllAutismSpectrumDisorderAnswers("No", RED_STYLECLASS);
+		return "";
+	}
+	
+	public String defaultAllAutismSpectrumDisorderAnswers(String defaultAnswer, String defaultStyleClass)
 	{
 		logger.info("entering defaultAllAllAutismSpectrumDisorderAnswers");
 		
 		for (int i = 0; i < this.getAutismDisorderSection1QuestionsHorizontalList().size(); i++) 
 	    {
 			DisabilityRow dr = this.getAutismDisorderSection1QuestionsHorizontalList().get(i);
-			defaultDisabilityRow(dr);			
+			defaultDisabilityRow(dr, defaultAnswer, defaultStyleClass);			
 	    }
 		
 		for (int i = 0; i < this.getAutismDisorderSection2QuestionsList().size(); i++) 
 	    {
 			CmcSurveyQuestion cmcSurveyQuestion = this.getAutismDisorderSection2QuestionsList().get(i);
-			cmcSurveyQuestion.setAnswer(Performs_Independently_Dropdown_Value);
-			cmcSurveyQuestion.setAnswerStyle(GREEN_STYLECLASS);
+			if (defaultAnswer.equalsIgnoreCase("Yes"))
+			{
+				cmcSurveyQuestion.setAnswer(Performs_Independently_Dropdown_Value);
+				cmcSurveyQuestion.setAnswerStyle(GREEN_STYLECLASS);
+			}
+			else
+			{
+				cmcSurveyQuestion.setAnswer(Unable_to_Meet_Demands_Dropdown_Value);
+				cmcSurveyQuestion.setAnswerStyle(RED_STYLECLASS);
+			}
 	    }
 		
 		return "";		
@@ -1146,40 +1436,40 @@ public class CmcMain implements Serializable
 		dr.setScooterAnswerStyle(""); 		
 	}
 	
-	private void defaultDisabilityRow(DisabilityRow dr) 
+	private void defaultDisabilityRow(DisabilityRow dr, String defaultAnswer, String defaultStyleClass) 
 	{
-		dr.setPublicBusAnswer("Yes"); 
-		dr.setPublicBusAnswerStyle(GREEN_STYLECLASS); 
-		dr.setCoachBusAnswer("Yes"); 
-		dr.setCoachBusAnswerStyle(GREEN_STYLECLASS); 
-		dr.setTrainSubwayAnswer("Yes"); 
-		dr.setTrainSubwayAnswerStyle(GREEN_STYLECLASS); 
-		dr.setTaxiAnswer("Yes"); 
-		dr.setTaxiAnswerStyle(GREEN_STYLECLASS); 
-		dr.setEhailingAnswer("Yes"); 
-		dr.setEhailingAnswerStyle(GREEN_STYLECLASS); 
-		dr.setFerryAnswer("Yes"); 
-		dr.setFerryAnswerStyle(GREEN_STYLECLASS); 
-		dr.setWalkAnswer("Yes"); 
-		dr.setWalkAnswerStyle(GREEN_STYLECLASS); 
-		dr.setBikeAnswer("Yes"); 
-		dr.setBikeAnswerStyle(GREEN_STYLECLASS); 
-		dr.setOtherAnswer("Yes"); 
-		dr.setOtherAnswerStyle(GREEN_STYLECLASS); 
-		dr.setPowerwheelchairAnswer("Yes"); 
-		dr.setManualwheelchairAnswer(""); 
-		dr.setRollatorAnswer("Yes"); 
-		dr.setProstheticsAnswer(""); 
-		dr.setWalkerAnswer("Yes"); 
-		dr.setCrutchescaneAnswer(""); 
-		dr.setScooterAnswer("Yes"); 
-		dr.setPowerwheelchairAnswerStyle(GREEN_STYLECLASS); 
-		dr.setManualwheelchairAnswerStyle(GREEN_STYLECLASS); 
-		dr.setRollatorAnswerStyle(GREEN_STYLECLASS); 
-		dr.setProstheticsAnswerStyle(GREEN_STYLECLASS); 
-		dr.setWalkerAnswerStyle(GREEN_STYLECLASS); 
-		dr.setCrutchescaneAnswerStyle(GREEN_STYLECLASS); 
-		dr.setScooterAnswerStyle(GREEN_STYLECLASS); 		
+		dr.setPublicBusAnswer(defaultAnswer); 
+		dr.setPublicBusAnswerStyle(defaultStyleClass); 
+		dr.setCoachBusAnswer(defaultAnswer); 
+		dr.setCoachBusAnswerStyle(defaultStyleClass); 
+		dr.setTrainSubwayAnswer(defaultAnswer); 
+		dr.setTrainSubwayAnswerStyle(defaultStyleClass); 
+		dr.setTaxiAnswer(defaultAnswer); 
+		dr.setTaxiAnswerStyle(defaultStyleClass); 
+		dr.setEhailingAnswer(defaultAnswer); 
+		dr.setEhailingAnswerStyle(defaultStyleClass); 
+		dr.setFerryAnswer(defaultAnswer); 
+		dr.setFerryAnswerStyle(defaultStyleClass); 
+		dr.setWalkAnswer(defaultAnswer); 
+		dr.setWalkAnswerStyle(defaultStyleClass); 
+		dr.setBikeAnswer(defaultAnswer); 
+		dr.setBikeAnswerStyle(defaultStyleClass); 
+		dr.setOtherAnswer(defaultAnswer); 
+		dr.setOtherAnswerStyle(defaultStyleClass); 
+		dr.setPowerwheelchairAnswer(defaultAnswer); 
+		dr.setManualwheelchairAnswer(defaultAnswer); 
+		dr.setRollatorAnswer(defaultAnswer); 
+		dr.setProstheticsAnswer(defaultAnswer); 
+		dr.setWalkerAnswer(defaultAnswer); 
+		dr.setCrutchescaneAnswer(defaultAnswer); 
+		dr.setScooterAnswer(defaultAnswer); 
+		dr.setPowerwheelchairAnswerStyle(defaultStyleClass); 
+		dr.setManualwheelchairAnswerStyle(defaultStyleClass); 
+		dr.setRollatorAnswerStyle(defaultStyleClass); 
+		dr.setProstheticsAnswerStyle(defaultStyleClass); 
+		dr.setWalkerAnswerStyle(defaultStyleClass); 
+		dr.setCrutchescaneAnswerStyle(defaultStyleClass); 
+		dr.setScooterAnswerStyle(defaultStyleClass); 		
 	}
 	
 	public void loadCmcSurveys(DynamoClients dynamoClients)  throws Exception
@@ -1504,6 +1794,22 @@ public class CmcMain implements Serializable
 
 	public void setRenderIntellectualResults(boolean renderIntellectualResults) {
 		this.renderIntellectualResults = renderIntellectualResults;
+	}
+
+	public String getResultsPageTitle() {
+		return resultsPageTitle;
+	}
+
+	public void setResultsPageTitle(String resultsPageTitle) {
+		this.resultsPageTitle = resultsPageTitle;
+	}
+
+	public List<ResultsRow> getResultsList() {
+		return resultsList;
+	}
+
+	public void setResultsList(List<ResultsRow> resultsList) {
+		this.resultsList = resultsList;
 	}
 		
 }

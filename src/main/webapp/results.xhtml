@@ -11,97 +11,38 @@
          <h:form id="resultsForm">                      
              
             <p:messages id="facesMessagesID" showDetail="false">
-		    </p:messages>  
-		    
-		    <p:outputPanel id="physicalResultsPanel" style="display:block" rendered="#{pc_CmcMain.renderPhysicalResults}">
-		    
-		     	<p:dataTable id="physicalTableID" value="#{pc_CmcMain.physicalDisabilitiesSection1QuestionsHorizontalList}"
-				    var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
-											       				  
-					<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Options">												
-						<h:outputText rendered="#{pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>															
-					</p:column>
-						  
-					<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Opciones">												
-					    <h:outputText rendered="#{!pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>															
-					</p:column>
-							  				  
-					<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Public (City) Bus">
-					    <h:outputText value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}"/>
-				    </p:column>
-						  
-					<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Autobús público (urbano)">											
-						<h:outputText value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}"/>
-				    </p:column>
-				    
-				</p:dataTable> 
+		    </p:messages>
+		    	          
+	     	<p:dataTable id="resultsTableID" value="#{pc_CmcMain.resultsList}"
+			    var="resultRow" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
+										       				  
+				<p:column headerText="Option">												
+					<h:outputText value="#{resultRow.transportationOption}"/>															
+				</p:column>
 				
-				<p:commandLink ajax="false">
-                     <p:graphicImage url="/images/pdf.png" width="24"/>
-                     <p:dataExporter type="pdf" target="physicalTableID" fileName="physPdf"/>
-                </p:commandLink>	
-				   
-		    </p:outputPanel> 	
-		    
-		    <p:outputPanel id="intellectualResultsPanel" style="display:block" rendered="#{pc_CmcMain.renderIntellectualResults}">
-		    
-		    	<p:dataTable id="intelTableID" value="#{pc_CmcMain.intellectualDisabilitiesSection1QuestionsHorizontalList}"
-				    var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
-											       				  
-					<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Options">												
-						<h:outputText rendered="#{pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>															
-					</p:column>
-						  
-					<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Opciones">												
-					    <h:outputText rendered="#{!pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>															
-					</p:column>
-							  				  
-					<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Public (City) Bus">
-					    <h:outputText value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}"/>
-				    </p:column>
-						  
-					<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Autobús público (urbano)">											
-						<h:outputText value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}"/>
-				    </p:column>
-				    
-				</p:dataTable>
+				<p:column headerText="Viable Option">												
+					<h:outputText rendered="#{resultRow.transportationViable}" value="Yes" styleClass="resultGreen"/>
+					<h:outputText rendered="#{!resultRow.transportationViable}" value="No" styleClass="resultRed"/>																	
+				</p:column>
 				
-				<p:commandLink ajax="false">
-                     <p:graphicImage url="/images/pdf.png" width="24"/>
-                     <p:dataExporter type="pdf" target="intelTableID" fileName="intelPdf"/>
-                </p:commandLink>
-                 
-		    </p:outputPanel> 
-		    
-		    <p:outputPanel id="autismResultsPanel" style="display:block" rendered="#{pc_CmcMain.renderAutismResults}">
-		    
-		    	<p:dataTable id="autismTableID" value="#{pc_CmcMain.autismDisorderSection1QuestionsHorizontalList}"
-				    var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
-											       				  
-					<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Options">												
-						<h:outputText rendered="#{pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategoryEnglish}"/>															
-					</p:column>
-						  
-					<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Opciones">												
-					    <h:outputText rendered="#{!pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>															
-					</p:column>
-							  				  
-					<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Public (City) Bus">
-					    <h:outputText value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}"/>
-				    </p:column>
-						  
-					<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Autobús público (urbano)">											
-						<h:outputText value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}"/>
-				    </p:column>
-				    
-				</p:dataTable>
+				<p:column headerText="Skills Already Acquired for This Transportation" style="background-color:#32cd32; color:#000000; font-weight: normal;">												
+					<h:outputText value="#{resultRow.skillsAcquiredDisplay}" escape="false"/>																
+				</p:column>
 				
-				<p:commandLink ajax="false">
-                     <p:graphicImage url="/images/pdf.png" width="24"/>
-                     <p:dataExporter type="pdf" target="autismTableID" fileName="autismPdf"/>
-                </p:commandLink>
+				<p:column headerText="Skills Identified as Needing Development" style="background-color:#fcc200; color:#000000; font-weight: normal;">										
+					<h:outputText value="#{resultRow.skillsNeedingDevelopmentDisplay}" escape="false" />																				
+				</p:column>
 				
-		    </p:outputPanel> 		
+				<p:column headerText="Skills Identified as Unable to Perform, but Still Required" style="background-color:#dc143c; color:#000000; font-weight: normal;">											
+					<h:outputText value="#{resultRow.skillsUnableToPerformDisplay}" escape="false" />																				
+				</p:column>
+			    
+			</p:dataTable> 
+			
+			<p:commandLink ajax="false">
+                 <p:graphicImage url="/images/pdf.png" width="44"/>
+                 <p:dataExporter type="pdf" target="resultsTableID" fileName="resultsPdf"/>
+            </p:commandLink>		    
 	                
 	     </h:form>
    

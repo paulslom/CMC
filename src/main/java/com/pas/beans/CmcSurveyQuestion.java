@@ -27,7 +27,7 @@ public class CmcSurveyQuestion implements Serializable
 	@Override
 	public String toString() 
 	{
-		String myString = "Survey Question ID: " + cmcSurveyQuestionID + " Survey Question in English: " + cmcSurveyQuestionEnglish;
+		String myString = "Question: " + cmcSurveyQuestionEnglish;
 		return myString;
 	}
 	

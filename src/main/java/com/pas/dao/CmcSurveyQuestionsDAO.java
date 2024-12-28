@@ -125,7 +125,7 @@ public class CmcSurveyQuestionsDAO implements Serializable
             {
             	if (!cmcsq.isCmcSurveyQuestionRenderInputs())
             	{
-            		cmcsq.setCmcSurveyQuestionStyleClass("sectionSubTitle");
+            		cmcsq.setCmcSurveyQuestionStyleClass("pageSectionSubTitle");
             	}
             	this.getPhysicalDisabilitiesSection3QuestionsList().add(cmcsq);
             }
@@ -137,7 +137,7 @@ public class CmcSurveyQuestionsDAO implements Serializable
             {
             	if (!cmcsq.isCmcSurveyQuestionRenderInputs())
             	{
-            		cmcsq.setCmcSurveyQuestionStyleClass("sectionSubTitle");
+            		cmcsq.setCmcSurveyQuestionStyleClass("pageSectionSubTitle");
             	}
             	this.getIntellectualDisabilitiesSection2QuestionsList().add(cmcsq);
             }

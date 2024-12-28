@@ -19,7 +19,7 @@
 			   </p:blockUI> 
 				
 			   <tr>
-			      <td>
+			      <td align="center">
 			   		  <h:outputText value="#{pc_CmcMain.physicalDisabilitiesPageTitle}" styleClass="pageSectionTitle"/>
 			   	  </td>
 			   </tr>
@@ -49,21 +49,28 @@
 					   immediate="true"
           			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>
           				   
-          			 <p:commandButton id="physDisDefaultAnswersId" 
-					   value="Default all Answers" 
-					   action="#{pc_CmcMain.defaultAllPhysicalDisabilityAnswers}" 
+          			 <p:commandButton id="physDisDefaultAnswersYesId" 
+					   value="Default Answers to Yes/Able" 
+					   action="#{pc_CmcMain.defaultAllPhysicalDisabilityAnswersToYes}" 
 					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
 					   ajax="false"
 					   immediate="true"
           			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>
-          				   
+          			
+          			<p:commandButton id="physDisDefaultAnswersNoId" 
+					   value="Default Answers to No/UnAble" 
+					   action="#{pc_CmcMain.defaultAllPhysicalDisabilityAnswersToNo}" 
+					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
+					   ajax="false"
+					   immediate="true"
+          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>	   
 	              </td>
 	           
 	           </tr>
 	              			   	
 	           <tr>
 	           
-	              <td>	              
+	              <td>	       	              
 	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section1_Title_English}" rendered="#{pc_CmcMain.siteInEnglish}" styleClass="pageSectionTitle"></h:outputText>
 	            	<h:outputText value="#{bundleCMC.physicalDisabilities_Section1_Title_Spanish}" rendered="#{!pc_CmcMain.siteInEnglish}" styleClass="pageSectionTitle"></h:outputText>	              
 	              </td>
@@ -389,7 +396,7 @@
 					  <p:dataTable id="physicalDisabilitiesSection3TableID" value="#{pc_CmcMain.physicalDisabilitiesSection3QuestionsList}"
 				          var="surveyQuestion" scrollable="true" scrollHeight="350" styleClass="dataTableStyle;">						
 							
-						  <p:column headerText="Functional Skills and Abilities:Is the individual able to: Ex. = Example" rendered="#{pc_CmcMain.siteInEnglish}">												
+						  <p:column headerText="Functional Skills and Abilities: Is the individual able to: Ex. = Example" rendered="#{pc_CmcMain.siteInEnglish}">												
 							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}" styleClass="#{surveyQuestion.cmcSurveyQuestionStyleClass}"/>														
 						  </p:column>
 						  

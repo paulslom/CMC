@@ -12,15 +12,20 @@
         
         <table style="table-layout: fixed; width:100%;">
         
+        	<colgroup>
+	        	<col width="90%"/>
+	            <col width="10%"/>
+        	</colgroup>
+        	
         	<tr>
         	
-        		<td width="80%">
+        		<td align="center">
         		     <h:outputText value="#{pc_CmcMain.siteTitle}" styleClass="sectionTitle"/>           	
 		        </td>
         		
-        		<td width="20%">
+        		<td>
         		
-        		    <p:selectOneRadio id="englishSpanishID" value="#{pc_CmcMain.siteLanguage}"  styleClass="sectionSubTitle">
+        		    <p:selectOneRadio id="englishSpanishID" value="#{pc_CmcMain.siteLanguage}"  styleClass="englishSpanishStyle">
 			            <f:selectItem itemLabel="English" itemValue="1" />
 						<f:selectItem itemLabel="Spanish" itemValue="2" />
 						<p:ajax update="menuForm menuId mainForm physForm intelForm autismForm" listener="#{pc_CmcMain.valueChangeLanguageRadio}" />
@@ -32,22 +37,26 @@
         		
         	<tr>
         	
-        		<td colspan="2">
+        		<td align="center">
         		   <h:outputText value="#{pc_CmcMain.siteSubTitle}" styleClass="sectionSubTitle"/>     
+	     		</td>
+	     		
+	     		<td>
 	     		</td>
         		
         	</tr>
         	            
             <tr>
             
-               <td colspan="2">
+               <td colspan="2" style="font-weight: bold; font-size:14;">
                
-                  <p:menubar id="menuId" styleClass="ui-menubar">
+                  <p:menubar id="menuId">
            
-			          <p:menuitem value="#{pc_CmcMain.physicalDisabilitiesMenuTitle}" url="#{request.contextPath}/physicalDisabilities.xhtml" styleClass="#{view.viewId.contains('/physicalDisabilities.xhtml') ? 'activeMenuSelection' : ''}"/>
-			          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesMenuTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml" styleClass="#{view.viewId.contains('/intellectualDisabilities.xhtml') ? 'activeMenuSelection' : ''}"/>
-			          <p:menuitem value="#{pc_CmcMain.autismDisorderMenuTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml" styleClass="#{view.viewId.contains('/autismSpectrumDisorder.xhtml') ? 'activeMenuSelection' : ''}"/>
-			         			
+			          <p:menuitem value="#{pc_CmcMain.physicalDisabilitiesMenuTitle}" url="#{request.contextPath}/physicalDisabilities.xhtml"/>
+			          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesMenuTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml"/>
+			          <p:menuitem value="#{pc_CmcMain.autismDisorderMenuTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml"/>
+			          <p:menuitem value="Results" url="#{request.contextPath}/results.xhtml"/>
+					
 				  </p:menubar> 
         		    
                </td>

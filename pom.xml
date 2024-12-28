@@ -6,7 +6,7 @@
   <groupId>com.pas</groupId>
   <artifactId>cmc</artifactId>
   <packaging>war</packaging>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   
   <name>Mobility Match Maven Webapp</name>
   <url>http://maven.apache.org</url>

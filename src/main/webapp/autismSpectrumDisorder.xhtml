@@ -19,7 +19,7 @@
 			   </p:blockUI> 
 				
 			   <tr>
-			      <td>
+			      <td align="center">
 			   		  <h:outputText value="#{pc_CmcMain.autismDisorderPageTitle}" styleClass="pageSectionTitle"/>
 			   	  </td>
 			   </tr>
@@ -49,9 +49,17 @@
 					   immediate="true"
           			   update="autismDisorderSection1TableID autismDisorderSection2TableID"/>
           				   
-          			 <p:commandButton id="autismDisDefaultAnswersId" 
-					   value="Default all Answers" 
-					   action="#{pc_CmcMain.defaultAllAutismSpectrumDisorderAnswers}" 
+          			 <p:commandButton id="autismDisDefaultAnswersYesId" 
+					   value="Default all Answers to Yes/Able" 
+					   action="#{pc_CmcMain.defaultAllAutismSpectrumDisorderAnswersToYes}" 
+					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
+					   ajax="false"
+					   immediate="true"
+          			   update="autismDisorderSection1TableID autismDisorderSection2TableID"/>
+          			   
+          			  <p:commandButton id="autismDisDefaultAnswersNoId" 
+					   value="Default all Answers to No/Unable" 
+					   action="#{pc_CmcMain.defaultAllAutismSpectrumDisorderAnswersToNo}" 
 					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
 					   ajax="false"
 					   immediate="true"
@@ -250,7 +258,7 @@
 				     <p:dataTable id="autismDisorderSection2TableID" value="#{pc_CmcMain.autismDisorderSection2QuestionsList}"
 			          var="surveyQuestion" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">				
 				       	 
-						  <p:column headerText="Functional Skills and Abilities:Is the individual able to: Ex. = Example" rendered="#{pc_CmcMain.siteInEnglish}">												
+						  <p:column headerText="Functional Skills and Abilities: Is the individual able to: Ex. = Example" rendered="#{pc_CmcMain.siteInEnglish}">												
 							  <h:outputText value="#{surveyQuestion.cmcSurveyQuestionEnglish}"/>														
 						  </p:column>
 						  
