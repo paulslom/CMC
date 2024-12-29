@@ -28,7 +28,7 @@
         		    <p:selectOneRadio id="englishSpanishID" value="#{pc_CmcMain.siteLanguage}"  styleClass="englishSpanishStyle">
 			            <f:selectItem itemLabel="English" itemValue="1" />
 						<f:selectItem itemLabel="Spanish" itemValue="2" />
-						<p:ajax update="menuForm menuId mainForm physForm intelForm autismForm" listener="#{pc_CmcMain.valueChangeLanguageRadio}" />
+						<p:ajax update="menuForm menuId mainForm physForm intelForm autismForm resultsForm" listener="#{pc_CmcMain.valueChangeLanguageRadio}" />
 			        </p:selectOneRadio>		
 		           
         		</td>

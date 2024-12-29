@@ -663,9 +663,11 @@ public class CmcMain implements Serializable
 				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
 		    }
 			
+			/*
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"All Physical Disabilities answers successfully submitted",null);
 	        FacesContext.getCurrentInstance().addMessage(null, msg); 
-	        
+	        */
+			
 	        this.setRenderPhysicalResults(true);
 	        this.setRenderIntellectualResults(false);
 	        this.setRenderAutismResults(false);

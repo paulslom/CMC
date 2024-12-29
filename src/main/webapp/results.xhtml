@@ -16,34 +16,59 @@
 	     	<p:dataTable id="resultsTableID" value="#{pc_CmcMain.resultsList}"
 			    var="resultRow" scrollable="true" scrollHeight="550" styleClass="dataTableStyle;">						
 										       				  
-				<p:column headerText="Option">												
+				<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Option">												
 					<h:outputText value="#{resultRow.transportationOption}"/>															
 				</p:column>
 				
-				<p:column headerText="Viable Option">												
+				<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Opcione">												
+					<h:outputText value="#{resultRow.transportationOption}"/>															
+				</p:column>
+				
+				<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Viable Option">												
 					<h:outputText rendered="#{resultRow.transportationViable}" value="Yes" styleClass="resultGreen"/>
 					<h:outputText rendered="#{!resultRow.transportationViable}" value="No" styleClass="resultRed"/>																	
 				</p:column>
 				
-				<p:column headerText="Skills Already Acquired for This Transportation" style="background-color:#32cd32; color:#000000; font-weight: normal;">												
+				<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Opción viable">												
+					<h:outputText rendered="#{resultRow.transportationViable}" value="Si" styleClass="resultGreen"/>
+					<h:outputText rendered="#{!resultRow.transportationViable}" value="No" styleClass="resultRed"/>																	
+				</p:column>				
+				
+				<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Skills Already Acquired for This Transportation" style="background-color:#32cd32; color:#000000; font-weight: normal;">												
 					<h:outputText value="#{resultRow.skillsAcquiredDisplay}" escape="false"/>																
 				</p:column>
 				
-				<p:column headerText="Skills Identified as Needing Development" style="background-color:#fcc200; color:#000000; font-weight: normal;">										
+				<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Habilidades ya adquiridas para este transporte" style="background-color:#32cd32; color:#000000; font-weight: normal;">												
+					<h:outputText value="#{resultRow.skillsAcquiredDisplay}" escape="false"/>																
+				</p:column>
+				
+				<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Skills Identified as Needing Development" style="background-color:#fcc200; color:#000000; font-weight: normal;">										
 					<h:outputText value="#{resultRow.skillsNeedingDevelopmentDisplay}" escape="false" />																				
 				</p:column>
 				
-				<p:column headerText="Skills Identified as Unable to Perform, but Still Required" style="background-color:#dc143c; color:#000000; font-weight: normal;">											
+				<p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Habilidades identificadas como que necesitan desarrollo" style="background-color:#fcc200; color:#000000; font-weight: normal;">										
+					<h:outputText value="#{resultRow.skillsNeedingDevelopmentDisplay}" escape="false" />																				
+				</p:column>
+				
+				<p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Skills Identified as Unable to Perform, but Still Required" style="background-color:#dc143c; color:#000000; font-weight: normal;">											
 					<h:outputText value="#{resultRow.skillsUnableToPerformDisplay}" escape="false" />																				
 				</p:column>
 			    
+			    <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Habilidades identificadas como imposibles de realizar, pero que aún son necesarias" style="background-color:#dc143c; color:#000000; font-weight: normal;">											
+					<h:outputText value="#{resultRow.skillsUnableToPerformDisplay}" escape="false" />																				
+				</p:column>
+				
 			</p:dataTable> 
 			
 			<p:commandLink ajax="false">
                  <p:graphicImage url="/images/pdf.png" width="44"/>
                  <p:dataExporter type="pdf" target="resultsTableID" fileName="resultsPdf"/>
             </p:commandLink>		    
-	                
+	         
+	         <div>				 
+				<input type="button" value="Create PDF"	onclick="generatePDF()"/>
+			</div>  
+			      
 	     </h:form>
    
     </ui:define>
