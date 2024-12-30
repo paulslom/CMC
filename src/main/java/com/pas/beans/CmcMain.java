@@ -1,5 +1,7 @@
 package com.pas.beans;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
+import org.primefaces.util.ComponentUtils;
 
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
 import com.pas.dao.CmcSurveyAnswersDAO;
 import com.pas.dao.CmcSurveyQuestionsDAO;
 import com.pas.dao.CmcSurveysDAO;
@@ -20,6 +28,10 @@ import com.pas.pojo.ResultsRow;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.component.UIColumn;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.component.ValueHolder;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.model.SelectItem;
@@ -111,6 +123,9 @@ public class CmcMain implements Serializable
 	
 	private String resultsPageTitle = "Pauls Results";
 	
+	private static String HTML_CRLF = "<br><br>";
+	private static String PDF_CRLF = "\r\n\r\n";
+	
 	private CmcSurveyQuestionsDAO cmcSurveyQuestionsDAO;
 	private CmcSurveysDAO cmcSurveysDAO;
 	private CmcSurveyAnswersDAO cmcSurveyAnswersDAO;
@@ -189,6 +204,36 @@ public class CmcMain implements Serializable
 			changeToSpanish();
         }		
 		
+    }
+	
+	public String exportResultColumn(UIColumn column) 
+	{
+	    String value = "";
+	    for(UIComponent child: column.getChildren()) 
+	    {
+	        if(child instanceof ValueHolder) 
+	        {
+	            value = ComponentUtils.getValueToRender(FacesContext.getCurrentInstance(), child);
+	        }
+	    }
+	    
+	    value = value.replaceAll(HTML_CRLF, PDF_CRLF);
+	    
+	    return value;
+	}
+	
+	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException 
+	{
+        Document pdf = (Document) document;
+        pdf.setPageSize(PageSize.A4.rotate());
+        pdf.open();
+        
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+
+        String separator = File.separator;
+        String logo = externalContext.getRealPath("") + separator + "images" + separator + "planForTheRoadAhead.png";
+
+        pdf.add(Image.getInstance(logo));
     }
 	
 	public void highlightDropdown(AjaxBehaviorEvent event)

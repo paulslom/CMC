@@ -13,20 +13,6 @@
       <meta http-equiv="pragma" content="no-cache"></meta>
 	  <meta http-equiv="cache-control" content="no-cache"></meta>
 	  <meta http-equiv="expires" content="0"></meta>
-	  
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"/>
-	  
-	  <script type="text/javascript">
-		
-	     function generatePDF() 
-		 {
-			const { jsPDF } = window.jspdf;
-			const doc = new jsPDF();
-			doc.text("Hello world!", 100, 100);
-			doc.save("newFile.pdf");			 
-		 }	
-	     
-	  </script>	 
 	
 	  <h:outputStylesheet name="css/cgStyles.css"/> 
 	 		
