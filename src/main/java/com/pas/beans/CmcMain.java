@@ -1245,6 +1245,16 @@ public class CmcMain implements Serializable
 	    {
 			CmcSurveyQuestion cmcSurveyQuestion = tempList.get(i);
 			
+			//skip "questions" that are only in there as subcategory separators on the questions pages
+			if (cmcSurveyQuestion.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Physical")
+			||  cmcSurveyQuestion.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Cognitive")
+			||  cmcSurveyQuestion.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Communication")
+			||  cmcSurveyQuestion.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Self-Monitoring")
+			||  cmcSurveyQuestion.getCmcSurveyQuestionEnglish().equalsIgnoreCase("Behavioral"))
+			{
+				continue;
+			}
+			
 			if (cmcSurveyQuestion.getAnswer() == null || cmcSurveyQuestion.getAnswer().trim().length() == 0)
 			{
 				errorFound = true;
