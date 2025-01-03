@@ -1226,10 +1226,7 @@ public class CmcMain implements Serializable
 				{
 					errorFound = true;
 				}	
-				if (dr.getOtherAnswer() == null || dr.getOtherAnswer().trim().length() == 0)
-				{
-					errorFound = true;
-				}	
+				
 			}
 					
 	    }

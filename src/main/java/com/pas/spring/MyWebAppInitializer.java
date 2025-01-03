@@ -10,7 +10,6 @@ import org.jboss.weld.environment.servlet.EnhancedListener;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Configuration;
 
-import com.pas.util.FileDataLoader;
 import com.sun.faces.config.FacesInitializer;
 
 import jakarta.servlet.ServletContainerInitializer;
@@ -67,16 +66,7 @@ public class MyWebAppInitializer implements ServletContextInitializer
             }
             facesInitializer.onStartup(jsfAnnotatedClasses, sc);
             
-            logger.info("completed initialization of Jsf items");
-            
-            logger.info("Calling file data Loader which might reload data files to table depending on setting...");
-            FileDataLoader fileDataLoader = new FileDataLoader();
-            boolean success = fileDataLoader.load();
-            if (success) 
-            {
-                logger.info("Successfully loaded dynamo db database.");
-            }
-             
+            logger.info("completed initialization of Jsf items");                         
         } 
         catch (final Exception ex) 
         {
