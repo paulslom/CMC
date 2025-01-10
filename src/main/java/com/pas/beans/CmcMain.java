@@ -1,6 +1,5 @@
 package com.pas.beans;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import org.primefaces.util.ComponentUtils;
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
-import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.pas.dao.CmcSurveyAnswersDAO;
 import com.pas.dao.CmcSurveyQuestionsDAO;
@@ -31,7 +29,6 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIColumn;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.ValueHolder;
-import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.model.SelectItem;
@@ -228,12 +225,15 @@ public class CmcMain implements Serializable
         pdf.setPageSize(PageSize.A4.rotate());
         pdf.open();
         
+        /*
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 
         String separator = File.separator;
         String logo = externalContext.getRealPath("") + separator + "images" + separator + "planForTheRoadAhead.png";
 
         pdf.add(Image.getInstance(logo));
+        
+        */
     }
 	
 	public void highlightDropdown(AjaxBehaviorEvent event)
