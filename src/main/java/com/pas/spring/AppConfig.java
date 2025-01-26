@@ -7,4 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = {"com.pas.spring"},
 	excludeFilters={@Filter(org.springframework.stereotype.Controller.class)})
-public class AppConfig {}
+public class AppConfig
+{
+}
