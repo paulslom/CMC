@@ -50,11 +50,11 @@ public class CmcSurveyAnswersDAO implements Serializable
 	{				
 		Iterator<CmcSurveyAnswer> results = cmcSurveyAnswersTable.scan().items().iterator();
             
-		int testimonialCount = 0;
+		//int testimonialCount = 0;
 		while (results.hasNext()) 
         {
-			testimonialCount++;
-			logger.info("iterating cmcSurveyAnswers " + testimonialCount);
+			//testimonialCount++;
+			//logger.info("iterating cmcSurveyAnswers " + testimonialCount);
 			CmcSurveyAnswer cgTest = results.next();						
             this.getFullSurveyAnswersList().add(cgTest);			
         }

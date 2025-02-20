@@ -24,7 +24,9 @@ import com.pas.pojo.DisabilityRow;
 import com.pas.pojo.QuestionSkip;
 import com.pas.pojo.ResultsRow;
 
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.event.Observes;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIColumn;
 import jakarta.faces.component.UIComponent;
@@ -35,7 +37,7 @@ import jakarta.faces.model.SelectItem;
 import jakarta.inject.Named;
 
 @Named("pc_CmcMain")
-@SessionScoped
+@ApplicationScoped
 public class CmcMain implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -126,10 +128,10 @@ public class CmcMain implements Serializable
 	private CmcSurveyQuestionsDAO cmcSurveyQuestionsDAO;
 	private CmcSurveysDAO cmcSurveysDAO;
 	private CmcSurveyAnswersDAO cmcSurveyAnswersDAO;
-		
-	public CmcMain() 
+	
+	public void onStart(@Observes @Initialized(ApplicationScoped.class) Object pointless) 
 	{
-		logger.info("Entering CmcMain constructor.  Should only be here ONE time");	
+		logger.info("Entering CmcMain onStart method.  Should only be here ONE time");
 		logger.info("CmcMain id is: " + this.getId());
 		logger.info("Setting default to English");
 		
