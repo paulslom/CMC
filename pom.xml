@@ -6,7 +6,7 @@
   <groupId>com.pas</groupId>
   <artifactId>cmc</artifactId>
   <packaging>war</packaging>
-  <version>1.0.6</version>
+  <version>1.0.9</version>
   
   <name>Mobility Match Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -227,32 +227,12 @@
              <target>17</target>
           </configuration>
        </plugin>
-       
+      
        <plugin>
 		  <groupId>org.springframework.boot</groupId>
 		  <artifactId>spring-boot-maven-plugin</artifactId>
 	   </plugin>
-	  	   
-	   <!--Get Native SQLite4Java dependencies-->
-       <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy</id>
-                    <phase>test-compile</phase>
-                    <goals>
-                        <goal>copy-dependencies</goal>
-                    </goals>
-                    <configuration>
-                        <includeScope>test</includeScope>
-                        <includeTypes>so,dll,dylib</includeTypes>
-                        <outputDirectory>${project.basedir}/native-libs</outputDirectory>
-                    </configuration>
-                </execution>
-            </executions>
-       </plugin>
-		
+	    
     </plugins>
     
      <resources>

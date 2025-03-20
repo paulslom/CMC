@@ -24,10 +24,10 @@ public class Create_All_Dynamo_Tables
          {
     		 DynamoClients dynamoClients = DynamoUtil.getDynamoClients();
     
-    		 //doTable(dynamoClients, SURVEYS_JSONFILE);
-    		 //doTable(dynamoClients, SURVEYQUESTIONS_PHYSICAL_DISABILITIES_JSONFILE);
-    		 //doTable(dynamoClients, SURVEYQUESTIONS_INTELLECTUAL_DISABILITIES_JSONFILE);
-    		 //doTable(dynamoClients, SURVEYQUESTIONS_AUTISM_DISORDER_JSONFILE);
+    		 doTable(dynamoClients, SURVEYS_JSONFILE);
+    		 doTable(dynamoClients, SURVEYQUESTIONS_PHYSICAL_DISABILITIES_JSONFILE);
+    		 doTable(dynamoClients, SURVEYQUESTIONS_INTELLECTUAL_DISABILITIES_JSONFILE);
+    		 doTable(dynamoClients, SURVEYQUESTIONS_AUTISM_DISORDER_JSONFILE);
     		 doTable(dynamoClients, "SurveyAnswers");
     	      	
 	    	 DynamoUtil.stopDynamoServer();

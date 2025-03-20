@@ -10,6 +10,7 @@ import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
 //import com.pas.util.Utils;
 
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 //import software.amazon.awssdk.enhanced.dynamodb.model.EnhancedGlobalSecondaryIndex;
 import software.amazon.awssdk.regions.Region;
@@ -23,6 +24,8 @@ public class DynamoUtil
 	
 	private static String AWS_REGION = "us-east-1";
 	private static String AWS_DYNAMODB_LOCAL_PORT = "8000";
+	private static String AWS_PROFILE = "MobilityMatch";
+	//private static String AWS_PROFILE = "PaulsAmazon";
 	
 	private static DynamoDBProxyServer server;
 	
@@ -97,7 +100,9 @@ public class DynamoUtil
         	
         	ddbClient =  DynamoDbClient.builder()
                     .region(Region.of(AWS_REGION))
+                    .credentialsProvider(ProfileCredentialsProvider.create(AWS_PROFILE))
                     .build();
+        	
         } 
 		
 	    //Create a client and connect to DynamoDB, using an instance of the standard client.
