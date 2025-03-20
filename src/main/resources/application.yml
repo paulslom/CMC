@@ -1,9 +1,5 @@
 # src/main/resources/application.yml
-
-spring:
-  profiles:
-    active: Paul
-    
+   
 server:
   servlet:
     context-path: /cmc
