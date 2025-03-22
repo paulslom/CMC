@@ -135,6 +135,7 @@ public class CmcMain implements Serializable
 		logger.info("CmcMain id is: " + this.getId());
 		logger.info("Setting default to English");
 		
+		yesNoEnglishList.clear();
 		SelectItem si = new SelectItem("","Select");
 		yesNoEnglishList.add(si);
 		si = new SelectItem("Yes","Yes");
@@ -142,6 +143,7 @@ public class CmcMain implements Serializable
 		si = new SelectItem("No","No");
 		yesNoEnglishList.add(si);
 		
+		yesNoSpanishList.clear();
 		si = new SelectItem("","Seleccionar");
 		yesNoSpanishList.add(si);
 		si = new SelectItem("Yes","Si");
@@ -149,6 +151,7 @@ public class CmcMain implements Serializable
 		si = new SelectItem("No","No");
 		yesNoSpanishList.add(si);
 		
+		skillLevelEnglishList.clear();
 		si = new SelectItem("","Select");
 		skillLevelEnglishList.add(si);
 		si = new SelectItem(Performs_Independently_Dropdown_Value,"Performs Independently");
@@ -158,6 +161,7 @@ public class CmcMain implements Serializable
 		si = new SelectItem(Unable_to_Meet_Demands_Dropdown_Value,"Unable to Meet Demands");
 		skillLevelEnglishList.add(si);
 		
+		skillLevelSpanishList.clear();
 		si = new SelectItem("","Seleccionar");
 		skillLevelSpanishList.add(si);
 		si = new SelectItem(Performs_Independently_Dropdown_Value,"Lo realiza de manera independiente");

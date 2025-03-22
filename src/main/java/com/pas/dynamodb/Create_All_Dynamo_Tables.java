@@ -29,9 +29,7 @@ public class Create_All_Dynamo_Tables
     		 doTable(dynamoClients, SURVEYQUESTIONS_INTELLECTUAL_DISABILITIES_JSONFILE);
     		 doTable(dynamoClients, SURVEYQUESTIONS_AUTISM_DISORDER_JSONFILE);
     		 doTable(dynamoClients, "SurveyAnswers");
-    	      	
-	    	 DynamoUtil.stopDynamoServer();
-	    	
+    	     
 			 logger.debug("**********  END of program ***********");
          }
     	 catch (Exception e)
