@@ -10,6 +10,8 @@ import org.apache.logging.log4j.Logger;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
 import org.primefaces.util.ComponentUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
@@ -18,11 +20,13 @@ import com.lowagie.text.PageSize;
 import com.pas.dao.CmcSurveyAnswersDAO;
 import com.pas.dao.CmcSurveyQuestionsDAO;
 import com.pas.dao.CmcSurveysDAO;
+import com.pas.dao.CmcUsersDAO;
 import com.pas.dynamodb.DynamoClients;
 import com.pas.dynamodb.DynamoUtil;
 import com.pas.pojo.DisabilityRow;
 import com.pas.pojo.QuestionSkip;
 import com.pas.pojo.ResultsRow;
+import com.pas.util.Utils;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
@@ -35,6 +39,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.model.SelectItem;
 import jakarta.inject.Named;
+import jakarta.faces.context.ExternalContext;
 
 @Named("pc_CmcMain")
 @ApplicationScoped
@@ -101,6 +106,8 @@ public class CmcMain implements Serializable
 	private List<SelectItem> skillLevelEnglishList = new ArrayList<>();
 	private List<SelectItem> skillLevelSpanishList = new ArrayList<>();
 	
+	private List<SelectItem> usageReasonList = new ArrayList<>();
+	
 	private String siteTitle;
 	private String siteSubTitle;
 	
@@ -125,9 +132,12 @@ public class CmcMain implements Serializable
 	private static String HTML_CRLF = "<br><br>";
 	private static String PDF_CRLF = "\r\n\r\n";
 	
+	private CmcUsersDAO cmcUsersDAO;
 	private CmcSurveyQuestionsDAO cmcSurveyQuestionsDAO;
 	private CmcSurveysDAO cmcSurveysDAO;
 	private CmcSurveyAnswersDAO cmcSurveyAnswersDAO;
+	
+	private CmcUser currentUser = new CmcUser();
 	
 	public void onStart(@Observes @Initialized(ApplicationScoped.class) Object pointless) 
 	{
@@ -171,6 +181,14 @@ public class CmcMain implements Serializable
 		si = new SelectItem(Unable_to_Meet_Demands_Dropdown_Value,"No puede cumplir con las demandas");
 		skillLevelSpanishList.add(si);
 		
+		usageReasonList.clear();
+		si = new SelectItem("","Select");
+		usageReasonList.add(si);
+		si = new SelectItem("usageReason1","Usage Reason 1");
+		usageReasonList.add(si);
+		si = new SelectItem("usageReason2","Usage Reason 2");
+		usageReasonList.add(si);
+				
 		try 
 		{
 			//this gets populated at app startup, no need to do it again when someone logs in.
@@ -178,6 +196,7 @@ public class CmcMain implements Serializable
 			{
 				DynamoClients dynamoClients = DynamoUtil.getDynamoClients();
 				
+				loadUsers(dynamoClients);
 				loadCmcSurveys(dynamoClients);
 				loadCmcSurveyQuestions(dynamoClients);
 				loadCmcSurveyAnswers(dynamoClients);
@@ -241,6 +260,80 @@ public class CmcMain implements Serializable
         
         */
     }
+	
+	public String getSignedOnUserName() 
+	{
+		String username = "";
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) 
+		{
+		   username = ((UserDetails)principal).getUsername();
+		} 
+		else 
+		{
+		   username = principal.toString();
+		}
+		
+		if (username != null)
+		{
+			username = username.toLowerCase();
+		}
+		return username;
+	}
+	
+	public String register()
+	{
+		logger.info("entering register method");
+		
+		try
+		{
+			this.getCurrentUser().setUserRole("USER"); //default to normal user.  Admin would have to make them admin.
+			cmcUsersDAO.addUser(this.getCurrentUser());
+			
+			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully Registered!", "Successfully Registered!");
+		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);	
+		 	
+		 	ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+			String targetURL = Utils.getContextRoot() + "/login.xhtml";
+		    ec.redirect(targetURL);
+            logger.info("successfully redirected to: " + targetURL);
+		}
+		catch (Exception e)
+		{
+        	logger.error("register errored: " + e.getMessage(), e);
+			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage());
+		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);	
+		 	return "";
+        }
+				
+		return "";	
+	}
+	
+	public String updateUser()
+	{
+		try
+		{
+			cmcUsersDAO.updateUser(this.getCurrentUser());
+			
+			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully Updated!", "Successfully Updated!");
+		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);	
+		}
+		catch (Exception e)
+		{
+        	logger.error("updateUser errored: " + e.getMessage(), e);
+			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage());
+		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);	
+		 	return "";
+        }
+				
+		return "";	
+	}
+	
+	public String cancelRegistration()
+	{
+		return "/login.xhtml";
+	}
 	
 	public void highlightDropdown(AjaxBehaviorEvent event)
 	{ 	
@@ -1532,6 +1625,14 @@ public class CmcMain implements Serializable
 		dr.setScooterAnswerStyle(defaultStyleClass); 		
 	}
 	
+	public void loadUsers(DynamoClients dynamoClients)  throws Exception
+	{
+		logger.info("entering loadUsers");
+		cmcUsersDAO = new CmcUsersDAO(dynamoClients);
+		cmcUsersDAO.readAllUsersFromDB(); 
+		logger.info("Cmc Users read in. List size = " + cmcUsersDAO.getFullCmcUsersList().size());
+    }
+	
 	public void loadCmcSurveys(DynamoClients dynamoClients)  throws Exception
 	{
 		logger.info("entering loadCmcSurveys");
@@ -1871,5 +1972,21 @@ public class CmcMain implements Serializable
 	public void setResultsList(List<ResultsRow> resultsList) {
 		this.resultsList = resultsList;
 	}
-		
+
+	public CmcUser getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(CmcUser currentUser) {
+		this.currentUser = currentUser;
+	}
+
+	public List<SelectItem> getUsageReasonList() {
+		return usageReasonList;
+	}
+
+	public void setUsageReasonList(List<SelectItem> usageReasonList) {
+		this.usageReasonList = usageReasonList;
+	}
+
 }

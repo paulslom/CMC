@@ -52,11 +52,23 @@
                
                   <p:menubar id="menuId">
            
+		              <p:submenu label="About">
+						   <p:menuitem value="The Team" url="#{request.contextPath}/theTeam.xhtml"/>
+						   <p:menuitem value="The Mission" url="#{request.contextPath}/theMission.xhtml"/>	
+						   <p:menuitem value="Background" url="#{request.contextPath}/background.xhtml"/>													
+					  </p:submenu>
+			
 			          <p:menuitem value="#{pc_CmcMain.physicalDisabilitiesMenuTitle}" url="#{request.contextPath}/physicalDisabilities.xhtml"/>
 			          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesMenuTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml"/>
 			          <p:menuitem value="#{pc_CmcMain.autismDisorderMenuTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml"/>
 			          <p:menuitem value="Results" url="#{request.contextPath}/results.xhtml"/>
-					
+					  <p:menuitem rendered="#{sessionScope.currentUserisAdmin}" value="Reports" url="#{request.contextPath}/reports.xhtml"/>
+					  
+					  <f:facet name="options">
+						   <p:outputLabel value="Logged in user: #{pc_CmcMain.signedOnUserName}"/>&#xA0;&#xA0;
+						   <h:outputLink value="#{request.contextPath}/logout.xhtml">Sign Out</h:outputLink>			   
+				      </f:facet>
+				      
 				  </p:menubar> 
         		    
                </td>

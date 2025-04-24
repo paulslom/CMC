@@ -13,8 +13,8 @@ public class DynamoUtil
 	private static Logger logger = LogManager.getLogger(DynamoUtil.class);
 	
 	private static String AWS_REGION = "us-east-1";
-	private static String AWS_PROFILE = "MobilityMatch";
-	//private static String AWS_PROFILE = "PaulsAmazon";
+	//private static String AWS_PROFILE = "MobilityMatch";
+	private static String AWS_PROFILE = "PaulsAmazon";
 	
 	private static DynamoClients dynamoClients = null;	
 

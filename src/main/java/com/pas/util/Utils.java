@@ -1,13 +1,7 @@
 package com.pas.util;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -16,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 public class Utils 
@@ -87,13 +81,29 @@ public class Utils
 	{
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-		String currentCamGroupUser = (String) session.getAttribute("currentCamGroupUser");
+		String currentCmcUser = (String) session.getAttribute("currentCmcUser");
 		
-		currentCamGroupUser = SecurityContextHolder.getContext().getAuthentication().getName();
+		currentCmcUser = SecurityContextHolder.getContext().getAuthentication().getName();
 		
-	    return currentCamGroupUser == null ? null : currentCamGroupUser.toLowerCase().trim();
+	    return currentCmcUser == null ? null : currentCmcUser.toLowerCase().trim();
 	}	
 
+	public static String getContextRoot()
+	{
+		String contextRoot = "";
+		try
+		{
+			HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	    	HttpSession httpSession = request.getSession();	
+	        contextRoot = (String) httpSession.getAttribute(AppConstants.CONTEXT_ROOT);
+		}
+		catch (Exception e)
+		{			
+		}
+		
+		return contextRoot;
+	}
+	
 	public static ArrayList<String> setEmailFullRecipientList(List<String> fullList) 
 	{
 		ArrayList<String> emailRecipients = new ArrayList<String>();
@@ -125,41 +135,6 @@ public class Utils
 	    return formatter.format(date);
 	}
 	
-	public static Boolean isRunningInsideDocker() 
-	{
-        try (Stream < String > stream = Files.lines(Paths.get("/proc/1/cgroup"))) 
-        {
-        	boolean inDocker = stream.anyMatch(line -> line.contains("/docker")); 
-        	boolean inAWSECS = stream.anyMatch(line -> line.contains("/ecs")); 
-        	
-        	logger.info("Am I in docker container? " + inDocker);
-        	logger.info("Am I in Amazon AWS ECS container? " + inAWSECS);
-        	
-            return inDocker || inAWSECS;
-        } 
-        catch (IOException e) 
-        {
-        	logger.info("Am I in docker container? NO");
-            return false;
-        }
-    }
-	
-	public static boolean isLocalEnv()
-	{
-		boolean isLocal = true; //just set to true when running locally
-		/*
-		try 
-		{
-			Path dir = (Path)Paths.get("/Paul", "GitHub");
-			isLocal = Files.isDirectory(dir);
-		} 
-		catch (Exception e) 
-		{			
-		}
-		*/		
-		return isLocal;
-	}
-	
 	public static String getEncryptedPassword(String unencryptedPassword)
 	{
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -167,27 +142,15 @@ public class Utils
 		return encryptedPW;
 	}
 	
-	public static long getDailyEmailTime() 
-    {
-    	int hour = 8;
-    	int minute = 0;
-    	int second = 0;
-    	
-    	//int hour = 20;
-    	//int minute = 50;
-    	//int second = 0;
-    	
-    	ZonedDateTime now = ZonedDateTime.now(ZoneId.of(Utils.MY_TIME_ZONE));
-    	ZonedDateTime nextRun = now.withHour(hour).withMinute(minute).withSecond(second);
-    	
-    	if(now.compareTo(nextRun) > 0)
-    	{
-    		nextRun = nextRun.plusDays(1);
-    	}
 
-    	Duration duration = Duration.between(now, nextRun);
-    	long initialDelay = duration.getSeconds();
-		return initialDelay;
-	}
-			
+	public static void main(String[] args) throws Exception
+    { 
+    	logger.info("**********  Utils main method start  ***********"); 
+    	String unencryptedPW = "NdUyv&jzCr35vEZ";
+    	String encryptedPW = getEncryptedPassword(unencryptedPW);
+    	logger.info("encrypted password for " + unencryptedPW + " is: " + encryptedPW); 
+    	logger.info("**********  Utils main method end  ***********"); 
+    }
+	
+				
 }

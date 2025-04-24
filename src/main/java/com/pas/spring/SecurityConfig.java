@@ -29,17 +29,17 @@ public class SecurityConfig
 	private static Logger logger = LogManager.getLogger(SecurityConfig.class);
 
     @Bean
-    PasswordEncoder passwordEncoder() 
+    public PasswordEncoder passwordEncoder() 
     {
         return new BCryptPasswordEncoder();
     }
 
-	//@Autowired MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+	@Autowired MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
     @Autowired UserDetailsServiceImpl userDetailsService;
 
     @Bean
     @Order(1)
-    SecurityFilterChain customFilterChain(HttpSecurity http, UserDetailsService userDetailsService, HandlerMappingIntrospector introspector) throws Exception 
+    public SecurityFilterChain customFilterChain(HttpSecurity http, UserDetailsService userDetailsService, HandlerMappingIntrospector introspector) throws Exception 
     {
     	logger.info("entering customFilterChain of SecurityConfig");     	
     	
@@ -49,27 +49,21 @@ public class SecurityConfig
         .authorizeHttpRequests(auth -> auth
         	.requestMatchers(
                 mvcMatcherBuilder.pattern("/resources/**"),
-                mvcMatcherBuilder.pattern("/webapp/**"),
+                mvcMatcherBuilder.pattern("/login.xhtml"),
                 mvcMatcherBuilder.pattern("/actuator/**"),
                 mvcMatcherBuilder.pattern("/jakarta.faces.resource/**"),
-                mvcMatcherBuilder.pattern("/index.html"))
-            .permitAll()            
+                mvcMatcherBuilder.pattern("/register.xhtml"))
+            .permitAll().anyRequest().authenticated()
         );      
-    	
-    	http.authorizeHttpRequests().anyRequest().permitAll();  //allow everything from a spring perspective. (no automatic spring login page).  We control our own login, without this, spring defaults to showing a login page.
-        
-    	//let's turn everything off here until we have some page we want to secure...
-    	
-    	/*
-    	http.formLogin(formLogin -> formLogin            
+       	
+    	http.formLogin(formLogin -> formLogin 
+    			.loginPage("/login.xhtml")
                 .permitAll()
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureUrl("/logout.xhtml")
             )
+    	  .logout(logout -> logout.logoutUrl("/logout.xhtml").permitAll());
     	
-    		.logout(logout -> logout.logoutUrl("/logout.xhtml").permitAll());
-    	
-    	*/
     	       
 	    logger.info("exiting filterChain of SecurityConfig");
 	    

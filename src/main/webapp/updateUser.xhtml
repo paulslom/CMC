@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="en"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">    
+    
+    <h:head>
+    
+      <meta http-equiv="pragma" content="no-cache"></meta>
+	  <meta http-equiv="cache-control" content="no-cache"></meta>
+	  <meta http-equiv="expires" content="0"></meta>
+	
+	  <h:outputStylesheet name="css/cgStyles.css"/> 
+	 		
+    </h:head>  
+    
+    <h:body class="custom-background">
+    
+        <f:loadBundle var="bundle" basename="ApplicationProperties" />  	 
+    
+        <h:form id="updateUserForm"> 
+            
+            <p:messages id="facesMessagesID" showDetail="false"/>
+		    
+		    <p:blockUI block="updateUserForm" widgetVar="blockWidgetVar"> 
+		       <p:graphicImage value="/images/wait.gif"/>  
+		    </p:blockUI> 
+			   
+		    <table id="updateUserTableID" style="width:100%; height:100%">
+            
+           	   <colgroup>
+           	       <col width="50%"/>
+           	       <col width="50%"/>
+           	   </colgroup>
+           	   
+           	   <tr>	          
+	              <td align="center" colspan="2">	 
+           	   		<h1>Mobility Match Registration</h1>
+           	   	  </td>
+           	   </tr>
+           	  
+           	  <tr>
+		  		
+	 			 <td class="textLabel">
+					<p:outputLabel value="User Name"/>
+				 </td>	
+			 
+	             <td class="text">
+	               <p:outputLabel value="#{pc_CmcMain.currentUser.userName}"/>
+	             </td>
+	            
+	           </tr>
+	           
+     	       <tr>
+		  		
+	 			  <td class="textLabel">
+					<p:outputLabel for="firstNameID" value="#{bundle.firstName}"/>
+				  </td>	
+			 
+	              <td class="text">
+	                <p:inputText id="firstNameID" size="30" value="#{pc_CmcMain.currentUser.firstName}" required="true"/>
+	              </td>
+	            
+	           </tr>
+	         
+	           <tr>
+		  		
+	 			 <td class="textLabel">
+					<p:outputLabel for="lastNameID" value="#{bundle.lastName}"/>
+				 </td>	
+			 
+	             <td class="text">
+	               <p:inputText id="lastNameID" size="30" value="#{pc_CmcMain.currentUser.lastName}" required="true"/>
+	             </td>
+	            
+	           </tr>
+	         
+	           
+	         
+	           <tr>
+		  		
+	 			 <td class="textLabel">
+					<p:outputLabel for="passwordID" value="#{bundle.password}"/>
+				 </td>	
+			 
+	             <td class="text">
+	               <p:password id="passwordID" size="8" value="#{pc_CmcMain.currentUser.password}" required="true"/>
+	             </td>
+	            
+	           </tr>
+	      	         
+	           <tr>	
+	             		
+	 			 <td class="textLabel">
+				    <p:outputLabel for="emailID" value="#{bundle.email}"/>
+			    </td>	
+			 
+	            <td class="text">
+	               <p:inputText id="emailID" size="50" value="#{pc_CmcMain.currentUser.emailAddress}" required="true"/>
+	            </td>
+	            
+	           </tr>
+	    	    			
+		     <tr>
+				<td colspan="2" align="center">
+				
+				   <p:commandButton 
+					   value="#{bundle.update}" 
+					   action="#{pc_CmcMain.updateUser}"	
+					   update="updateUser">	
+				   </p:commandButton> 
+				   
+				   <p:commandButton value="Go to Login page"
+				       action="#{pc_CmcMain.cancelRegistration}"
+				       immediate="true"
+					   update="updateUser">
+				   </p:commandButton>
+				   
+				</td>
+			</tr>
+							
+		    </table>
+		
+		</h:form>
+		
+	</h:body>
+		
+</html>
