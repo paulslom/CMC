@@ -36,6 +36,7 @@ import jakarta.faces.component.UIColumn;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.component.ValueHolder;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.ActionEvent;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.model.SelectItem;
 import jakarta.inject.Named;
@@ -107,6 +108,8 @@ public class CmcMain implements Serializable
 	private List<SelectItem> skillLevelSpanishList = new ArrayList<>();
 	
 	private List<SelectItem> usageReasonList = new ArrayList<>();
+	
+	private List<CmcUser> siteVisitsList = new ArrayList<>();
 	
 	private String siteTitle;
 	private String siteSubTitle;
@@ -282,6 +285,48 @@ public class CmcMain implements Serializable
 		return username;
 	}
 	
+	public void siteVisits(ActionEvent event) 
+	{
+		try 
+        {		    
+		    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();		    
+		    
+		    refreshSiteVisitsList();
+		    
+            String targetURL = Utils.getContextRoot() + "/reportSiteVisits.xhtml";
+		    ec.redirect(targetURL);
+            logger.info("successfully redirected to: " + targetURL);
+        } 
+        catch (Exception e) 
+        {
+            logger.error("exception: " + e.getMessage(), e);
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage());
+		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);		 	
+        }
+	}  	
+		
+	public void surveyAnswerTotals(ActionEvent event) 
+	{
+		try 
+        {		    
+		    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();		    
+		    String accountid = ec.getRequestParameterMap().get("accountid");		    
+		    logger.info("account ID " + accountid + " selected to show trx from menu");
+		    
+		    refreshSurveyAnswerTotals();
+		    
+            String targetURL = Utils.getContextRoot() + "/reportSurveyAnswers.xhtml";
+		    ec.redirect(targetURL);
+            logger.info("successfully redirected to: " + targetURL);
+        } 
+        catch (Exception e) 
+        {
+            logger.error("exception: " + e.getMessage(), e);
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage());
+		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);		 	
+        }
+	}  	
+
 	public String register()
 	{
 		logger.info("entering register method");
@@ -1690,6 +1735,17 @@ public class CmcMain implements Serializable
 		logger.info("Cmc Survey Answers read in. List size = " + cmcSurveyAnswersDAO.getFullSurveyAnswersList().size());		
     }
 	
+	private void refreshSiteVisitsList() throws Exception 
+	{	
+		logger.info("entering refreshSiteVisitsList");
+		siteVisitsList = cmcUsersDAO.readAllUsersFromDB();
+	}
+
+	private void refreshSurveyAnswerTotals() 
+	{		
+		logger.info("entering refreshSurveyAnswersList");
+	}
+	
 	public double getId() {
 		return id;
 	}
@@ -1987,6 +2043,14 @@ public class CmcMain implements Serializable
 
 	public void setUsageReasonList(List<SelectItem> usageReasonList) {
 		this.usageReasonList = usageReasonList;
+	}
+
+	public List<CmcUser> getSiteVisitsList() {
+		return siteVisitsList;
+	}
+
+	public void setSiteVisitsList(List<CmcUser> siteVisitsList) {
+		this.siteVisitsList = siteVisitsList;
 	}
 
 }

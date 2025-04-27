@@ -58,7 +58,12 @@ public class CmcUsersDAO implements Serializable
 	public List<CmcUser> readAllUsersFromDB() throws Exception
 	{				
 		Iterator<CmcUser> results = CmcUsersTable.scan().items().iterator();
-            
+         
+		if (fullCmcUsersList != null)
+		{
+			fullCmcUsersList.clear();
+		}
+		
         while (results.hasNext()) 
         {
             CmcUser gu = results.next();
@@ -133,15 +138,17 @@ public class CmcUsersDAO implements Serializable
 		PutItemEnhancedRequest<CmcUser> putItemEnhancedRequest = PutItemEnhancedRequest.builder(CmcUser.class).item(cmcUser).build();
 		CmcUsersTable.putItem(putItemEnhancedRequest);
 			
-		logger.info("LoggedDBOperation: function-update; table:CmcUsers; rows:1");
+		logger.info("LoggedDBOperation: function-add; table:CmcUsers; rows:1");
 					
 		refreshListsAndMaps("add", cmcUser);	
 	}
 	
 	public void updateUser(CmcUser cmcUser) throws Exception
 	{
-		deleteUser(cmcUser.getUserName());
-		addUser(cmcUser);		
+		PutItemEnhancedRequest<CmcUser> putItemEnhancedRequest = PutItemEnhancedRequest.builder(CmcUser.class).item(cmcUser).build();
+		CmcUsersTable.putItem(putItemEnhancedRequest);
+		logger.info("LoggedDBOperation: function-update; table:CmcUsers; rows:1");
+		
 		refreshListsAndMaps("update", cmcUser);	
 	}
 

@@ -13,6 +13,7 @@ import com.pas.beans.CmcUser;
 import com.pas.dao.CmcUsersDAO;
 import com.pas.dynamodb.DynamoClients;
 import com.pas.dynamodb.DynamoUtil;
+import com.pas.util.AppConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -74,6 +75,8 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             {
             	session.setAttribute("currentUserisUser", false);
             }
+            
+            session.setAttribute(AppConstants.CONTEXT_ROOT, springBean.getContextRoot());
         }       
         
         String whereTo = springBean.getContextRoot() + "/main.xhtml";

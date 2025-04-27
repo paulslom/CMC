@@ -3,6 +3,7 @@ package com.pas.beans;
 import java.io.Serializable;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbIgnore;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
 @DynamoDbBean
@@ -18,6 +19,9 @@ public class CmcUser implements Serializable
 	private String emailAddress;
 	private String usageReason;
 	private Integer totalSiteVisits;
+	
+	//not stored in DB
+	private String fullName;
 	
 	@Override
 	public String toString() 
@@ -89,6 +93,17 @@ public class CmcUser implements Serializable
 
 	public void setTotalSiteVisits(Integer totalSiteVisits) {
 		this.totalSiteVisits = totalSiteVisits;
+	}
+
+	@DynamoDbIgnore
+	public String getFullName() 
+	{
+		this.setFullName(this.getFirstName() + " " + this.getLastName());
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 	
 	

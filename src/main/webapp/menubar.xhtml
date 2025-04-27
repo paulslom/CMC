@@ -12,6 +12,10 @@
         
         <table style="table-layout: fixed; width:100%;">
         
+        	<p:blockUI block="menuForm" widgetVar="blockWidgetVar"> 
+			    <p:graphicImage value="/images/wait.gif"/>  
+			</p:blockUI> 
+			   
         	<colgroup>
 	        	<col width="90%"/>
 	            <col width="10%"/>
@@ -62,7 +66,26 @@
 			          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesMenuTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml"/>
 			          <p:menuitem value="#{pc_CmcMain.autismDisorderMenuTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml"/>
 			          <p:menuitem value="Results" url="#{request.contextPath}/results.xhtml"/>
-					  <p:menuitem rendered="#{sessionScope.currentUserisAdmin}" value="Reports" url="#{request.contextPath}/reports.xhtml"/>
+			          
+			          <p:submenu rendered="#{sessionScope.currentUserisAdmin}" label="Reports">
+						   
+						   <p:menuitem value="Site Visits"
+						   		ajax="false" 
+					        	actionListener="#{pc_CmcMain.siteVisits}"
+					        	onclick="PF('blockWidgetVar').show()" 
+					        	oncomplete="PF('blockWidgetVar').hide()" 
+					        	update="menuForm">
+					       </p:menuitem>
+					       
+					       <p:menuitem value="Survey Answer Totals"
+						   		ajax="false" 
+					        	actionListener="#{pc_CmcMain.surveyAnswerTotals}"
+					        	onclick="PF('blockWidgetVar').show()" 
+					        	oncomplete="PF('blockWidgetVar').hide()" 
+					        	update="menuForm">
+					       </p:menuitem>
+					       													
+					  </p:submenu>
 					  
 					  <f:facet name="options">
 						   <p:outputLabel value="Logged in user: #{pc_CmcMain.signedOnUserName}"/>&#xA0;&#xA0;

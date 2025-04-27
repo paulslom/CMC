@@ -56,7 +56,6 @@ public class Utils
 	    return returnDate;
 	}
 			
-	@SuppressWarnings("unchecked")
 	public static boolean isAdminUser()
 	{
 		boolean adminUser = false;
@@ -146,7 +145,7 @@ public class Utils
 	public static void main(String[] args) throws Exception
     { 
     	logger.info("**********  Utils main method start  ***********"); 
-    	String unencryptedPW = "NdUyv&jzCr35vEZ";
+    	String unencryptedPW = "tuser";
     	String encryptedPW = getEncryptedPassword(unencryptedPW);
     	logger.info("encrypted password for " + unencryptedPW + " is: " + encryptedPW); 
     	logger.info("**********  Utils main method end  ***********"); 
