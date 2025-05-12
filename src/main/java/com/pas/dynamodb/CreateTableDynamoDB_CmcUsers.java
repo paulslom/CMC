@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pas.beans.CmcUser;
-import com.pas.util.Utils;
 
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
@@ -51,18 +50,33 @@ public class CreateTableDynamoDB_CmcUsers
         	logger.info(e.getMessage());
         }
         
-        // Create a table in DynamoDB Local
+        // Create a table in DynamoDB
         DynamoDbTable<CmcUser> CmcUserTable = createTable(dynamoClients.getDynamoDbEnhancedClient(), dynamoClients.getDdbClient());           
 
         // Insert data into the table
     	logger.info("Inserting data into the table:" + AWS_TABLE_NAME);
          
-       	CmcUser CmcUser = new CmcUser();
-       	CmcUser.setUserName("paulslom");       	
-       	String pw = "*(lc~N05X\"jGeq%!((x9";	
-		String encodedPW = Utils.getEncryptedPassword(pw);
-       	CmcUser.setPassword(encodedPW);
-		CmcUserTable.putItem(CmcUser); 			  
+       	CmcUser cmcUser = new CmcUser();
+       	cmcUser.setUserName("paulslom"); 
+	  	cmcUser.setPassword("$2a$10$FZ9v1Gd7V3npcnhE5uCLJukoy5NZw1Mc2LXXumh5z0RmFNtY/Hgbe");
+	  	cmcUser.setEmailAddress("paulslomkowski@yahoo.com");
+	  	cmcUser.setUserRole("ADMIN");
+	  	cmcUser.setFirstName("Paul");
+	  	cmcUser.setLastName("Slomkowski");
+	  	cmcUser.setUsageReason("UsageReason1");
+	  	cmcUser.setTotalSiteVisits(7);
+		CmcUserTable.putItem(cmcUser); 
+		
+		cmcUser = new CmcUser();
+       	cmcUser.setUserName("tuser"); 
+	  	cmcUser.setPassword("$2a$10$vfupVQRGcBfWLH3ZvPvoleEk/zegX8ikAUDglEW/swYTAJT82.p3m");
+	  	cmcUser.setEmailAddress("tuserpw@google.com");
+	  	cmcUser.setUserRole("USER");
+	  	cmcUser.setFirstName("test");
+	  	cmcUser.setLastName("testuser");
+	  	cmcUser.setUsageReason("UsageReason2");
+	  	cmcUser.setTotalSiteVisits(2);
+		CmcUserTable.putItem(cmcUser);
 	}
    
     private static DynamoDbTable<CmcUser> createTable(DynamoDbEnhancedClient ddbEnhancedClient, DynamoDbClient ddbClient) 

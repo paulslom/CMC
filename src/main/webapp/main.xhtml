@@ -13,7 +13,49 @@
             <h3><h:outputText value="#{pc_CmcMain.siteTitle}"/></h3>
   		    
 		    <p:messages id="facesMessagesID" showDetail="false">
-		    </p:messages>   			
+		    </p:messages>
+		    
+		    
+		    <table id="updateUserTableID" style="width:100%; height:100%">
+            
+           	   <colgroup>
+           	       <col width="50%"/>
+           	       <col width="50%"/>
+           	   </colgroup>
+           	   
+           	   <tr>	 
+           	            
+	              <td align="left" valign="top">
+	              	 
+	              	 <p:video value="videos/gears.mp4" autoplay="true" loop="true">
+	              	 	
+						Your browser does not support the video element.
+				        	See: <h:outputLink value="https://www.w3schools.com/html/html5_video.asp">HTML5 Video</h:outputLink>
+				        	    
+				     </p:video>
+				     		      
+           	   	  </td>
+           		            
+	              <td align="left">
+	              	 
+	              	 <p:galleria value="#{pc_CmcMain.photosList}" var="photo" numVisible="5" responsiveOptions="#{pc_CmcMain.responsiveOptions1}"
+				                circular="true" autoPlay="true" transitionInterval="2000" style="max-width: 640px">
+				                
+				        <p:graphicImage name="#{photo.itemImageSrc}" alt="#{photo.alt}" style="width: 100%; display: block;" />
+				        
+				        <f:facet name="thumbnail">
+				            <p:graphicImage name="#{photo.thumbnailImageSrc}" alt="#{photo.alt}" style="display: block;" />
+				        </f:facet>
+				        
+				     </p:galleria>
+				     		      
+           	   	  </td>
+           	   	  
+           	   </tr>
+           	   
+           	</table>
+           	   
+		   			
 	                
 	     </h:form>
    

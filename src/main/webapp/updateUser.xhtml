@@ -39,7 +39,7 @@
            	   
            	   <tr>	          
 	              <td align="center" colspan="2">	 
-           	   		<h1>Mobility Match Registration</h1>
+           	   		<h1>Mobility Match Update User Profile</h1>
            	   	  </td>
            	   </tr>
            	  
@@ -78,20 +78,20 @@
 	             </td>
 	            
 	           </tr>
-	         
 	           
-	         
-	           <tr>
-		  		
-	 			 <td class="textLabel">
-					<p:outputLabel for="passwordID" value="#{bundle.password}"/>
-				 </td>	
-			 
-	             <td class="text">
-	               <p:password id="passwordID" size="8" value="#{pc_CmcMain.currentUser.password}" required="true"/>
-	             </td>
-	            
-	           </tr>
+			   <tr>
+			   	          
+   	               <td class="textLabel">
+   					  <p:outputLabel value="Password"/>
+   				   </td>	
+   	              
+   	               <td>
+   	               	   <input name="password" type="password" id="password"/>         		        
+           		       <input type="checkbox" id="ckboxid" onclick="myFunction()"/>
+           		       Show Password
+           		   </td>			        	
+           	        		
+           	   </tr>
 	      	         
 	           <tr>	
 	             		
@@ -111,13 +111,13 @@
 				   <p:commandButton 
 					   value="#{bundle.update}" 
 					   action="#{pc_CmcMain.updateUser}"	
-					   update="updateUser">	
+					   update="updateUserForm">	
 				   </p:commandButton> 
 				   
 				   <p:commandButton value="Go to Login page"
-				       action="#{pc_CmcMain.cancelRegistration}"
+				       action="#{pc_CmcMain.returnToLogin}"
 				       immediate="true"
-					   update="updateUser">
+					   update="updateUserForm">
 				   </p:commandButton>
 				   
 				</td>

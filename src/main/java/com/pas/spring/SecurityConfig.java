@@ -52,6 +52,7 @@ public class SecurityConfig
                 mvcMatcherBuilder.pattern("/login.xhtml"),
                 mvcMatcherBuilder.pattern("/actuator/**"),
                 mvcMatcherBuilder.pattern("/jakarta.faces.resource/**"),
+                mvcMatcherBuilder.pattern("/changePassword.xhtml"),
                 mvcMatcherBuilder.pattern("/register.xhtml"))
             .permitAll().anyRequest().authenticated()
         );      

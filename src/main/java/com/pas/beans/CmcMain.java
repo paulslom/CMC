@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
+import org.primefaces.model.ResponsiveOption;
 import org.primefaces.util.ComponentUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,10 +25,13 @@ import com.pas.dao.CmcUsersDAO;
 import com.pas.dynamodb.DynamoClients;
 import com.pas.dynamodb.DynamoUtil;
 import com.pas.pojo.DisabilityRow;
+import com.pas.pojo.Photo;
 import com.pas.pojo.QuestionSkip;
 import com.pas.pojo.ResultsRow;
+import com.pas.services.PhotoService;
 import com.pas.util.Utils;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.event.Observes;
@@ -39,6 +43,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.ActionEvent;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.model.SelectItem;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.faces.context.ExternalContext;
 
@@ -142,6 +147,12 @@ public class CmcMain implements Serializable
 	
 	private CmcUser currentUser = new CmcUser();
 	
+	private List<Photo> photosList;
+    private List<ResponsiveOption> responsiveOptions1;
+    
+    @Inject
+    private PhotoService service;
+    
 	public void onStart(@Observes @Initialized(ApplicationScoped.class) Object pointless) 
 	{
 		logger.info("Entering CmcMain onStart method.  Should only be here ONE time");
@@ -213,6 +224,17 @@ public class CmcMain implements Serializable
 		}		
 	}
 
+	@PostConstruct
+    public void init() 
+	{
+        this.setPhotosList(service.getPhotos());
+
+        responsiveOptions1 = new ArrayList<>();
+        responsiveOptions1.add(new ResponsiveOption("1024px", 5));
+        responsiveOptions1.add(new ResponsiveOption("768px", 3));
+        responsiveOptions1.add(new ResponsiveOption("560px", 1));
+    }
+	
 	public void valueChangeLanguageRadio(AjaxBehaviorEvent event)
 	{ 	
 		logger.info("Changing site language");
@@ -333,13 +355,17 @@ public class CmcMain implements Serializable
 		
 		try
 		{
-			this.getCurrentUser().setUserRole("USER"); //default to normal user.  Admin would have to make them admin.
+			this.getCurrentUser().setUserRole("USER"); //default to normal user.  Admin would have to make them admin within the database using a db tool.
+			
+			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();		    
+		    String pw = ec.getRequestParameterMap().get("password");		    
+			this.getCurrentUser().setPassword(pw); 
+			
 			cmcUsersDAO.addUser(this.getCurrentUser());
 			
 			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully Registered!", "Successfully Registered!");
 		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);	
 		 	
-		 	ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 			String targetURL = Utils.getContextRoot() + "/login.xhtml";
 		    ec.redirect(targetURL);
             logger.info("successfully redirected to: " + targetURL);
@@ -375,7 +401,48 @@ public class CmcMain implements Serializable
 		return "";	
 	}
 	
-	public String cancelRegistration()
+	public String changePassword()
+	{
+		logger.info("entering changePassword method");
+		
+		try
+		{			
+			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+			String userid = ec.getRequestParameterMap().get("username");	
+		    String pw = ec.getRequestParameterMap().get("password");
+		    
+		    CmcUser cmcUser = cmcUsersDAO.getCmcUser(userid);
+		    
+		    if (cmcUser == null)
+		    {
+		    	FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "User not found.  Try again or Register if new","User not found.  Try again or Register if new");
+			 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);	
+			 	return "";
+		    }
+		    else //user is found and valid
+		    {
+		    	String encodedPW = Utils.getEncryptedPassword(pw);				
+				cmcUser.setPassword(encodedPW);		
+		    	cmcUsersDAO.updateUser(cmcUser);
+		    	this.setCurrentUser(cmcUser);
+		    	
+		    	FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully Changed Password!", "Successfully Changed Password!");
+			 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);	
+		    }
+			
+		}
+		catch (Exception e)
+		{
+        	logger.error("change password errored: " + e.getMessage(), e);
+			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage());
+		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);	
+		 	return "";
+        }
+				
+		return "";	
+	}
+	
+	public String returnToLogin()
 	{
 		return "/login.xhtml";
 	}
@@ -2051,6 +2118,22 @@ public class CmcMain implements Serializable
 
 	public void setSiteVisitsList(List<CmcUser> siteVisitsList) {
 		this.siteVisitsList = siteVisitsList;
+	}
+
+	public List<Photo> getPhotosList() {
+		return photosList;
+	}
+
+	public void setPhotosList(List<Photo> photosList) {
+		this.photosList = photosList;
+	}
+
+	public List<ResponsiveOption> getResponsiveOptions1() {
+		return responsiveOptions1;
+	}
+
+	public void setResponsiveOptions1(List<ResponsiveOption> responsiveOptions1) {
+		this.responsiveOptions1 = responsiveOptions1;
 	}
 
 }
