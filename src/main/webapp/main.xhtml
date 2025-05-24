@@ -9,25 +9,25 @@
     <ui:define name="content">     
      
          <h:form id="mainForm">                      
-             
-            <h3><h:outputText value="#{pc_CmcMain.siteTitle}"/></h3>
-  		    
-		    <p:messages id="facesMessagesID" showDetail="false">
-		    </p:messages>
-		    
-		    
+     			    
 		    <table id="updateUserTableID" style="width:100%; height:100%">
-            
-           	   <colgroup>
+              
+               <colgroup>
            	       <col width="50%"/>
            	       <col width="50%"/>
            	   </colgroup>
            	   
+			   <tr>           	            
+	              <td colspan="2" align="center" valign="top"> 
+	              	<h3><h:outputText value="#{pc_CmcMain.siteTitle}"/></h3>
+	              </td>	              
+	           </tr> 
+	            
            	   <tr>	 
            	            
-	              <td align="left" valign="top">
+	              <td align="center" valign="top">
 	              	 
-	              	 <p:video value="videos/gears.mp4" autoplay="true" loop="true">
+	              	 <p:video value="videos/gears.mp4" autoplay="true" loop="true" width="640px" height="300px">
 	              	 	
 						Your browser does not support the video element.
 				        	See: <h:outputLink value="https://www.w3schools.com/html/html5_video.asp">HTML5 Video</h:outputLink>
@@ -35,11 +35,11 @@
 				     </p:video>
 				     		      
            	   	  </td>
-           		            
-	              <td align="left">
+           	  	                
+	              <td align="center">
 	              	 
-	              	 <p:galleria value="#{pc_CmcMain.photosList}" var="photo" numVisible="5" responsiveOptions="#{pc_CmcMain.responsiveOptions1}"
-				                circular="true" autoPlay="true" transitionInterval="2000" style="max-width: 640px">
+	              	 <p:galleria value="#{pc_CmcMain.photosList}" var="photo" numVisible="10" responsiveOptions="#{pc_CmcMain.responsiveOptions1}"
+				                circular="true" autoPlay="true" transitionInterval="2000" style="max-width: 640px; max-height: 400px">
 				                
 				        <p:graphicImage name="#{photo.itemImageSrc}" alt="#{photo.alt}" style="width: 100%; display: block;" />
 				        
@@ -53,9 +53,7 @@
            	   	  
            	   </tr>
            	   
-           	</table>
-           	   
-		   			
+           	</table>	   			
 	                
 	     </h:form>
    

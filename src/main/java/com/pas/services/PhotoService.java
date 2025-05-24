@@ -22,18 +22,20 @@ public class PhotoService
 
         photos.add(new Photo("images/being-driven.jpg", "images/being-driven.jpg",
                 "Driven", "Driven"));
-        photos.add(new Photo("images/on-bikes.jpg", "images/on-bikes.jpg",
-                "On Bikes", "On Bikes"));
+        photos.add(new Photo("images/bikes.jpeg", "images/bikes.jpeg",
+                "Bikes", "Bikes"));
         photos.add(new Photo("images/pointing.jpg", "images/pointing.jpg",
                 "Pointing", "Pointing"));
-        photos.add(new Photo("images/taxi.jpg", "images/taxi.jpg",
+        photos.add(new Photo("images/taxi.jpeg", "images/taxi.jpeg",
                 "Taxi", "Taxi"));
-        photos.add(new Photo("images/thumbs-up.jpg", "images/thumbs-up.jpg",
+        photos.add(new Photo("images/thumbs-up.jpeg", "images/thumbs-up.jpeg",
                 "Thumbs Up", "Thumbs Up"));
-        photos.add(new Photo("images/which-way.jpg", "images/which-way.jpg",
-                "Which Way", "Which Way"));
-        photos.add(new Photo("images/writing.jpg", "images/writing.jpg",
-                "Writing", "Writing"));
+        photos.add(new Photo("images/riding.jpeg", "images/riding.jpeg",
+                "Riding", "Riding"));
+        photos.add(new Photo("images/riding-2.jpeg", "images/riding-2.jpeg",
+                "Riding2", "Riding2"));
+        photos.add(new Photo("images/train.jpg", "images/train.jpg",
+                "Train", "Train"));
        
     }
 

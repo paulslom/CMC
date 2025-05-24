@@ -112,6 +112,9 @@ public class CmcMain implements Serializable
 	private List<SelectItem> skillLevelEnglishList = new ArrayList<>();
 	private List<SelectItem> skillLevelSpanishList = new ArrayList<>();
 	
+	private List<SelectItem> agesList = new ArrayList<>();
+	private List<SelectItem> diagnosisList = new ArrayList<>();
+	private List<SelectItem> livingEnvironmentList = new ArrayList<>();
 	private List<SelectItem> usageReasonList = new ArrayList<>();
 	
 	private List<CmcUser> siteVisitsList = new ArrayList<>();
@@ -150,6 +153,11 @@ public class CmcMain implements Serializable
 	private List<Photo> photosList;
     private List<ResponsiveOption> responsiveOptions1;
     
+    private String surveyClientAge;
+	private String surveyClientDiagnosis;
+	private String surveyClientLivingEnvironment;
+	private String surveyClientPrimaryGoalOfUse;
+	
     @Inject
     private PhotoService service;
     
@@ -202,7 +210,33 @@ public class CmcMain implements Serializable
 		usageReasonList.add(si);
 		si = new SelectItem("usageReason2","Usage Reason 2");
 		usageReasonList.add(si);
-				
+		
+		diagnosisList.clear();
+		si = new SelectItem("","Select");
+		diagnosisList.add(si);
+		si = new SelectItem("diagnosis1","Diagnosis 1");
+		diagnosisList.add(si);
+		si = new SelectItem("diagnosis2","Diagnosis 2");
+		diagnosisList.add(si);
+		
+		livingEnvironmentList.clear();
+		si = new SelectItem("","Select");
+		livingEnvironmentList.add(si);
+		si = new SelectItem("livingEnvironment1","Living Environment 1");
+		livingEnvironmentList.add(si);
+		si = new SelectItem("livingEnvironment2","Living Environment 2");
+		livingEnvironmentList.add(si);
+		
+		agesList.clear();
+		si = new SelectItem("","Select");
+		agesList.add(si);
+		
+		for (int i = 15; i <= 100; i++) 
+		{
+			si = new SelectItem(String.valueOf(i),String.valueOf(i));
+			agesList.add(si);
+		}
+						
 		try 
 		{
 			//this gets populated at app startup, no need to do it again when someone logs in.
@@ -348,7 +382,7 @@ public class CmcMain implements Serializable
 		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);		 	
         }
 	}  	
-
+	
 	public String register()
 	{
 		logger.info("entering register method");
@@ -889,8 +923,9 @@ public class CmcMain implements Serializable
 		
 		try
 		{
-			if (validateAnswersUpperSection(this.getPhysicalDisabilitiesSection1QuestionsHorizontalList())
-			||  validateAnswersLowerSection(this.getPhysicalDisabilitiesSection3QuestionsList())) //will be true if errors
+			if (upperSectionAnswersInvalid(this.getPhysicalDisabilitiesSection1QuestionsHorizontalList())
+			||  lowerSectionAnswersInvalid(this.getPhysicalDisabilitiesSection3QuestionsList())
+			||  clientInfoInvalid()) 
 			{
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
 		        FacesContext.getCurrentInstance().addMessage(null, msg);    
@@ -915,7 +950,7 @@ public class CmcMain implements Serializable
 				CmcSurveyAnswer cmcSurveyAnswer = new CmcSurveyAnswer();
 				cmcSurveyAnswer.setSurveyQuestionID(cmcSurveyQuestion.getCmcSurveyQuestionID());
 				cmcSurveyAnswer.setSurveyID(cmcSurveyQuestion.getCmcSurveyID());
-				cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());
+				cmcSurveyAnswer.setSurveyAnswer(cmcSurveyQuestion.getAnswer());				
 				cmcSurveyAnswersDAO.addSurveyAnswer(cmcSurveyAnswer);
 		    }
 			
@@ -943,14 +978,62 @@ public class CmcMain implements Serializable
 		return "/results.xhtml";
 	}		
 
+	private boolean clientInfoInvalid() 
+	{
+		boolean clientInfoInValid = false;
+		
+		if (this.getSurveyClientAge() == null || this.getSurveyClientAge().trim().length() == 0)
+		{
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer client age",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);    
+	        clientInfoInValid = true;
+		}
+		
+		if (this.getSurveyClientDiagnosis() == null || this.getSurveyClientDiagnosis().trim().length() == 0)
+		{
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer client diagnosis",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);    
+	        clientInfoInValid = true;
+		}	
+		
+		if (this.getSurveyClientLivingEnvironment() == null || this.getSurveyClientLivingEnvironment().trim().length() == 0)
+		{
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer client living arrangement",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);    
+	        clientInfoInValid = true;
+		}	
+		
+		if (this.getSurveyClientPrimaryGoalOfUse() == null || this.getSurveyClientPrimaryGoalOfUse().trim().length() == 0)
+		{
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer client primary goal of use",null);
+	        FacesContext.getCurrentInstance().addMessage(null, msg);    
+	        clientInfoInValid = true;
+		}	
+		
+		return clientInfoInValid;
+	}
+
+	public void setCmcSurveyAnswerSubmitterAndClientStuff(CmcSurveyAnswer cmcSurveyAnswer) 
+	{
+		cmcSurveyAnswer.setSurveySubmitterUserName(this.getCurrentUser().getUserName());
+		cmcSurveyAnswer.setSurveySubmitterFirstName(this.getCurrentUser().getFirstName());
+		cmcSurveyAnswer.setSurveySubmitterLastName(this.getCurrentUser().getLastName());
+		cmcSurveyAnswer.setSurveySubmitterEmailAddress(this.getCurrentUser().getEmailAddress());
+		cmcSurveyAnswer.setSurveyClientAge(this.getSurveyClientAge());
+		cmcSurveyAnswer.setSurveyClientDiagnosis(this.getSurveyClientDiagnosis());
+		cmcSurveyAnswer.setSurveyClientLivingEnvironment(this.getSurveyClientLivingEnvironment());
+		cmcSurveyAnswer.setSurveyClientPrimaryGoalOfUse(this.getSurveyClientPrimaryGoalOfUse());
+	}
+
 	public String submitIntellectualDisabilityAnswers() throws Exception
 	{
 		logger.info("entering submitPhysicalDisabilityAnswers");
 		
 		try
 		{
-			if (validateAnswersUpperSection(this.getIntellectualDisabilitiesSection1QuestionsHorizontalList())
-			||  validateAnswersLowerSection(this.getIntellectualDisabilitiesSection2QuestionsList())) //will be true if errors
+			if (upperSectionAnswersInvalid(this.getIntellectualDisabilitiesSection1QuestionsHorizontalList())
+			||  lowerSectionAnswersInvalid(this.getIntellectualDisabilitiesSection2QuestionsList())
+			||  clientInfoInvalid()) 
 			{
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
 		        FacesContext.getCurrentInstance().addMessage(null, msg);    
@@ -1001,8 +1084,9 @@ public class CmcMain implements Serializable
 		
 		try
 		{
-			if (validateAnswersUpperSection(this.getAutismDisorderSection1QuestionsHorizontalList())
-			||  validateAnswersLowerSection(this.getAutismDisorderSection2QuestionsList())) //will be true if errors
+			if (upperSectionAnswersInvalid(this.getAutismDisorderSection1QuestionsHorizontalList())
+			||  lowerSectionAnswersInvalid(this.getAutismDisorderSection2QuestionsList())
+			||  clientInfoInvalid()) 
 			{
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Please answer all questions",null);
 		        FacesContext.getCurrentInstance().addMessage(null, msg);    
@@ -1395,7 +1479,7 @@ public class CmcMain implements Serializable
 		
 	}
 
-	private boolean validateAnswersUpperSection(List<DisabilityRow> tempList)
+	private boolean upperSectionAnswersInvalid(List<DisabilityRow> tempList)
 	{
 		boolean errorFound = false;
 		
@@ -1445,7 +1529,7 @@ public class CmcMain implements Serializable
 		return errorFound;				
 	}
 	
-	private boolean validateAnswersLowerSection(List<CmcSurveyQuestion> tempList)
+	private boolean lowerSectionAnswersInvalid(List<CmcSurveyQuestion> tempList)
 	{
 		boolean errorFound = false;
 		
@@ -2134,6 +2218,62 @@ public class CmcMain implements Serializable
 
 	public void setResponsiveOptions1(List<ResponsiveOption> responsiveOptions1) {
 		this.responsiveOptions1 = responsiveOptions1;
+	}
+
+	public List<SelectItem> getAgesList() {
+		return agesList;
+	}
+
+	public void setAgesList(List<SelectItem> agesList) {
+		this.agesList = agesList;
+	}
+
+	public List<SelectItem> getDiagnosisList() {
+		return diagnosisList;
+	}
+
+	public void setDiagnosisList(List<SelectItem> diagnosisList) {
+		this.diagnosisList = diagnosisList;
+	}
+
+	public List<SelectItem> getLivingEnvironmentList() {
+		return livingEnvironmentList;
+	}
+
+	public void setLivingEnvironmentList(List<SelectItem> livingEnvironmentList) {
+		this.livingEnvironmentList = livingEnvironmentList;
+	}
+
+	public String getSurveyClientAge() {
+		return surveyClientAge;
+	}
+
+	public void setSurveyClientAge(String surveyClientAge) {
+		this.surveyClientAge = surveyClientAge;
+	}
+
+	public String getSurveyClientDiagnosis() {
+		return surveyClientDiagnosis;
+	}
+
+	public void setSurveyClientDiagnosis(String surveyClientDiagnosis) {
+		this.surveyClientDiagnosis = surveyClientDiagnosis;
+	}
+
+	public String getSurveyClientLivingEnvironment() {
+		return surveyClientLivingEnvironment;
+	}
+
+	public void setSurveyClientLivingEnvironment(String surveyClientLivingEnvironment) {
+		this.surveyClientLivingEnvironment = surveyClientLivingEnvironment;
+	}
+
+	public String getSurveyClientPrimaryGoalOfUse() {
+		return surveyClientPrimaryGoalOfUse;
+	}
+
+	public void setSurveyClientPrimaryGoalOfUse(String surveyClientPrimaryGoalOfUse) {
+		this.surveyClientPrimaryGoalOfUse = surveyClientPrimaryGoalOfUse;
 	}
 
 }

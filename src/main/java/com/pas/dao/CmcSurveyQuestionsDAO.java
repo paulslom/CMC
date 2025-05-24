@@ -16,8 +16,8 @@ import com.pas.beans.CmcSurvey;
 import com.pas.beans.CmcSurveyQuestion;
 import com.pas.dynamodb.DynamoClients;
 import com.pas.pojo.DisabilityRow;
+import com.pas.util.Utils;
 
-import jakarta.inject.Inject;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
@@ -57,9 +57,7 @@ public class CmcSurveyQuestionsDAO implements Serializable
 	private static DynamoClients dynamoClients;
 	private static DynamoDbTable<CmcSurveyQuestion> cmcSurveyQuestionsTable;
 	private static final String AWS_TABLE_NAME = "cmcSurveyQuestions";
-	
-	@Inject CmcMain cmcMain;
-	
+		
 	public CmcSurveyQuestionsDAO(DynamoClients dynamoClients2) 
 	{
 	    try 
@@ -68,6 +66,8 @@ public class CmcSurveyQuestionsDAO implements Serializable
 	       cmcSurveyQuestionsTable = dynamoClients.getDynamoDbEnhancedClient().table(AWS_TABLE_NAME, TableSchema.fromBean(CmcSurveyQuestion.class));
 	       
 	       List<CmcSurvey> tempList = new ArrayList<>();
+	       
+	       CmcMain cmcMain = (CmcMain) Utils.getManagedBean("pc_CmcMain");
 	       
 	       if (cmcMain != null)
 	       {

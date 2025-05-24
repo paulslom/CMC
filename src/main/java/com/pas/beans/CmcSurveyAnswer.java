@@ -12,10 +12,20 @@ public class CmcSurveyAnswer implements Serializable
 	
 	private String surveyAnswerID; // (Primary key - auto-generated guid)
 	private String surveyQuestionID; //the ID of the question
-	private String surveyID; //the ID of the question
+	private String surveyID; //the ID of the survey
 	private String surveyAnswerDate;
 	private String surveyAnswer;
 	private String surveyAnswerComment;
+	
+	private String surveySubmitterUserName;
+	private String surveySubmitterFirstName;
+	private String surveySubmitterLastName;
+	private String surveySubmitterEmailAddress;
+	
+	private String surveyClientAge;
+	private String surveyClientDiagnosis;
+	private String surveyClientLivingEnvironment;
+	private String surveyClientPrimaryGoalOfUse;
 	
 	@DynamoDbPartitionKey
 	public String getSurveyAnswerID() {
@@ -53,6 +63,54 @@ public class CmcSurveyAnswer implements Serializable
 	}
 	public void setSurveyAnswerComment(String surveyAnswerComment) {
 		this.surveyAnswerComment = surveyAnswerComment;
+	}
+	public String getSurveySubmitterUserName() {
+		return surveySubmitterUserName;
+	}
+	public void setSurveySubmitterUserName(String surveySubmitterUserName) {
+		this.surveySubmitterUserName = surveySubmitterUserName;
+	}
+	public String getSurveySubmitterFirstName() {
+		return surveySubmitterFirstName;
+	}
+	public void setSurveySubmitterFirstName(String surveySubmitterFirstName) {
+		this.surveySubmitterFirstName = surveySubmitterFirstName;
+	}
+	public String getSurveySubmitterLastName() {
+		return surveySubmitterLastName;
+	}
+	public void setSurveySubmitterLastName(String surveySubmitterLastName) {
+		this.surveySubmitterLastName = surveySubmitterLastName;
+	}
+	public String getSurveySubmitterEmailAddress() {
+		return surveySubmitterEmailAddress;
+	}
+	public void setSurveySubmitterEmailAddress(String surveySubmitterEmailAddress) {
+		this.surveySubmitterEmailAddress = surveySubmitterEmailAddress;
+	}
+	public String getSurveyClientAge() {
+		return surveyClientAge;
+	}
+	public void setSurveyClientAge(String surveyClientAge) {
+		this.surveyClientAge = surveyClientAge;
+	}
+	public String getSurveyClientDiagnosis() {
+		return surveyClientDiagnosis;
+	}
+	public void setSurveyClientDiagnosis(String surveyClientDiagnosis) {
+		this.surveyClientDiagnosis = surveyClientDiagnosis;
+	}
+	public String getSurveyClientLivingEnvironment() {
+		return surveyClientLivingEnvironment;
+	}
+	public void setSurveyClientLivingEnvironment(String surveyClientLivingEnvironment) {
+		this.surveyClientLivingEnvironment = surveyClientLivingEnvironment;
+	}
+	public String getSurveyClientPrimaryGoalOfUse() {
+		return surveyClientPrimaryGoalOfUse;
+	}
+	public void setSurveyClientPrimaryGoalOfUse(String surveyClientPrimaryGoalOfUse) {
+		this.surveyClientPrimaryGoalOfUse = surveyClientPrimaryGoalOfUse;
 	}
 		
 	/*

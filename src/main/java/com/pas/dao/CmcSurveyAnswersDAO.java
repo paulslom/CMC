@@ -14,8 +14,8 @@ import com.pas.beans.CmcMain;
 import com.pas.beans.CmcSurveyAnswer;
 import com.pas.dynamodb.DateToStringConverter;
 import com.pas.dynamodb.DynamoClients;
+import com.pas.util.Utils;
 
-import jakarta.inject.Inject;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
@@ -30,9 +30,7 @@ public class CmcSurveyAnswersDAO implements Serializable
 	private static DynamoClients dynamoClients;
 	private static DynamoDbTable<CmcSurveyAnswer> cmcSurveyAnswersTable;
 	private static final String AWS_TABLE_NAME = "cmcSurveyAnswer";
-	
-	@Inject CmcMain cmcMain;
-	
+		
 	public CmcSurveyAnswersDAO(DynamoClients dynamoClients2) 
 	{
 	   try 
@@ -86,6 +84,8 @@ public class CmcSurveyAnswersDAO implements Serializable
 			cmcSurveyAnswer.setSurveyAnswerID(UUID.randomUUID().toString());
 		}
 		
+		CmcMain cmcMain = (CmcMain) Utils.getManagedBean("pc_CmcMain");
+		cmcMain.setCmcSurveyAnswerSubmitterAndClientStuff(cmcSurveyAnswer);
 		cmcSurveyAnswer.setSurveyAnswerDate(DateToStringConverter.convertDateToDynamoStringFormat(new Date()));
 		
 		PutItemEnhancedRequest<CmcSurveyAnswer> putItemEnhancedRequest = PutItemEnhancedRequest.builder(CmcSurveyAnswer.class).item(cmcSurveyAnswer).build();

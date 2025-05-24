@@ -35,27 +35,27 @@
 	              <td align="center">	              
 	       
                      <p:commandButton id="physDisSubmitId" 
-					   value="Submit results" 
-					   action="#{pc_CmcMain.submitPhysicalDisabilityAnswers}" 
-					   onclick="PF('blockWidgetVar').show()" 
-          			   oncomplete="PF('block').hide()"
-          			   ajax="false"
-          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>
+					     value="Submit results" 
+					     type="button"
+					     onclick="PF('confirmSurveyDialogPD').show()">
+					 </p:commandButton>  
           				   
           			 <p:commandButton id="physDisClearAnswersId" 
 					   value="Clear all Answers" 
 					   action="#{pc_CmcMain.clearAllPhysicalDisabilityAnswers}" 
 					   ajax="false"
 					   immediate="true"
-          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>
-          				   
+          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID">
+          			 </p:commandButton>
+          			 	   
           			 <p:commandButton id="physDisDefaultAnswersYesId" 
 					   value="Default Answers to Yes/Able" 
 					   action="#{pc_CmcMain.defaultAllPhysicalDisabilityAnswersToYes}" 
 					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
 					   ajax="false"
 					   immediate="true"
-          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>
+          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID">
+          			 </p:commandButton>
           			
           			<p:commandButton id="physDisDefaultAnswersNoId" 
 					   value="Default Answers to No/UnAble" 
@@ -63,11 +63,13 @@
 					   rendered="#{pc_CmcMain.renderDefaultAnswers}" 
 					   ajax="false"
 					   immediate="true"
-          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID"/>	   
+          			   update="physicalDisabilitiesSection1TableID physicalDisabilitiesSection2TableID physicalDisabilitiesSection3TableID">
+          			</p:commandButton>  
+					 
 	              </td>
 	           
 	           </tr>
-	              			   	
+	                			   	
 	           <tr>
 	           
 	              <td>	       	              
@@ -435,6 +437,95 @@
 		  </table>	  
 	                
 	   </h:form>
+	   
+	   <p:dialog showEffect="fade" hideEffect="explode" header="Confirm Survey Responses and Client info" 
+		widgetVar="confirmSurveyDialogPD" position="center center" width="550" height="320" >
+		
+		  <h:form id="physClientDialogForm">
+		  
+      		<table>
+			
+				<tr>
+			  		
+	 			   <td class="textLabel">
+					  <p:outputLabel for="pageID" value="#{bundleCMC.clientAge}"/>
+				   </td>	
+			 
+	               <td class="text">
+	                  <p:selectOneMenu id="pageID" required="true" value="#{pc_CmcMain.surveyClientAge}" requiredMessage="Selection is required">
+						  <f:selectItems value="#{pc_CmcMain.agesList}" />
+					  </p:selectOneMenu>	
+	               </td>
+	            
+	           </tr>
+	       
+	           <tr>
+			  		
+	 			   <td class="textLabel">
+					  <p:outputLabel for="pdiagnosisID" value="#{bundleCMC.clientDiagnosis}"/>
+				   </td>	
+			 
+	               <td class="text">
+	                  <p:selectOneMenu id="pdiagnosisID" required="true" value="#{pc_CmcMain.surveyClientDiagnosis}" requiredMessage="Selection is required">
+						  <f:selectItems value="#{pc_CmcMain.diagnosisList}" />
+					  </p:selectOneMenu>	
+	               </td>
+	            
+	           </tr>
+	           
+	           <tr>
+			  		
+	 			   <td class="textLabel">
+					  <p:outputLabel for="plivingEnvID" value="#{bundleCMC.clientLivingEnvironment}"/>
+				   </td>	
+			 
+	               <td class="text">
+	                  <p:selectOneMenu id="plivingEnvID" required="true" value="#{pc_CmcMain.surveyClientLivingEnvironment}" requiredMessage="Selection is required">
+						  <f:selectItems value="#{pc_CmcMain.livingEnvironmentList}" />
+					  </p:selectOneMenu>	
+	               </td>
+	            
+	           </tr>
+	           
+	           <tr>
+			  		
+	 			   <td class="textLabel">
+					  <p:outputLabel for="pusageReasonID" value="#{bundleCMC.clientUseGoal}"/>
+				   </td>	
+			 
+	               <td class="text">
+	                  <p:selectOneMenu id="pusageReasonID" required="true" value="#{pc_CmcMain.surveyClientPrimaryGoalOfUse}" requiredMessage="Selection is required">
+						  <f:selectItems value="#{pc_CmcMain.usageReasonList}" />
+					  </p:selectOneMenu>	
+	               </td>
+	            
+	           </tr>
+	           
+			   <tr><td><BR/></td></tr>
+			   
+			   <tr>
+			   
+					<td align="right">
+					
+						<p:commandButton value="Confirm" 
+						    action="#{pc_CmcMain.submitPhysicalDisabilityAnswers}" 
+						    oncomplete="PF('confirmSurveyDialogPD').hide();"
+						    update="physForm">
+	       				</p:commandButton>
+	       				
+					</td>
+					
+					<td width="50%" align="left">
+						<p:commandButton value="Cancel" oncomplete="PF('confirmSurveyDialogPD').hide();"/>
+					</td>
+					
+			   </tr>
+		   
+		    </table>
+		    
+		 </h:form>   
+		
+	</p:dialog>	  
    
     </ui:define>
 

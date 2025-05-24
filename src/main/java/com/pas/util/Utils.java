@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +18,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import jakarta.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.CDI;
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -36,7 +40,7 @@ public class Utils
 	public static int NET_STYLE_HOLENUM = 22;
 	
 	public static String MY_TIME_ZONE = "America/New_York";
-		
+
 	public static String getLastYearsLastDayDate() 
 	{
 	    Calendar prevYear = Calendar.getInstance();
@@ -102,6 +106,28 @@ public class Utils
 		
 		return contextRoot;
 	}
+	
+	public static Object getManagedBean(String beanName)
+    {
+	   Object returnObject = null;
+	   
+	   try 
+       {		  
+		   BeanManager beanManager = CDI.current().getBeanManager();
+		   Set<Bean<?>> beans = beanManager.getBeans(beanName);
+		   Bean<?> bean = beanManager.resolve(beans);
+		   if (bean != null)
+		   { 
+			   Class cls = bean.getBeanClass();
+			   returnObject = CDI.current().select(cls).get();
+		   }
+       } 
+       catch (Exception e)
+       {
+           logger.error("Error retrieving instance of bean " + beanName + " - error:" + e.getMessage(), e);           
+       }
+       return returnObject;
+    }
 	
 	public static ArrayList<String> setEmailFullRecipientList(List<String> fullList) 
 	{

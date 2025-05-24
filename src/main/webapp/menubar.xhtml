@@ -57,8 +57,9 @@
                   <p:menubar id="menuId">
            
 		              <p:submenu label="About">
-						   <p:menuitem value="The Team" url="#{request.contextPath}/theTeam.xhtml"/>
-						   <p:menuitem value="The Mission" url="#{request.contextPath}/theMission.xhtml"/>	
+		                   <p:menuitem value="Vision and Mission" url="#{request.contextPath}/visionAndMission.xhtml"/>
+		                   <p:menuitem value="Description" url="#{request.contextPath}/siteDescription.xhtml"/>	
+		                   <p:menuitem value="Team" url="#{request.contextPath}/theTeam.xhtml"/>						   
 						   <p:menuitem value="Background" url="#{request.contextPath}/background.xhtml"/>													
 					  </p:submenu>
 			
@@ -68,6 +69,7 @@
 			          <p:menuitem value="#{pc_CmcMain.intellectualDisabilitiesMenuTitle}" url="#{request.contextPath}/intellectualDisabilities.xhtml"/>
 			          <p:menuitem value="#{pc_CmcMain.autismDisorderMenuTitle}" url="#{request.contextPath}/autismSpectrumDisorder.xhtml"/>
 			          <p:menuitem value="Results" url="#{request.contextPath}/results.xhtml"/>
+			          <p:menuitem value="Creating Goals" url="#{request.contextPath}/creatingGoals.xhtml"/>
 			          
 			          <p:submenu rendered="#{sessionScope.currentUserisAdmin}" label="Reports">
 						   
