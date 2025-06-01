@@ -6,12 +6,12 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.pas.beans.CmcMain;
 import com.pas.beans.CmcSurvey;
 import com.pas.beans.CmcSurveyQuestion;
 import com.pas.dao.CmcSurveysDAO;
@@ -25,9 +25,9 @@ import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse;
 import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 
-public class CreateTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities
+public class CreateAndLoadTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities
 {	 
-	private static Logger logger = LogManager.getLogger(CreateTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities.class);
+	private static Logger logger = LogManager.getLogger(CreateAndLoadTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities.class);
 	private static String AWS_TABLE_NAME = "cmcSurveyQuestions";
 	
 	public void loadTable(DynamoClients dynamoClients, InputStream inputStream) throws Exception 
@@ -58,16 +58,16 @@ public class CreateTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities
         // Insert data into the table
         logger.info("Inserting data into the table:" + AWS_TABLE_NAME);
        
-        String physicalDisabilitiesSurveyID = "";
+        String surveyID = "";
         CmcSurveysDAO cmcSurveysDAO = new CmcSurveysDAO(dynamoClients);
 		List<CmcSurvey> tempList = cmcSurveysDAO.readAllSurveysFromDB(); 
     
         for (int i = 0; i < tempList.size(); i++) 
 	    {
 			CmcSurvey cmcSurvey = tempList.get(i);
-			if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase("Physical Disabilities"))
+			if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase(CmcMain.Physical_Disabilities_Survey_Name))
 			{
-				physicalDisabilitiesSurveyID = cmcSurvey.getCmcSurveyID();
+				surveyID = cmcSurvey.getCmcSurveyID();
 				break;
 			}			
 	    }
@@ -80,13 +80,15 @@ public class CreateTableDynamoDB_CmcSurveyQuestionsPhysicalDisabilities
         }
         else
         {
+        	Integer surveyQuestionIDCounter = 1;
+        	
         	for (int i = 0; i < cmcSurveyQuestionList.size(); i++) 
     		{
             	CmcSurveyQuestion gu = cmcSurveyQuestionList.get(i);
-            	gu.setCmcSurveyQuestionID(UUID.randomUUID().toString());
-            	gu.setCmcSurveyID(physicalDisabilitiesSurveyID);
+            	gu.setCmcSurveyQuestionID(surveyID + "." + surveyQuestionIDCounter);
+            	gu.setCmcSurveyID(surveyID);
                 table.putItem(gu);                
-    		}             
+    		}            
         }
 	}
     

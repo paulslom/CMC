@@ -14,9 +14,9 @@ import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse;
 import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 
-public class CreateTableDynamoDB_CmcUsers
+public class CreateAndLoadTableDynamoDB_CmcUsers
 {
-	private static Logger logger = LogManager.getLogger(CreateTableDynamoDB_CmcUsers.class);
+	private static Logger logger = LogManager.getLogger(CreateAndLoadTableDynamoDB_CmcUsers.class);
 	private static String AWS_TABLE_NAME = "CmcUsers";
 	
 	public static void main(String[] args) throws Exception

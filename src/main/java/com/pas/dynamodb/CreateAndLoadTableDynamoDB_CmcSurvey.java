@@ -6,7 +6,6 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,9 +22,9 @@ import software.amazon.awssdk.services.dynamodb.model.DescribeTableResponse;
 import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 
-public class CreateTableDynamoDB_CmcSurvey
+public class CreateAndLoadTableDynamoDB_CmcSurvey
 {
-	private static Logger logger = LogManager.getLogger(CreateTableDynamoDB_CmcSurvey.class);
+	private static Logger logger = LogManager.getLogger(CreateAndLoadTableDynamoDB_CmcSurvey.class);
 	private static String AWS_TABLE_NAME = "cmcSurveys";
 	
     public void loadTable(DynamoClients dynamoClients, InputStream inputStream) throws Exception 
@@ -65,11 +64,14 @@ public class CreateTableDynamoDB_CmcSurvey
         }
         else
         {
+        	Integer surveyIDCounter = 1;
+        	
         	for (int i = 0; i < cmcSurveyList.size(); i++) 
     		{
             	CmcSurvey cs = cmcSurveyList.get(i); 
-            	cs.setCmcSurveyID(UUID.randomUUID().toString());
+            	cs.setCmcSurveyID(String.valueOf(surveyIDCounter));
                 cmcSurveyTable.putItem(cs);
+                surveyIDCounter++;
     		}
         }
         

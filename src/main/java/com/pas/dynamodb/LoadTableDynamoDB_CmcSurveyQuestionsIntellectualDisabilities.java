@@ -1,12 +1,13 @@
 package com.pas.dynamodb;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,21 +21,47 @@ import com.pas.dao.CmcSurveysDAO;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
-public class CreateTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities
+public class LoadTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities
 {	 
-	private static Logger logger = LogManager.getLogger(CreateTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities.class);
+	private static Logger logger = LogManager.getLogger(LoadTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities.class);
 	private static String AWS_TABLE_NAME = "cmcSurveyQuestions";
+	private static String SURVEYQUESTIONS_INTELLECTUAL_DISABILITIES_JSONFILE = "SurveyQuestionsIntellectualDisabilitiesData.json";
+
+	public static void main(String[] args) throws Exception
+    { 
+    	logger.info("**********  START of program ***********");   	
+    	
+    	 try 
+         {
+    		 DynamoClients dynamoClients = DynamoUtil.getDynamoClients();
+    
+    		 loadTable(dynamoClients);
+	          	
+			 logger.info("**********  END of program ***********");
+         }
+    	 catch (Exception e)
+    	 {
+    		 logger.error("Exception: " + e.getMessage(), e);
+    	 }
+		System.exit(1);
+	}
 	
-	public void loadTable(DynamoClients dynamoClients, InputStream inputStream) throws Exception 
+	public static void loadTable(DynamoClients dynamoClients) throws Exception 
 	{
-		DynamoDbTable<CmcSurveyQuestion> table = dynamoClients.getDynamoDbEnhancedClient().table(AWS_TABLE_NAME, TableSchema.fromBean(CmcSurveyQuestion.class));           
+		//Grab a handle to the table in DynamoDB
+        DynamoDbTable<CmcSurveyQuestion> table = dynamoClients.getDynamoDbEnhancedClient().table(AWS_TABLE_NAME, TableSchema.fromBean(CmcSurveyQuestion.class));     
+
+        String jsonFilePath = "C:\\Paul\\GitHub\\CMC\\src\\main\\resources\\data\\" + SURVEYQUESTIONS_INTELLECTUAL_DISABILITIES_JSONFILE;
+        File jsonFile = new File(jsonFilePath);          
+        
+        InputStream inputStream = new FileInputStream(jsonFile);      
         loadTableData(table, inputStream, dynamoClients);				
 	}
-	   
+   
     private static void loadTableData(DynamoDbTable<CmcSurveyQuestion> table, InputStream inputStream, DynamoClients dynamoClients) throws Exception
     {   
         // Insert data into the table
-        logger.info("Inserting Intellectual disabilities data into the table:" + AWS_TABLE_NAME);
+        logger.info("Inserting data into the table:" + AWS_TABLE_NAME);
        
         String surveyID = "";
         CmcSurveysDAO cmcSurveysDAO = new CmcSurveysDAO(dynamoClients);
@@ -54,17 +81,20 @@ public class CreateTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities
         
         if (cmcSurveyQuestionList == null)
         {
-        	logger.error("cam group client list from json file is Empty - can't do anything more so exiting");
+        	logger.error("list from json file is Empty - can't do anything more so exiting");
         }
         else
         {
+        	Integer surveyQuestionIDCounter = 1;
+        	
         	for (int i = 0; i < cmcSurveyQuestionList.size(); i++) 
     		{
             	CmcSurveyQuestion gu = cmcSurveyQuestionList.get(i);
-            	gu.setCmcSurveyQuestionID(UUID.randomUUID().toString());
+            	gu.setCmcSurveyQuestionID(surveyID + "." + surveyQuestionIDCounter);
             	gu.setCmcSurveyID(surveyID);
-                table.putItem(gu);                
-    		}             
+                table.putItem(gu); 
+                surveyQuestionIDCounter++;
+    		}            
         }
 	}
     

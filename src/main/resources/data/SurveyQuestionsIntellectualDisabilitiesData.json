@@ -1,379 +1,379 @@
 [
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 1,
+	"cmcSurveyQuestionNumber": 2.1.1,
 	"cmcSurveyCategory": "Available",
 	"cmcSurveyQuestionEnglish": "Public (City) Bus Available",
 	"cmcSurveyQuestionSpanish": "Autobús público (urbano)"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 2,
+	"cmcSurveyQuestionNumber": 2.1.2,
 	"cmcSurveyCategory": "Available",
 	"cmcSurveyQuestionEnglish": "Coach (Intercity Bus)",
 	"cmcSurveyQuestionSpanish": "Autobús de larga distancia (interurbano)"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 3,
+	"cmcSurveyQuestionNumber": 2.1.3,
 	"cmcSurveyCategory": "Available",
 	"cmcSurveyQuestionEnglish": "Train/Subway Trolley/Tram",
 	"cmcSurveyQuestionSpanish": "Tren/Metro/Tranvía/Trolley"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 4,
+	"cmcSurveyQuestionNumber": 2.1.4,
 	"cmcSurveyCategory": "Available",
 	"cmcSurveyQuestionEnglish": "Taxi",
 	"cmcSurveyQuestionSpanish": "Taxi"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 5,
+	"cmcSurveyQuestionNumber": 2.1.5,
 	"cmcSurveyCategory": "Available",
 	"cmcSurveyQuestionEnglish": "E-hailing (Uber, Lyft)",
 	"cmcSurveyQuestionSpanish": "Transporte por aplicación (Uber/Lyft)"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 6,
+	"cmcSurveyQuestionNumber": 2.1.6,
 	"cmcSurveyCategory": "Available",
 	"cmcSurveyQuestionEnglish": "Ferry",
 	"cmcSurveyQuestionSpanish": "Feri"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 7,
+	"cmcSurveyQuestionNumber": 2.1.7,
 	"cmcSurveyCategory": "Available",
 	"cmcSurveyQuestionEnglish": "Walk",
 	"cmcSurveyQuestionSpanish": "A pie"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 8,
+	"cmcSurveyQuestionNumber": 2.1.8,
 	"cmcSurveyCategory": "Available",
 	"cmcSurveyQuestionEnglish": "Bike/Scooter",
 	"cmcSurveyQuestionSpanish": "Bicicleta/Scooter"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 9,
+	"cmcSurveyQuestionNumber": 2.1.9,
 	"cmcSurveyCategory": "Available",
 	"cmcSurveyQuestionEnglish": "Other (Add Specifics)",
 	"cmcSurveyQuestionSpanish": "Otro"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 10,
+	"cmcSurveyQuestionNumber": 2.1.10,
 	"cmcSurveyCategory": "Tried",
 	"cmcSurveyQuestionEnglish": "Public (City) Bus",
 	"cmcSurveyQuestionSpanish": "Autobús público (urbano)"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 11,
+	"cmcSurveyQuestionNumber": 2.1.11,
 	"cmcSurveyCategory": "Tried",
 	"cmcSurveyQuestionEnglish": "Coach (Intercity Bus",
 	"cmcSurveyQuestionSpanish": "Autobús de larga distancia (interurbano)"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 12,
+	"cmcSurveyQuestionNumber": 2.1.12,
 	"cmcSurveyCategory": "Tried",
 	"cmcSurveyQuestionEnglish": "Train/Subway Trolley/Tram",
 	"cmcSurveyQuestionSpanish": "Tren/Metro/Tranvía/Trolley"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 13,
+	"cmcSurveyQuestionNumber": 2.1.13,
 	"cmcSurveyCategory": "Tried",
 	"cmcSurveyQuestionEnglish": "Taxi",
 	"cmcSurveyQuestionSpanish": "Taxi"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 14,
+	"cmcSurveyQuestionNumber": 2.1.14,
 	"cmcSurveyCategory": "Tried",
 	"cmcSurveyQuestionEnglish": "E-hailing (Uber, Lyft)",
 	"cmcSurveyQuestionSpanish": "Transporte por aplicación (Uber/Lyft)"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 15,
+	"cmcSurveyQuestionNumber": 2.1.15,
 	"cmcSurveyCategory": "Tried",
 	"cmcSurveyQuestionEnglish": "Ferry",
 	"cmcSurveyQuestionSpanish": "Feri"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 16,
+	"cmcSurveyQuestionNumber": 2.1.16,
 	"cmcSurveyCategory": "Tried",
 	"cmcSurveyQuestionEnglish": "Walk",
 	"cmcSurveyQuestionSpanish": "A pie"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 17,
+	"cmcSurveyQuestionNumber": 2.1.17,
 	"cmcSurveyCategory": "Tried",
 	"cmcSurveyQuestionEnglish": "Bike/Scooter",
 	"cmcSurveyQuestionSpanish": "Bicicleta/Scooter"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 18,
+	"cmcSurveyQuestionNumber": 2.1.18,
 	"cmcSurveyCategory": "Tried",
 	"cmcSurveyQuestionEnglish": "Other (Add Specifics)",
 	"cmcSurveyQuestionSpanish": "Otro"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 19,
+	"cmcSurveyQuestionNumber": 2.1.19,
 	"cmcSurveyCategory": "Use",
 	"cmcSurveyQuestionEnglish": "Public (City) Bus",
 	"cmcSurveyQuestionSpanish": "Autobús público (urbano)"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 20,
+	"cmcSurveyQuestionNumber": 2.1.20,
 	"cmcSurveyCategory": "Use",
 	"cmcSurveyQuestionEnglish": "Coach (Intercity Bus",
 	"cmcSurveyQuestionSpanish": "Autobús de larga distancia (interurbano)"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 21,
+	"cmcSurveyQuestionNumber": 2.1.21,
 	"cmcSurveyCategory": "Use",
 	"cmcSurveyQuestionEnglish": "Train/Subway Trolley/Tram",
 	"cmcSurveyQuestionSpanish": "Tren/Metro/Tranvía/Trolley"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 22,
+	"cmcSurveyQuestionNumber": 2.1.22,
 	"cmcSurveyCategory": "Use",
 	"cmcSurveyQuestionEnglish": "Taxi",
 	"cmcSurveyQuestionSpanish": "Taxi"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 23,
+	"cmcSurveyQuestionNumber": 2.1.23,
 	"cmcSurveyCategory": "Use",
 	"cmcSurveyQuestionEnglish": "E-hailing (Uber, Lyft)",
 	"cmcSurveyQuestionSpanish": "Transporte por aplicación (Uber/Lyft)"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 24,
+	"cmcSurveyQuestionNumber": 2.1.24,
 	"cmcSurveyCategory": "Use",
 	"cmcSurveyQuestionEnglish": "Ferry",
 	"cmcSurveyQuestionSpanish": "Feri"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 25,
+	"cmcSurveyQuestionNumber": 2.1.25,
 	"cmcSurveyCategory": "Use",
 	"cmcSurveyQuestionEnglish": "Walk",
 	"cmcSurveyQuestionSpanish": "A pie"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 26,
+	"cmcSurveyQuestionNumber": 2.1.26,
 	"cmcSurveyCategory": "Use",
 	"cmcSurveyQuestionEnglish": "Bike/Scooter",
 	"cmcSurveyQuestionSpanish": "Bicicleta/Scooter"
 },
 {
 	"cmcSurveySection": "1",
-	"cmcSurveyQuestionNumber": 27,
+	"cmcSurveyQuestionNumber": 2.1.27,
 	"cmcSurveyCategory": "Use",
 	"cmcSurveyQuestionEnglish": "Other (Add Specifics)",
 	"cmcSurveyQuestionSpanish": "Otro"
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 28,
+	"cmcSurveyQuestionNumber": 2.2.0,
 	"cmcSurveyQuestionEnglish": "Cognitive",
 	"cmcSurveyQuestionSpanish": "Cognitivo",
 	"cmcSurveyQuestionRenderInputs": false
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 29,
+	"cmcSurveyQuestionNumber": 2.2.1,
 	"cmcSurveyQuestionEnglish": "1. Ambulate independently, including steps/stairs",
 	"cmcSurveyQuestionSpanish": "1. Deambular o andar de forma independiente, incluyendo escaleras."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 30,
+	"cmcSurveyQuestionNumber": 2.2.2,
 	"cmcSurveyQuestionEnglish": "2. Physically maneuver within a familiar or unfamiliar environment",
 	"cmcSurveyQuestionSpanish": "2. Maniobrar físicamente y navegar dentro de un entorno desconocido. "
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 31,
+	"cmcSurveyQuestionNumber": 2.2.3,
 	"cmcSurveyQuestionEnglish": "3. Recognize and follow signage with no external cues (Ex: driver wave, vehicle signal lights)",
 	"cmcSurveyQuestionSpanish": "3. Reconocer y seguir las señalizaciones sin indicaciones externas (Ej.: señal del conductor, luces de señalización de vehículos."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 32,
+	"cmcSurveyQuestionNumber": 2.2.4,
 	"cmcSurveyQuestionEnglish": "4. Scanning the environment for safety when exiting the vehicle or getting off the bus",
 	"cmcSurveyQuestionSpanish": "4. Explorar el entorno en busca de señales de seguridad al salir del vehículo o bajarse del autobús."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 33,
+	"cmcSurveyQuestionNumber": 2.2.5,
 	"cmcSurveyQuestionEnglish": "5. Initiate use and secure own seatbelt, if appropriate.",
 	"cmcSurveyQuestionSpanish": "5. Asegurar el propio cinturón de seguridad."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 34,
+	"cmcSurveyQuestionNumber": 2.2.6,
 	"cmcSurveyQuestionEnglish": "6. Maintain attention to anticipate correct destination/stop",
 	"cmcSurveyQuestionSpanish": "6. Mantener la atención para anticipar el destino o parada correcta."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 35,
+	"cmcSurveyQuestionNumber": 2.2.7,
 	"cmcSurveyQuestionEnglish": "7. Plans a trip considering time to and from destination",
 	"cmcSurveyQuestionSpanish": "7. Planificar un viaje considerando el tiempo de ida y vuelta al destino."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 36,
+	"cmcSurveyQuestionNumber": 2.2.8,
 	"cmcSurveyQuestionEnglish": "8. Read and decipher a schedule",
 	"cmcSurveyQuestionSpanish": "8. Leer e interpretar un horario."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 37,
+	"cmcSurveyQuestionNumber": 2.2.9,
 	"cmcSurveyQuestionEnglish": "9. Navigate/wayfinding with a schematic, map, or GPS (Ex: start point, within transport center, destination)",
 	"cmcSurveyQuestionSpanish": "9. Navegar/orientarse con un esquema, mapa o GPS (Ej.: punto de partida, dentro del centro de transporte, destino)."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 38,
+	"cmcSurveyQuestionNumber": 2.2.10,
 	"cmcSurveyQuestionEnglish": "10. Manage money/money card/fare card to pay for and register travel",
 	"cmcSurveyQuestionSpanish": "10. Manejar medios de pago como dinero en efectivo, tarjeta bancaria, tarjeta de transporte y registrar el viaje."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 39,
+	"cmcSurveyQuestionNumber": 2.2.11,
 	"cmcSurveyQuestionEnglish": "11. Problem-solve when a problem arises (e.g., cancellation, delay).",
 	"cmcSurveyQuestionSpanish": "11. Resolver problemas cuando ocurre un imprevisto común con el transporte (Ej.: cancelación o retraso)."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 40,
+	"cmcSurveyQuestionNumber": 2.2.12,
 	"cmcSurveyQuestionEnglish": "12. Use appropriate wear for weather (e.g., rain, snow boots)",
 	"cmcSurveyQuestionSpanish": "12. Usar la vestimenta adecuada para el clima (Ej.: impermeable, botas de nieve)."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 41,
+	"cmcSurveyQuestionNumber": 2.2.13,
 	"cmcSurveyQuestionEnglish": "13. Plan ahead to carry water, food, charged cellphone, and /or medication as needed.",
 	"cmcSurveyQuestionSpanish": "13. Planificar con anticipación si es necesario llevar agua, comida o medicamentos."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 42,
+	"cmcSurveyQuestionNumber": 2.2.14,
 	"cmcSurveyQuestionEnglish": "14. Cross a street with traffic signals and pedestrian controls while monitoring vehicle traffic",
 	"cmcSurveyQuestionSpanish": "14. Cruzar una calle con semáforos y controles peatonales mientras se monitorea el tráfico vehicular."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 43,
+	"cmcSurveyQuestionNumber": 2.2.15,
 	"cmcSurveyQuestionEnglish": "15. Cross a street without pedestrian controls (with/without traffic signals)",
 	"cmcSurveyQuestionSpanish": "15. Cruzar una calle sin controles peatonales (con o sin semáforos)"
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 44,
+	"cmcSurveyQuestionNumber": 2.2.16,
 	"cmcSurveyQuestionEnglish": "16. Awareness of people who may take advantage of individual (e.g.scammers, con artists, grooming).",
 	"cmcSurveyQuestionSpanish": "16. Tener conciencia de personas que puedan aprovecharse (por ejemplo, estafadores)."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 45,
+	"cmcSurveyQuestionNumber": 2.2.17.0,
 	"cmcSurveyQuestionEnglish": "Communication",
 	"cmcSurveyQuestionSpanish": "Comunicación",
 	"cmcSurveyQuestionRenderInputs": false
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 46,
+	"cmcSurveyQuestionNumber": 2.2.17.1,
 	"cmcSurveyQuestionEnglish": "17. Able to hail a taxi or flag a bus for stopping",
 	"cmcSurveyQuestionSpanish": "17. Capaz de solicitar un taxi o detener un autobús."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 47,
+	"cmcSurveyQuestionNumber": 2.2.18,
 	"cmcSurveyQuestionEnglish": "18. Communicate needs effectively with a driver; knowing when and if appropriate (Ex: when getting on a bus, not while driving)",
 	"cmcSurveyQuestionSpanish": "18. Comunicar necesidades de manera efectiva con un conductor; saber cuándo y si es apropiado. (Ej.: al subir al autobús, no mientras se conduce)."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 48,
+	"cmcSurveyQuestionNumber": 2.2.19,
 	"cmcSurveyQuestionEnglish": "19. Communicate identification information and/or phone number to an appropriate individual",
 	"cmcSurveyQuestionSpanish": "19. Comunicar información de identificación o número de teléfono a la persona adecuada. "
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 49,
+	"cmcSurveyQuestionNumber": 2.2.20,
 	"cmcSurveyQuestionEnglish": "20. Use a cellphone/mobile phone for requesting and managing service (Ex: apps for ordering rideshare)",
 	"cmcSurveyQuestionSpanish": "20. Usar un teléfono celular para solicitar y gestionar servicios."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 51,
+	"cmcSurveyQuestionNumber": 2.2.21,
 	"cmcSurveyQuestionEnglish": "21. Recognizes an emergency situation and contacts the correct person (Ex: caregiver vs 911)",
 	"cmcSurveyQuestionSpanish": "21. Reconocer una situación de emergencia y contactar a la persona correcta (Ej.: cuidador o al 911)."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 52,
+	"cmcSurveyQuestionNumber": 2.2.22.0,
 	"cmcSurveyQuestionEnglish": "Behavioral",
 	"cmcSurveyQuestionSpanish": "Conductual",
 	"cmcSurveyQuestionRenderInputs": false
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 53,
+	"cmcSurveyQuestionNumber": 2.2.22.1,
 	"cmcSurveyQuestionEnglish": "22. Tolerates motion of vehicles (including bus, train, ferry)",
 	"cmcSurveyQuestionSpanish": "22. Tolerar el movimiento de los vehículos (incluyendo autobús, tren, ferri)."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 54,
+	"cmcSurveyQuestionNumber": 2.2.23,
 	"cmcSurveyQuestionEnglish": "23. Follow social etiquette for community mobility (Ex: no feet on seats, does not intrude on other passengers’ space)",
 	"cmcSurveyQuestionSpanish": "23. Seguir los protocolos sociales de movilidad en la comunidad (por ejemplo, no apoyar los pies en los asientos, no invadir el espacio de otros pasajeros, no dar vueltas o tararear)."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 55,
+	"cmcSurveyQuestionNumber": 2.2.24,
 	"cmcSurveyQuestionEnglish": "24. Sit or stand without disruptive behavior during the trip",
 	"cmcSurveyQuestionSpanish": "24. Sentarse o pararse sin presentar conductas disruptivas durante el viaje."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 56,
+	"cmcSurveyQuestionNumber": 2.2.25,
 	"cmcSurveyQuestionEnglish": "25. Recognize and respond appropriately to one's current level of energy or pain",
 	"cmcSurveyQuestionSpanish": "25. Reconocer y responder apropiadamente al nivel actual de energía o dolor. "
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 57,
+	"cmcSurveyQuestionNumber": 2.2.26,
 	"cmcSurveyQuestionEnglish": "26. Recover from feelings of being overwhelmed or anxious if a problem occurs in order to continue the travel",
 	"cmcSurveyQuestionSpanish": "26. Recuperarse de sentimientos como estar abrumado o ansioso si ocurre un problema, para poder continuar el viaje."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 58,
+	"cmcSurveyQuestionNumber": 2.2.27,
 	"cmcSurveyQuestionEnglish": "27. Aware and plan for potential discomfort, fatigue or pain with travel.",
 	"cmcSurveyQuestionSpanish": "27. Tenga en cuenta y planifique las posibles molestias, fatiga o dolor que pueda sufrir durante el viaje."
 },
 {
 	"cmcSurveySection": "2",
-	"cmcSurveyQuestionNumber": 59,
+	"cmcSurveyQuestionNumber": 2.2.28,
 	"cmcSurveyQuestionEnglish": "28. Aware of unsafe situations or dangers in the environment and appropriately respond or adapt (e.g., broken sidewalk, construction, detour).",
 	"cmcSurveyQuestionSpanish": "28. Ser consciente de situaciones inseguras o peligros en el entorno y responder o adaptarse adecuadamente (por ejemplo, acera rota, construcción, desvío)."
 }

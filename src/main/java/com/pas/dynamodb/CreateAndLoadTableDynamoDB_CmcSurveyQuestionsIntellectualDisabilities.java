@@ -6,7 +6,6 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,11 +19,11 @@ import com.pas.dao.CmcSurveysDAO;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
-public class CreateTableDynamoDB_CmcSurveyQuestionsAutismDisorder
+public class CreateAndLoadTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities
 {	 
-	private static Logger logger = LogManager.getLogger(CreateTableDynamoDB_CmcSurveyQuestionsAutismDisorder.class);
+	private static Logger logger = LogManager.getLogger(CreateAndLoadTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities.class);
 	private static String AWS_TABLE_NAME = "cmcSurveyQuestions";
-		
+	
 	public void loadTable(DynamoClients dynamoClients, InputStream inputStream) throws Exception 
 	{
 		DynamoDbTable<CmcSurveyQuestion> table = dynamoClients.getDynamoDbEnhancedClient().table(AWS_TABLE_NAME, TableSchema.fromBean(CmcSurveyQuestion.class));           
@@ -34,7 +33,7 @@ public class CreateTableDynamoDB_CmcSurveyQuestionsAutismDisorder
     private static void loadTableData(DynamoDbTable<CmcSurveyQuestion> table, InputStream inputStream, DynamoClients dynamoClients) throws Exception
     {   
         // Insert data into the table
-        logger.info("Inserting Autism Spectrum Disorder data into the table:" + AWS_TABLE_NAME);
+        logger.info("Inserting Intellectual disabilities data into the table:" + AWS_TABLE_NAME);
        
         String surveyID = "";
         CmcSurveysDAO cmcSurveysDAO = new CmcSurveysDAO(dynamoClients);
@@ -43,7 +42,7 @@ public class CreateTableDynamoDB_CmcSurveyQuestionsAutismDisorder
         for (int i = 0; i < tempList.size(); i++) 
 	    {
 			CmcSurvey cmcSurvey = tempList.get(i);
-			if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase(CmcMain.Autism_Disorder_Survey_Name))
+			if (cmcSurvey.getCmcSurveyName().equalsIgnoreCase(CmcMain.Intellectual_Disabilities_Survey_Name))
 			{
 				surveyID = cmcSurvey.getCmcSurveyID();
 				break;
@@ -54,17 +53,19 @@ public class CreateTableDynamoDB_CmcSurveyQuestionsAutismDisorder
         
         if (cmcSurveyQuestionList == null)
         {
-        	logger.error("list from json file is Empty - can't do anything more so exiting");
+        	logger.error("cam group client list from json file is Empty - can't do anything more so exiting");
         }
         else
         {
+        	Integer surveyQuestionIDCounter = 1;
+        	
         	for (int i = 0; i < cmcSurveyQuestionList.size(); i++) 
     		{
             	CmcSurveyQuestion gu = cmcSurveyQuestionList.get(i);
-            	gu.setCmcSurveyQuestionID(UUID.randomUUID().toString());
+            	gu.setCmcSurveyQuestionID(surveyID + "." + surveyQuestionIDCounter);
             	gu.setCmcSurveyID(surveyID);
                 table.putItem(gu);                
-    		}             
+    		}              
         }
 	}
     
@@ -75,5 +76,5 @@ public class CreateTableDynamoDB_CmcSurveyQuestionsAutismDisorder
        	List<CmcSurveyQuestion> list = Arrays.asList(array);
        	return list;        
     }
-   
+       
 }
