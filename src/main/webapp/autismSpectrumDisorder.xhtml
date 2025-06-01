@@ -94,7 +94,7 @@
 							  <h:outputText rendered="#{!pc_CmcMain.siteInEnglish}" value="#{surveyQuestion.cmcSurveyCategorySpanish}"/>															
 						  </p:column>
 							  				  
-						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Public (City) Bus">												
+						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Bus">												
 							  <p:selectOneMenu id="sect1PublicBusAnswerIDEng" value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}"
 							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
 								  <p:ajax event="change" update="autismForm" listener="#{pc_CmcMain.highlightDropdown}" />
@@ -102,30 +102,14 @@
 							  </p:selectOneMenu>
 						  </p:column>
 						  
-						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Autobús público (urbano)">											
+						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Autobús">											
 							  <p:selectOneMenu id="sect1PublicBusAnswerIDSpan" value="#{surveyQuestion.publicBusAnswer}" styleClass="#{surveyQuestion.publicBusAnswerStyle}" 
 							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
 								  <p:ajax event="change" update="autismForm" listener="#{pc_CmcMain.highlightDropdown}" />
 								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
 							  </p:selectOneMenu>															
 						  </p:column>
-						
-						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Coach (Intercity Bus)">												
-							  <p:selectOneMenu id="sect1CityBusAnswerIDEng" value="#{surveyQuestion.coachBusAnswer}" styleClass="#{surveyQuestion.coachBusAnswerStyle}" 
-							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">
-								  <p:ajax event="change" update="autismForm" listener="#{pc_CmcMain.highlightDropdown}" />
-								  <f:selectItems value="#{pc_CmcMain.yesNoEnglishList}" />
-							  </p:selectOneMenu>
-						  </p:column>
-						  
-						  <p:column rendered="#{!pc_CmcMain.siteInEnglish}" headerText="Autobús de larga distancia (interurbano)">											
-							  <p:selectOneMenu id="sect1CityBusAnswerIDSpan" value="#{surveyQuestion.coachBusAnswer}" styleClass="#{surveyQuestion.coachBusAnswerStyle}"  
-							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Se requiere selección en la sección 1">
-								  <p:ajax event="change" update="autismForm" listener="#{pc_CmcMain.highlightDropdown}" />
-								  <f:selectItems value="#{pc_CmcMain.yesNoSpanishList}" />
-							  </p:selectOneMenu>															
-						  </p:column>
-						  
+									  
 						  <p:column rendered="#{pc_CmcMain.siteInEnglish}" headerText="Train/Subway Trolley/Tram">												
 							  <p:selectOneMenu id="sect1TrolleyAnswerIDEng" value="#{surveyQuestion.trainSubwayAnswer}" styleClass="#{surveyQuestion.trainSubwayAnswerStyle}"  
 							  						required="#{surveyQuestion.answerRequired}" requiredMessage="Selection is required in section 1">

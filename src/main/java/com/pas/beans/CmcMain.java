@@ -923,7 +923,7 @@ public class CmcMain implements Serializable
 		
 		try
 		{
-			if (upperSectionAnswersInvalid(this.getPhysicalDisabilitiesSection1QuestionsHorizontalList())
+			if (upperSectionAnswersInvalid(this.getPhysicalDisabilitiesSection1QuestionsHorizontalList(), Physical_Disabilities_Survey_Name)
 			||  lowerSectionAnswersInvalid(this.getPhysicalDisabilitiesSection3QuestionsList())
 			||  clientInfoInvalid()) 
 			{
@@ -963,7 +963,7 @@ public class CmcMain implements Serializable
 	        this.setRenderIntellectualResults(false);
 	        this.setRenderAutismResults(false);
 	        
-	        populateResultsPage("physical", this.getPhysicalDisabilitiesSection1QuestionsHorizontalList(), this.getPhysicalDisabilitiesSection3QuestionsList());
+	        populateResultsPage("physical", this.getPhysicalDisabilitiesSection1QuestionsHorizontalList(), this.getPhysicalDisabilitiesSection3QuestionsList(), Physical_Disabilities_Survey_Name);
 		}
 		catch (Exception e)
 		{
@@ -1031,7 +1031,7 @@ public class CmcMain implements Serializable
 		
 		try
 		{
-			if (upperSectionAnswersInvalid(this.getIntellectualDisabilitiesSection1QuestionsHorizontalList())
+			if (upperSectionAnswersInvalid(this.getIntellectualDisabilitiesSection1QuestionsHorizontalList(), Intellectual_Disabilities_Survey_Name)
 			||  lowerSectionAnswersInvalid(this.getIntellectualDisabilitiesSection2QuestionsList())
 			||  clientInfoInvalid()) 
 			{
@@ -1063,7 +1063,7 @@ public class CmcMain implements Serializable
 	        this.setRenderIntellectualResults(true);
 	        this.setRenderAutismResults(false);
 	        
-	        populateResultsPage("intellectual", this.getIntellectualDisabilitiesSection1QuestionsHorizontalList(), this.getIntellectualDisabilitiesSection2QuestionsList());
+	        populateResultsPage("intellectual", this.getIntellectualDisabilitiesSection1QuestionsHorizontalList(), this.getIntellectualDisabilitiesSection2QuestionsList(), Intellectual_Disabilities_Survey_Name);
 		}
 		catch (Exception e)
 		{
@@ -1084,7 +1084,7 @@ public class CmcMain implements Serializable
 		
 		try
 		{
-			if (upperSectionAnswersInvalid(this.getAutismDisorderSection1QuestionsHorizontalList())
+			if (upperSectionAnswersInvalid(this.getAutismDisorderSection1QuestionsHorizontalList(), Autism_Disorder_Survey_Name)
 			||  lowerSectionAnswersInvalid(this.getAutismDisorderSection2QuestionsList())
 			||  clientInfoInvalid()) 
 			{
@@ -1116,7 +1116,7 @@ public class CmcMain implements Serializable
 	        this.setRenderIntellectualResults(false);
 	        this.setRenderAutismResults(true);
 	        
-	        populateResultsPage("autism", this.getAutismDisorderSection1QuestionsHorizontalList(), this.getAutismDisorderSection2QuestionsList());
+	        populateResultsPage("autism", this.getAutismDisorderSection1QuestionsHorizontalList(), this.getAutismDisorderSection2QuestionsList(), Autism_Disorder_Survey_Name);
 		}
 		catch (Exception e)
 		{
@@ -1132,7 +1132,7 @@ public class CmcMain implements Serializable
 	}
 	
 
-	private void populateResultsPage(String survey, List<DisabilityRow> topSectionList, List<CmcSurveyQuestion> bottomSectionList) 
+	private void populateResultsPage(String survey, List<DisabilityRow> topSectionList, List<CmcSurveyQuestion> bottomSectionList, String whichSurvey) 
 	{
 		logger.info("entering populateResultsPage for survey: " + survey);
 		
@@ -1141,12 +1141,22 @@ public class CmcMain implements Serializable
 		//default all viability settings to true; if even one unable to perform is selected it'll get set to false.
 		
 		ResultsRow resultsRowPublicBus = new ResultsRow();
-		resultsRowPublicBus.setTransportationOption("Public (City) Bus");
-		resultsRowPublicBus.setTransportationViable(true);
-		
 		ResultsRow resultsRowCoachBus = new ResultsRow();
-		resultsRowCoachBus.setTransportationOption("Coach (Intercity Bus)");
-		resultsRowCoachBus.setTransportationViable(true);
+		
+		if (whichSurvey.equalsIgnoreCase(Physical_Disabilities_Survey_Name)
+		||  whichSurvey.equalsIgnoreCase(Intellectual_Disabilities_Survey_Name))
+		{			
+			resultsRowPublicBus.setTransportationOption("Public (City) Bus");
+			resultsRowPublicBus.setTransportationViable(true);			
+			
+			resultsRowCoachBus.setTransportationOption("Coach (Intercity Bus)");
+			resultsRowCoachBus.setTransportationViable(true);
+		}
+		else //must be autism
+		{
+			resultsRowPublicBus.setTransportationOption("Bus");
+			resultsRowPublicBus.setTransportationViable(true);
+		}
 		
 		ResultsRow resultsRowTrainSubway = new ResultsRow();
 		resultsRowTrainSubway.setTransportationOption("Train/Subway/Trolley/Tram");
@@ -1479,7 +1489,7 @@ public class CmcMain implements Serializable
 		
 	}
 
-	private boolean upperSectionAnswersInvalid(List<DisabilityRow> tempList)
+	private boolean upperSectionAnswersInvalid(List<DisabilityRow> tempList, String whichSurvey)
 	{
 		boolean errorFound = false;
 		
@@ -1492,11 +1502,17 @@ public class CmcMain implements Serializable
 				if (dr.getPublicBusAnswer() == null || dr.getPublicBusAnswer().trim().length() == 0)
 				{
 					errorFound = true;
-				}	
-				if (dr.getCoachBusAnswer() == null || dr.getCoachBusAnswer().trim().length() == 0)
+				}
+				
+				if (whichSurvey.equalsIgnoreCase(Physical_Disabilities_Survey_Name)
+				||  whichSurvey.equalsIgnoreCase(Intellectual_Disabilities_Survey_Name))
 				{
-					errorFound = true;
-				}	
+					if (dr.getCoachBusAnswer() == null || dr.getCoachBusAnswer().trim().length() == 0)
+					{
+						errorFound = true;
+					}	
+				}
+				
 				if (dr.getTrainSubwayAnswer() == null || dr.getTrainSubwayAnswer().trim().length() == 0)
 				{
 					errorFound = true;
