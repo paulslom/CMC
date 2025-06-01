@@ -35,6 +35,8 @@ public class LoadTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities
          {
     		 DynamoClients dynamoClients = DynamoUtil.getDynamoClients();
     
+    		 logger.info("Which Amazon profile are we using? " + DynamoUtil.AWS_PROFILE);
+    		 
     		 loadTable(dynamoClients);
 	          	
 			 logger.info("**********  END of program ***********");
@@ -94,7 +96,9 @@ public class LoadTableDynamoDB_CmcSurveyQuestionsIntellectualDisabilities
             	gu.setCmcSurveyID(surveyID);
                 table.putItem(gu); 
                 surveyQuestionIDCounter++;
-    		}            
+    		} 
+        	
+        	logger.info("Successfully loaded " + surveyQuestionIDCounter + " rows of data into the table:" + AWS_TABLE_NAME);
         }
 	}
     

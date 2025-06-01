@@ -32,6 +32,8 @@ public class LoadTableDynamoDB_CmcSurvey
          {
     		 DynamoClients dynamoClients = DynamoUtil.getDynamoClients();
     
+    		 logger.info("Which Amazon profile are we using? " + DynamoUtil.AWS_PROFILE);
+    		 
     		 loadTable(dynamoClients);
 	          	
 			 logger.info("**********  END of program ***********");
@@ -73,6 +75,8 @@ public class LoadTableDynamoDB_CmcSurvey
                 cmcSurveyTable.putItem(cs);
                 surveyIDCounter++;
     		}
+        	
+        	logger.info("Successfully loaded " + surveyIDCounter + " rows of data into the table:" + AWS_TABLE_NAME);
         }
         
 	}
