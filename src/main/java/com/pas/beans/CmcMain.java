@@ -18,6 +18,7 @@ import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
+import com.pas.dao.CmcDiagnosesDAO;
 import com.pas.dao.CmcSurveyAnswersDAO;
 import com.pas.dao.CmcSurveyQuestionsDAO;
 import com.pas.dao.CmcSurveysDAO;
@@ -113,7 +114,9 @@ public class CmcMain implements Serializable
 	private List<SelectItem> skillLevelSpanishList = new ArrayList<>();
 	
 	private List<SelectItem> agesList = new ArrayList<>();
-	private List<SelectItem> diagnosisList = new ArrayList<>();
+	private List<SelectItem> physicalDiagnosesList = new ArrayList<>();
+	private List<SelectItem> intellectualDiagnosesList = new ArrayList<>();
+	private List<SelectItem> autismDiagnosesList = new ArrayList<>();
 	private List<SelectItem> livingEnvironmentList = new ArrayList<>();
 	private List<SelectItem> usageReasonList = new ArrayList<>();
 	
@@ -147,6 +150,7 @@ public class CmcMain implements Serializable
 	private CmcSurveyQuestionsDAO cmcSurveyQuestionsDAO;
 	private CmcSurveysDAO cmcSurveysDAO;
 	private CmcSurveyAnswersDAO cmcSurveyAnswersDAO;
+	private CmcDiagnosesDAO cmcDiagnosesDAO;
 	
 	private CmcUser currentUser = new CmcUser();
 	
@@ -209,15 +213,7 @@ public class CmcMain implements Serializable
 		si = new SelectItem("usageReason1","Usage Reason 1");
 		usageReasonList.add(si);
 		si = new SelectItem("usageReason2","Usage Reason 2");
-		usageReasonList.add(si);
-		
-		diagnosisList.clear();
-		si = new SelectItem("","Select");
-		diagnosisList.add(si);
-		si = new SelectItem("diagnosis1","Diagnosis 1");
-		diagnosisList.add(si);
-		si = new SelectItem("diagnosis2","Diagnosis 2");
-		diagnosisList.add(si);
+		usageReasonList.add(si);		
 		
 		livingEnvironmentList.clear();
 		si = new SelectItem("","Select");
@@ -248,6 +244,7 @@ public class CmcMain implements Serializable
 				loadCmcSurveys(dynamoClients);
 				loadCmcSurveyQuestions(dynamoClients);
 				loadCmcSurveyAnswers(dynamoClients);
+				loadCmcDiagnoses(dynamoClients);
 			}
 			
 			changeToEnglish();
@@ -1020,7 +1017,10 @@ public class CmcMain implements Serializable
 		cmcSurveyAnswer.setSurveySubmitterLastName(this.getCurrentUser().getLastName());
 		cmcSurveyAnswer.setSurveySubmitterEmailAddress(this.getCurrentUser().getEmailAddress());
 		cmcSurveyAnswer.setSurveyClientAge(this.getSurveyClientAge());
-		cmcSurveyAnswer.setSurveyClientDiagnosis(this.getSurveyClientDiagnosis());
+		
+		CmcDiagnosis cmcDiagnosis = cmcDiagnosesDAO.getFullDiagnosesMap().get(this.getSurveyClientDiagnosis());
+		cmcSurveyAnswer.setSurveyClientDiagnosis(cmcDiagnosis.getCmcDiagnosis());
+		
 		cmcSurveyAnswer.setSurveyClientLivingEnvironment(this.getSurveyClientLivingEnvironment());
 		cmcSurveyAnswer.setSurveyClientPrimaryGoalOfUse(this.getSurveyClientPrimaryGoalOfUse());
 	}
@@ -1902,6 +1902,47 @@ public class CmcMain implements Serializable
 		logger.info("Cmc Survey Answers read in. List size = " + cmcSurveyAnswersDAO.getFullSurveyAnswersList().size());		
     }
 	
+
+	private void loadCmcDiagnoses(DynamoClients dynamoClients)   throws Exception
+	{
+		logger.info("entering loadCmcDiagnoses");		
+		cmcDiagnosesDAO = new CmcDiagnosesDAO(dynamoClients);
+		cmcDiagnosesDAO.readAllDiagnosesFromDB();			
+		logger.info("Cmc Diagnoses read in. List size = " + cmcDiagnosesDAO.getFullDiagnosesList().size());	
+		
+		physicalDiagnosesList.clear();
+		SelectItem si = new SelectItem("","Select");
+		physicalDiagnosesList.add(si);
+		
+		intellectualDiagnosesList.clear();
+		si = new SelectItem("","Select");
+		intellectualDiagnosesList.add(si);
+		
+		autismDiagnosesList.clear();
+		si = new SelectItem("","Select");
+		autismDiagnosesList.add(si);
+		
+		for (int i = 0; i < cmcDiagnosesDAO.getFullDiagnosesList().size(); i++) 
+		{
+			CmcDiagnosis cmcDiagnosis = cmcDiagnosesDAO.getFullDiagnosesList().get(i);
+			si = new SelectItem(cmcDiagnosis.getCmcDiagnosisId(),cmcDiagnosis.getCmcDiagnosis());
+			
+			if (cmcDiagnosis.getCmcSurveyName().equalsIgnoreCase(Physical_Disabilities_Survey_Name))
+			{				
+				physicalDiagnosesList.add(si);
+			}
+			else if (cmcDiagnosis.getCmcSurveyName().equalsIgnoreCase(Intellectual_Disabilities_Survey_Name))
+			{
+				intellectualDiagnosesList.add(si);
+			}
+			else if (cmcDiagnosis.getCmcSurveyName().equalsIgnoreCase("Autism"))
+			{
+				autismDiagnosesList.add(si);
+			}
+		}
+		
+    }
+
 	private void refreshSiteVisitsList() throws Exception 
 	{	
 		logger.info("entering refreshSiteVisitsList");
@@ -2244,14 +2285,6 @@ public class CmcMain implements Serializable
 		this.agesList = agesList;
 	}
 
-	public List<SelectItem> getDiagnosisList() {
-		return diagnosisList;
-	}
-
-	public void setDiagnosisList(List<SelectItem> diagnosisList) {
-		this.diagnosisList = diagnosisList;
-	}
-
 	public List<SelectItem> getLivingEnvironmentList() {
 		return livingEnvironmentList;
 	}
@@ -2290,6 +2323,30 @@ public class CmcMain implements Serializable
 
 	public void setSurveyClientPrimaryGoalOfUse(String surveyClientPrimaryGoalOfUse) {
 		this.surveyClientPrimaryGoalOfUse = surveyClientPrimaryGoalOfUse;
+	}
+
+	public List<SelectItem> getPhysicalDiagnosesList() {
+		return physicalDiagnosesList;
+	}
+
+	public void setPhysicalDiagnosesList(List<SelectItem> physicalDiagnosesList) {
+		this.physicalDiagnosesList = physicalDiagnosesList;
+	}
+
+	public List<SelectItem> getIntellectualDiagnosesList() {
+		return intellectualDiagnosesList;
+	}
+
+	public void setIntellectualDiagnosesList(List<SelectItem> intellectualDiagnosesList) {
+		this.intellectualDiagnosesList = intellectualDiagnosesList;
+	}
+
+	public List<SelectItem> getAutismDiagnosesList() {
+		return autismDiagnosesList;
+	}
+
+	public void setAutismDiagnosesList(List<SelectItem> autismDiagnosesList) {
+		this.autismDiagnosesList = autismDiagnosesList;
 	}
 
 }
