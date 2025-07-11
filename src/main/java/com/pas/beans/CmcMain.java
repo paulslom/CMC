@@ -210,26 +210,45 @@ public class CmcMain implements Serializable
 		usageReasonList.clear();
 		si = new SelectItem("","Select");
 		usageReasonList.add(si);
-		si = new SelectItem("usageReason1","Usage Reason 1");
+		si = new SelectItem("DevelopTransportationPlan","Develop Transportation Plan");
 		usageReasonList.add(si);
-		si = new SelectItem("usageReason2","Usage Reason 2");
+		si = new SelectItem("AssistInMM","Assist In Mobility Management");
 		usageReasonList.add(si);		
-		
+		si = new SelectItem("EvalOfCommMobilitySkills","Evaluation Of Community Mobility Skills");
+		usageReasonList.add(si);
+		si = new SelectItem("TryingOut","Trying Out");
+		usageReasonList.add(si);	
+		si = new SelectItem("ExploringIndependence","Exploring Potential Independence in Mobility");
+		usageReasonList.add(si);
+						
 		livingEnvironmentList.clear();
 		si = new SelectItem("","Select");
 		livingEnvironmentList.add(si);
-		si = new SelectItem("livingEnvironment1","Living Environment 1");
+		si = new SelectItem("Independent","Independent");
 		livingEnvironmentList.add(si);
-		si = new SelectItem("livingEnvironment2","Living Environment 2");
+		si = new SelectItem("WithParents","With Parents/Family");
 		livingEnvironmentList.add(si);
-		
+		si = new SelectItem("GroupHome","Group Home");
+		livingEnvironmentList.add(si);
+		si = new SelectItem("AssistiveLiving","Assistive Living");
+		livingEnvironmentList.add(si);
+		si = new SelectItem("Institution","Institution");
+		livingEnvironmentList.add(si);
+			
 		agesList.clear();
 		si = new SelectItem("","Select");
 		agesList.add(si);
 		
-		for (int i = 15; i <= 100; i++) 
+		for (int i = 12; i <= 80; i++) 
 		{
-			si = new SelectItem(String.valueOf(i),String.valueOf(i));
+			if (i < 80)
+			{
+				si = new SelectItem(String.valueOf(i),String.valueOf(i));
+			}
+			else
+			{
+				si = new SelectItem("80+","80+");
+			}
 			agesList.add(si);
 		}
 						

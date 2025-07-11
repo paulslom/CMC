@@ -42,6 +42,12 @@
 	text-decoration: none;
 }
 
+.aboutStyle {
+	font: 20px "Aptos, serif";
+	color: #000000;
+	text-decoration: none
+}
+
 .textLabel {
 	margin-top: 2px;
 	padding: 3px;
@@ -197,6 +203,14 @@ button:hover {
 .register p a:hover {
   text-decoration: underline;
   color: #a8a8a8;
+}
+
+.myBox100pct { 
+	border-width: 1; 
+	border-style: solid; 
+	border-color: #000000; 
+	background-color: #FFFFFF;
+	vertical-align: middle;
 }
 
 
