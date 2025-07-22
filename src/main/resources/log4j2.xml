@@ -1,0 +1,15 @@
+<configuration>
+
+	<Appenders>
+		<Console name="app">
+			<PatternLayout pattern="cmc: [%d{yyyy-MM-dd HH:mm:ss.SSS}{America/New_York}] [%-5p] [%C{5}:%L] [%m]%n" />
+		</Console>
+	</Appenders>
+
+	<Loggers>
+		<Root additivity="false" level="info">
+			<AppenderRef ref="app" />
+		</Root>
+	</Loggers>
+	
+</configuration>
