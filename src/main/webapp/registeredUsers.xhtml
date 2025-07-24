@@ -1,0 +1,77 @@
+<ui:composition template="template.xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+     
+    <ui:define name="content">     
+     
+         <h:form id="registeredUsersForm">                      
+             
+            <p:messages id="facesMessagesID" showDetail="false">
+		    </p:messages>
+		    
+		    <table>
+		    
+		    	<tr>
+			      <td align="center">
+			   		  <h:outputText value="Registered Users" styleClass="pageSectionTitle"/>
+			   	  </td>
+			   </tr>
+		    
+	          <tr>
+	          
+	              <td>
+	                    
+			  		 <p:dataTable id="ruTableID" value="#{pc_CmcMain.registeredUsersList}" rowIndexVar="rowIndex"
+				          var="ru" scrollable="true" scrollHeight="950" styleClass="dataTableStyle">						
+						   
+						  <p:column style="width:3%" headerText="Num">												
+							  <h:outputText value="#{rowIndex + 1}"/>															
+						  </p:column>
+					  	
+                          <p:column style="width:10%" headerText="userName" sortBy="#{ru.userName}">												
+							  <h:outputText value="#{ru.userName}"/>															
+						  </p:column>
+							
+						  <p:column style="width:20%" headerText="First Name" sortBy="#{ru.firstName}">												
+							  <h:outputText value="#{ru.firstName}"/>															
+						  </p:column>
+						  
+						  <p:column style="width:20%" headerText="Last Name" sortBy="#{ru.lastName}">												
+							  <h:outputText value="#{ru.lastName}"/>															
+						  </p:column>
+						  
+						  <p:column style="width:10%" headerText="Role" sortBy="#{ru.userRole}">												
+							  <h:outputText value="#{ru.userRole}"/>															
+						  </p:column>
+						  
+						  <p:column style="width:20%" headerText="Email" sortBy="#{ru.emailAddress}">												
+							  <h:outputText value="#{ru.emailAddress}"/>															
+						  </p:column>
+						  
+						  <p:column style="width:10%" headerText="Usage Reason" sortBy="#{ru.usageReason}">												
+							  <h:outputText value="#{ru.usageReason}"/>															
+						  </p:column>
+						  
+						  <p:column style="width:7%" headerText="Total Site Visits" sortBy="#{ru.totalSiteVisits}">												
+							  <h:outputText value="#{ru.totalSiteVisits}"/>															
+						  </p:column>		
+						  
+						   
+										  
+				     </p:dataTable>
+				     
+				  </td>
+		     </tr>
+	       
+	        </table>	 
+	       
+	     </h:form>
+   
+    </ui:define>
+
+</ui:composition>
+  

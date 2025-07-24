@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 //import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
@@ -34,6 +35,7 @@ public class SecurityConfig
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired MyAuthenticationFailureHandler myAuthenticationFailureHandler;
 	@Autowired MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
     @Autowired UserDetailsServiceImpl userDetailsService;
 
@@ -61,13 +63,12 @@ public class SecurityConfig
     			.loginPage("/login.xhtml")
                 .permitAll()
                 .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler)
                 .failureUrl("/logout.xhtml")
             )
     	  .logout(logout -> logout.logoutUrl("/logout.xhtml").permitAll());
-    	
-    	       
+        
 	    logger.info("exiting filterChain of SecurityConfig");
-	    
         return http.build();
     }    
        

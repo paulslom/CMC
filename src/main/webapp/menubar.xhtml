@@ -71,7 +71,7 @@
 			          <p:menuitem value="Results" url="#{request.contextPath}/results.xhtml"/>
 			          <p:menuitem value="Creating Goals" url="#{request.contextPath}/creatingGoals.xhtml"/>
 			          
-			          <p:submenu rendered="#{sessionScope.currentUserisAdmin}" label="Reports">
+			          <p:submenu rendered="#{sessionScope.currentUserisAdmin}" label="Admin only Reports">
 						   
 						   <p:menuitem value="Site Visits"
 						   		ajax="false" 
@@ -84,6 +84,14 @@
 					       <p:menuitem value="Survey Answer Totals"
 						   		ajax="false" 
 					        	actionListener="#{pc_CmcMain.surveyAnswerTotals}"
+					        	onclick="PF('blockWidgetVar').show()" 
+					        	oncomplete="PF('blockWidgetVar').hide()" 
+					        	update="menuForm">
+					       </p:menuitem>
+					       
+					       <p:menuitem value="Registered Users"
+						   		ajax="false" 
+					        	actionListener="#{pc_CmcMain.registeredUsers}"
 					        	onclick="PF('blockWidgetVar').show()" 
 					        	oncomplete="PF('blockWidgetVar').hide()" 
 					        	update="menuForm">

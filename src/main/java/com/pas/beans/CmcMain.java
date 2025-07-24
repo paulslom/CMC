@@ -122,6 +122,8 @@ public class CmcMain implements Serializable
 	
 	private List<CmcUser> siteVisitsList = new ArrayList<>();
 	
+	private List<CmcUser> registeredUsersList = new ArrayList<>();
+	
 	private String siteTitle;
 	private String siteSubTitle;
 	
@@ -376,18 +378,36 @@ public class CmcMain implements Serializable
 		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);		 	
         }
 	}  	
-		
+	
 	public void surveyAnswerTotals(ActionEvent event) 
 	{
 		try 
         {		    
-		    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();		    
-		    String accountid = ec.getRequestParameterMap().get("accountid");		    
-		    logger.info("account ID " + accountid + " selected to show trx from menu");
+		    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 		    
 		    refreshSurveyAnswerTotals();
 		    
             String targetURL = Utils.getContextRoot() + "/reportSurveyAnswers.xhtml";
+		    ec.redirect(targetURL);
+            logger.info("successfully redirected to: " + targetURL);
+        } 
+        catch (Exception e) 
+        {
+            logger.error("exception: " + e.getMessage(), e);
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage());
+		 	FacesContext.getCurrentInstance().addMessage(null, facesMessage);		 	
+        }
+	}  	
+	
+	public void registeredUsers(ActionEvent event) 
+	{
+		try 
+        {		    
+		    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		    
+		    refreshRegisteredUsersListing();
+		    
+            String targetURL = Utils.getContextRoot() + "/registeredUsers.xhtml";
 		    ec.redirect(targetURL);
             logger.info("successfully redirected to: " + targetURL);
         } 
@@ -1968,6 +1988,12 @@ public class CmcMain implements Serializable
 		siteVisitsList = cmcUsersDAO.readAllUsersFromDB();
 	}
 
+	private void refreshRegisteredUsersListing() throws Exception 
+	{	
+		logger.info("entering refreshRegisteredUsersListing");
+		registeredUsersList = cmcUsersDAO.readAllUsersFromDB();
+	}
+	
 	private void refreshSurveyAnswerTotals() 
 	{		
 		logger.info("entering refreshSurveyAnswersList");
@@ -2366,6 +2392,14 @@ public class CmcMain implements Serializable
 
 	public void setAutismDiagnosesList(List<SelectItem> autismDiagnosesList) {
 		this.autismDiagnosesList = autismDiagnosesList;
+	}
+
+	public List<CmcUser> getRegisteredUsersList() {
+		return registeredUsersList;
+	}
+
+	public void setRegisteredUsersList(List<CmcUser> registeredUsersList) {
+		this.registeredUsersList = registeredUsersList;
 	}
 
 }
