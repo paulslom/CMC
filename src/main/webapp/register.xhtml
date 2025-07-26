@@ -23,9 +23,15 @@
         <f:loadBundle var="bundle" basename="ApplicationProperties" /> 
         
         <h:outputScript name="javascript/cmcjs.js"/> 
+        
+        <h:form id="hiddenForm" style="display:none">
+            <h:commandLink id="link" update="registerForm">
+	            <f:ajax event="click" listener="#{pc_Registration.onloadRegistrationPage}" />
+	        </h:commandLink>
+        </h:form>
            
         <h:form id="registerForm"> 
-            
+              
             <p:messages id="facesMessagesID" showDetail="false"/>
 		    
 		    <p:blockUI block="registerForm" widgetVar="blockWidgetVar"> 
@@ -52,7 +58,7 @@
 				  </td>	
 			 
 	              <td class="text">
-	                <p:inputText id="firstNameID" size="30" value="#{pc_CmcMain.currentUser.firstName}" required="true"/>
+	                <p:inputText id="firstNameID" size="30" value="#{pc_Registration.firstName}" required="true"/>
 	              </td>
 	            
 	           </tr>
@@ -64,7 +70,7 @@
 				 </td>	
 			 
 	             <td class="text">
-	               <p:inputText id="lastNameID" size="30" value="#{pc_CmcMain.currentUser.lastName}" required="true"/>
+	               <p:inputText id="lastNameID" size="30" value="#{pc_Registration.lastName}" required="true"/>
 	             </td>
 	            
 	           </tr>
@@ -76,7 +82,7 @@
 				 </td>	
 			 
 	             <td class="text">
-	               <p:inputText id="usernameID" size="50" value="#{pc_CmcMain.currentUser.userName}" required="true"/>
+	               <p:inputText id="usernameID" size="50" value="#{pc_Registration.userName}" required="true"/>
 	             </td>
 	            
 	           </tr>
@@ -102,7 +108,7 @@
 			    </td>	
 			 
 	            <td class="text">
-	               <p:inputText id="emailID" size="50" value="#{pc_CmcMain.currentUser.emailAddress}" required="true"/>
+	               <p:inputText id="emailID" size="50" value="#{pc_Registration.emailAddress}" required="true"/>
 	            </td>
 	            
 	           </tr>
@@ -114,7 +120,7 @@
 		            
 		            <td align="left">	        
 					
-					    <p:selectOneMenu id="usageReasonListID" value="#{pc_CmcMain.currentUser.usageReason}" required="true" hideNoSelectionOption="false">
+					    <p:selectOneMenu id="usageReasonListID" value="#{pc_Registration.usageReason}" required="true" hideNoSelectionOption="false">
 					        <f:selectItems value="#{pc_CmcMain.usageReasonList}"/>
 					    </p:selectOneMenu>
 					    

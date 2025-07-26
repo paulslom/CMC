@@ -11,4 +11,12 @@ function myFunction()
     x.type = "password";
   }
   
+}
+
+window.onload = function() 
+{
+	if (document.getElementById('hiddenForm:link'))
+    {
+		document.getElementById('hiddenForm:link').onclick();
+	} 
 }	

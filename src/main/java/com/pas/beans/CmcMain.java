@@ -164,8 +164,8 @@ public class CmcMain implements Serializable
 	private String surveyClientLivingEnvironment;
 	private String surveyClientPrimaryGoalOfUse;
 	
-    @Inject
-    private PhotoService service;
+    @Inject PhotoService service;
+    @Inject Registration registration;
     
 	public void onStart(@Observes @Initialized(ApplicationScoped.class) Object pointless) 
 	{
@@ -425,12 +425,11 @@ public class CmcMain implements Serializable
 		
 		try
 		{
-			this.getCurrentUser().setUserRole("USER"); //default to normal user.  Admin would have to make them admin within the database using a db tool.
-			
 			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();		    
 		    String pw = ec.getRequestParameterMap().get("password");		    
-			this.getCurrentUser().setPassword(pw); 
-			
+	
+			setCurrentUserFromRegistration(pw);
+				
 			cmcUsersDAO.addUser(this.getCurrentUser());
 			
 			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully Registered!", "Successfully Registered!");
@@ -451,6 +450,17 @@ public class CmcMain implements Serializable
 		return "";	
 	}
 	
+	private void setCurrentUserFromRegistration(String password) 
+	{
+		this.getCurrentUser().setUserRole("USER"); //default to normal user.  Admin would have to make them admin within the database using a db tool.
+		this.getCurrentUser().setEmailAddress(registration.getEmailAddress());
+		this.getCurrentUser().setFirstName(registration.getFirstName());
+		this.getCurrentUser().setLastName(registration.getLastName());
+		this.getCurrentUser().setPassword(password); 	
+		this.getCurrentUser().setUsageReason(registration.getUsageReason());
+		this.getCurrentUser().setUserName(registration.getUserName());		
+	}
+
 	public String updateUser()
 	{
 		try
@@ -1655,7 +1665,7 @@ public class CmcMain implements Serializable
 	    }
 		
 		return "";
-	}
+	}	
 	
 	public String clearAllAutismSpectrumDisorderAnswers()
 	{
@@ -2401,5 +2411,6 @@ public class CmcMain implements Serializable
 	public void setRegisteredUsersList(List<CmcUser> registeredUsersList) {
 		this.registeredUsersList = registeredUsersList;
 	}
+
 
 }

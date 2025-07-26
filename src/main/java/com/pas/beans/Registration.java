@@ -2,14 +2,19 @@ package com.pas.beans;
 
 import java.io.Serializable;
 
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbIgnore;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@DynamoDbBean
-public class CmcUser implements Serializable
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
+
+@Named("pc_Registration")
+@ViewScoped
+public class Registration implements Serializable
 {
 	private static final long serialVersionUID = 131158039169073163L;
+	
+	private static Logger logger = LogManager.getLogger(Registration.class);	
 	
 	private String userName;
 	private String password;
@@ -18,7 +23,6 @@ public class CmcUser implements Serializable
 	private String userRole;
 	private String emailAddress;
 	private String usageReason;
-	private Integer totalSiteVisits;
 	
 	//not stored in DB
 	private String fullName;
@@ -30,6 +34,12 @@ public class CmcUser implements Serializable
 		return myString;
 	}
 
+	public void onloadRegistrationPage()
+	{
+		logger.info("loading new registration page");
+		this.reset();
+	}
+	
 	public void reset()
 	{
 		setUserName("");
@@ -40,8 +50,7 @@ public class CmcUser implements Serializable
 		setEmailAddress("");
 		setUsageReason("");
 	}
-	
-	@DynamoDbPartitionKey
+
 	public String getUserName() {
 		return userName;
 	}
@@ -98,24 +107,15 @@ public class CmcUser implements Serializable
 		this.usageReason = usageReason;
 	}
 
-	public Integer getTotalSiteVisits() {
-		return totalSiteVisits;
-	}
-
-	public void setTotalSiteVisits(Integer totalSiteVisits) {
-		this.totalSiteVisits = totalSiteVisits;
-	}
-
-	@DynamoDbIgnore
-	public String getFullName() 
-	{
-		this.setFullName(this.getFirstName() + " " + this.getLastName());
+	public String getFullName() {
 		return fullName;
 	}
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+	
+	
 	
 	
 }
